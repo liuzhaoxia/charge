@@ -2,7 +2,7 @@
  * Created by liwanchong on 2016/8/2.
  */
 import { fetchMethod, createFetch } from '../fetch/fetch'
-import appConfig from '../constants/AppConfig'
+import appConfig from '../constants/appConfig'
 
 const api = {
     login: (parameter)=> createFetch(
