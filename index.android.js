@@ -6,6 +6,6 @@
 
 
 import {AppRegistry} from 'react-native';
- import  map from './src/components/android/map'
+
 import  app from './src/containers/android/app'
-AppRegistry.registerComponent('charge', () => map);
+AppRegistry.registerComponent('charge', () => app);
