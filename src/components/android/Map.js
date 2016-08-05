@@ -1,8 +1,8 @@
+
 /**
  * Created by liwanchong on 2016/8/2.
  */
 import React, {Component} from 'react';
-import Mapbox, {MapView} from 'react-native-mapbox-gl';
 import {
     AppRegistry,
     StyleSheet,
@@ -11,6 +11,8 @@ import {
     View,
     ScrollView
 } from 'react-native';
+import Mapbox, {MapView} from 'react-native-mapbox-gl';
+
 import appConfig from '../../constants/appConfig'
 import  helper from '../../utils/helper'
 const accessToken = appConfig.mapBoxToken;
