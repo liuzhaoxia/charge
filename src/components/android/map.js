@@ -23,13 +23,13 @@ class Map extends Component {
         // 初始状态
         this.state = {
             center: {
-                latitude: 40.72052634,
-                longitude: -73.97686958312988
+                latitude: 39.9,
+                longitude: 116.3
             },
             zoom: 11,
             userTrackingMode: Mapbox.userTrackingMode.none,
             annotations: [{
-                coordinates: [40.72052634, -73.97686958312988],
+                coordinates: [39.9, 116.3],
                 type: 'point',
                 title: 'This is marker 1',
                 subtitle: 'It has a rightCalloutAccessory too',
@@ -45,7 +45,7 @@ class Map extends Component {
                 },
                 id: 'marker1'
             }, {
-                coordinates: [40.714541341726175, -74.00579452514648],
+                coordinates: [39.9, 116.3],
                 type: 'point',
                 title: 'Important!',
                 subtitle: 'Neat, this is a custom annotation image',
@@ -147,7 +147,7 @@ class Map extends Component {
                     return annotation;
                 }
                 return {
-                    coordinates: [40.714541341726175, -74.00579452514648],
+                    coordinates: [39.9, 116.3],
                     'type': 'point',
                     title: 'New Title!',
                     subtitle: 'New Subtitle',
