@@ -1,6 +1,10 @@
 {
+  // 使用babel-eslint支持草案2阶段特性，比如async/await等
   "parser": "babel-eslint",
+
+  // 使用eslint-config-airbnb预定义规则
   "extends": "airbnb",
+
   /**
    * "off" 或 0 - 关闭规则
    * "warn" 或 1 - 开启规则，使用警告级别的错误：warn (不会导致程序退出),
@@ -8,10 +12,13 @@
    */
   "rules": {
 
-    //关闭规则，允许使用require
+    // 关闭规则，允许使用require
     "global-require": 0,
 
-    //关闭规则，允许jsx组件文件扩展名为js，因为扩展名jsx在react-native中报找不到模块
-    "react/jsx-filename-extension": 0
+    // 关闭规则，允许jsx组件文件扩展名为js，因为扩展名jsx在react-native中报找不到模块
+    "react/jsx-filename-extension": 0,
+
+    // 关闭规则，因为此条规则会导致npm run lint崩溃,主要用于处理async/await
+    "generator-star-spacing": 0
   }
 }
