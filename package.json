@@ -3,23 +3,23 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "lint": "eslint index.android.js index.ios.js src"
   },
   "dependencies": {
     "react": "15.2.1",
     "react-native": "0.30.0",
-    "react-native-mapbox-gl": "^5.0.0",
     "react-native-button": "^1.6.0",
     "react-native-image-picker": "^0.21.4",
+    "react-native-mapbox-gl": "^5.0.0",
     "react-native-refreshable-listview": "^1.3.0",
     "react-native-router-flux": "^3.31.2",
+    "react-native-store": "^0.4.1",
     "react-native-swipeout": "^2.0.12",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
     "redux-actions": "^0.10.1",
     "redux-thunk": "^2.1.0"
   },
-  "devDependencies": {
-
-  }
+  "devDependencies": {}
 }

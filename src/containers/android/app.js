@@ -9,7 +9,9 @@ import {
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider, connect } from 'react-redux';
 import { Router, Scene, Modal } from 'react-native-router-flux';
+
 import Map from './MapContainer';
+import Choose from './../../containers/android/Choose';
 // import ListView from './../../containers/android/ListView';
 // import ImagePicker from './../../containers/android/ImagePicker';
 // import main from './../../components/android/Main';
