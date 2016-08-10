@@ -6,10 +6,11 @@ import { combineReducers } from 'redux';
 import loginReducer from './loginReducer';
 // import listViewReducer from './listViewReducer';
 // import articleInfoReducer from './articleInfoReducer'
+import detailReducer from './detailReducer'
 // ... other reducers
 
 const rootReducer = combineReducers({
-    loginReducer
+    loginReducer,detailReducer
     // ... other reducers
 });
 
