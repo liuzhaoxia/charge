@@ -5,7 +5,7 @@
  */
 
 
-import {AppRegistry} from 'react-native';
+import { AppRegistry } from 'react-native';
+import app from './src/containers/android/app';
 
-import  app from './src/containers/android/app'
 AppRegistry.registerComponent('charge', () => app);
