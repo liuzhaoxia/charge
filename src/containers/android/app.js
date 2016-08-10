@@ -22,7 +22,7 @@ import DetailInfo from '../../containers/android/Detail'
 
 import shellsDetail from '../../containers/android/shellsDetail'
 
-import test from '../../containers/android/test'
+import imageViewPage from '../../containers/android/imageViewPager'
 
 class App extends React.Component {
     constructor(props) {
@@ -41,6 +41,9 @@ class App extends React.Component {
                                 <Scene key="shellsDetail" component={shellsDetail} title="shellsDetail"
                                        hideNavBar/>
                                 <Scene key="DetailInfo" component={DetailInfo} title="DetailInfo"
+                                       hideNavBar/>
+
+                                <Scene key="imageViewPage" component={imageViewPage} title="imageViewPage"
                                        hideNavBar/>
 
                             </Scene>

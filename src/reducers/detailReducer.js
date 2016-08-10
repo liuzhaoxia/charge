@@ -22,7 +22,7 @@ const initialState = {
         "address": "望京西园222",//地址
         "distance": 2,//距离
         "payment": ["4"], //支付方式（参数pid时，返回）
-        "plotPic": ["",],//图片信息（参数pid时，返回）
+        "plotPic": ['https://images.unsplash.com/photo-1441742917377-57f78ee0e582?h=1024','https://images.unsplash.com/photo-1441716844725-09cedc13a4e7?h=1024'],//图片信息（参数pid时，返回）
         "telephone": "",//电话
         "servicePro": "0",//服务提供商
         "open24H": 2,//是否24小时开放1为是，2为否（参数pid时，返回）

@@ -65,6 +65,8 @@ class Detail extends React.Component {
         };
 
         this.backShells=this.backShells.bind(this);
+
+        this.openViewPage=this.openViewPage.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -75,6 +77,10 @@ class Detail extends React.Component {
 
     backShells(){
         Actions.shellsDetail();
+    }
+
+    openViewPage(){
+        Actions.imageViewPage();
     }
 
     render(){
@@ -98,8 +104,12 @@ class Detail extends React.Component {
                     <View>
                         <TouchableHighlight underlayColor='transparent'
                                             onPress={this.openViewPage}>
-                                 <Image source={require('../../image/logo.png')} style={styles.logoImage}/>
+                                 <Image source={{uri:data.plotPic[0]}} style={styles.logoImage}/>
                         </TouchableHighlight>
+                        <View style={{backgroundColor:'#000000',width:20,height:20,marginTop:-20,marginLeft:10,}}>
+                            <Text style={{color:'#FFFFFF',padding:2}}>{data.plotPic.length}</Text>
+                        </View>
+
                     </View>
                     <View style={{width:200}}>
                         <Text style={styles.nameTitle}>{data.name}</Text>
