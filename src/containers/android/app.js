@@ -19,7 +19,11 @@ import routeReducerCreator from './../../reducers/routeReducerCreator';
 // import helper from './../../utils/helper'
  import store from './../../store/store';
 // import ArticleInfo from './../../containers/android/MessInfo'
+import DetailInfo from '../../containers/android/Detail'
 
+import shellsDetail from '../../containers/android/shellsDetail'
+
+import test from '../../containers/android/test'
 
 class App extends React.Component {
     constructor(props) {
@@ -35,8 +39,11 @@ class App extends React.Component {
                             <Scene key="mainModule" direction="vertical" initial={true}>
                                 <Scene key="map" component={Map} title="Map"
                                        hideNavBar/>
+                                <Scene key="shellsDetail" component={shellsDetail} title="shellsDetail"
+                                       hideNavBar/>
+                                <Scene key="DetailInfo" component={DetailInfo} title="DetailInfo"
+                                       hideNavBar/>
                             </Scene>
-
                         </Scene>
                         <Scene key="error" component={Error}/>
                     </Scene>

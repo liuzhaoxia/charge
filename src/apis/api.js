@@ -14,6 +14,11 @@ const api = {
         `${appConfig.serviceRoot}Charge/charge/app/visitorQuery`,
         fetchMethod.Get,
         {parameter: parameter}
+    ),
+    getDetailByPid: (parameter)=> createFetch(
+        `${appConfig.serviceRoot}app/listAll`,
+        fetchMethod.Get,
+        {parameter: parameter}
     )
 };
 
