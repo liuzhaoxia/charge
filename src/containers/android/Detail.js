@@ -30,21 +30,21 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     avatarimage: {
-        width: 40,
-        height: 30,
+        width: 24,
+        height: 24,
         alignSelf: 'center',
-        borderRadius:126
+        marginTop:3
     },
     logoImage:{
         width: 80,
         height: 80,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        marginTop:5,
+        marginLeft:5
     },
     nameTitle:{
-        margin:5,
         fontSize: 15,
-        color: '#FFFFFF',
-        alignSelf: 'center'
+        color: '#FFFFFF'
     },
     content: {
         flexDirection:'row',
@@ -92,7 +92,7 @@ class Detail extends React.Component {
                     <View>
                         <TouchableHighlight underlayColor='transparent'
                                             onPress={this.backShells}>
-                        <Image source={require('../../image/back.jpg')} style={styles.avatarimage}/>
+                        <Image source={require('../../image/back.png')} style={styles.avatarimage}/>
                         </TouchableHighlight>
                     </View>
                     <View style={{width:300}}>
@@ -106,17 +106,16 @@ class Detail extends React.Component {
                                             onPress={this.openViewPage}>
                                  <Image source={{uri:data.plotPic[0]}} style={styles.logoImage}/>
                         </TouchableHighlight>
-                        <View style={{backgroundColor:'#000000',width:20,height:20,marginTop:-20,marginLeft:10,}}>
-                            <Text style={{color:'#FFFFFF',padding:2}}>{data.plotPic.length}</Text>
+                        <View style={{backgroundColor:'#000000',width:20,height:20,marginTop:-20,marginLeft:60,}}>
+                            <Text style={{color:'#FFFFFF',marginLeft:5}}>{data.plotPic.length}</Text>
                         </View>
-
                     </View>
-                    <View style={{width:200}}>
+                    <View style={{width:240,marginLeft:5}}>
                         <Text style={styles.nameTitle}>{data.name}</Text>
-                        <Image style={{marginLeft:10}} source={data.carBrand==='3'?require('../../image/bmw.png'):require('../../image/bmw.png')}></Image>
+                        <Image source={data.carBrand==='3'?require('../../image/bmw.png'):require('../../image/bmw.png')}></Image>
                         <View style={{flexDirection:'row',marginTop:20}}>
-                            <Image style={{marginLeft:10}} source={require('../../image/xposition.png')}></Image>
-                            <Text style={{color:'#FFFFFF',margin:4}}>{data.distance}km</Text>
+                            <Image  source={require('../../image/xposition.png')}></Image>
+                            <Text style={{color:'#FFFFFF',fontSize:13}}>{data.distance}km</Text>
                         </View>
                     </View>
                 </View>
@@ -167,15 +166,18 @@ class Detail extends React.Component {
                         <Image source={data.state===0?require('../../image/charge_avail.png'):require('../../image/charge_unavail.png')}></Image>
                     </View>
                 </View>
-                <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
-                <View style={{flexDirection:'row'}}>
+                {
+                    data.telephone!==''?(<View><View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
+                    <View style={{flexDirection:'row'}}>
                     <View style={{marginTop:3,marginLeft:5}}>
-                        <Image source={require('../../image/tele_icon.png')}></Image>
+                    <Image source={require('../../image/tele_icon.png')}></Image>
                     </View>
                     <View style={{width:280}}>
-                        <Text style={{margin:5,fontSize: 15,fontWeight: 'bold'}}>{data.telephone}</Text>
+                    <Text style={{margin:5,fontSize: 15,fontWeight: 'bold'}}>{data.telephone}</Text>
                     </View>
-                </View>
+                    </View></View>):(<View></View>)
+                }
+
                 <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:3}}></View>
                 <ScrollableTabView
                     renderTabBar={() => <DefaultTabBar tabNames={tabNames}/>}
@@ -186,7 +188,7 @@ class Detail extends React.Component {
                                 return (
                                     <View key={i} style={{flexDirection:'row'}}>
                                         <View>
-                                            <Image source={socker.plugType==='0'?require('../../image/socket_jiaoliudian3kongjiayong.png'):(socker.plugType==='1'?require('../../image/socket_guobiaojiaoliudian7kong.png'):(socker.plugType==='2'?require('../../image/socket_guobiaojiaoliudian9kong.png'):(socker.plugType==='3'?require('../../image/socket_meishijiaoliu5kong.png'):(socker.plugType==='4'?require('../../image/socket_meishizhiliucombo.png'):''))))} style={{width:25,height:25,margin:5}}/>
+                                            <Image source={socker.plugType==='0'?require('../../image/socket_jiaoliudian3kongjiayong.png'):(socker.plugType==='1'?require('../../image/socket_guobiaojiaoliudian7kong.png'):(socker.plugType==='2'?require('../../image/socket_guobiaojiaoliudian9kong.png'):(socker.plugType==='3'?require('../../image/socket_meishijiaoliu5kong.png'):(socker.plugType==='4'?require('../../image/socket_meishizhiliucombo.png'):(socker.plugType==='5'?require('../../image/socket_oushijiaoliu7kong.png'):(socker.plugType==='6'?require('../../image/socket_oshizhiliucombo.png'):(socker.plugType==='7'?require('../../image/socket_rishizhiliuchademo.png'):(socker.plugType==='8'?require('../../image/socket_tesilachachao.png'):(socker.plugType==='9'?require('../../image/socket_qita.png'):'')))))))))} style={{width:25,height:25,margin:5}}/>
                                         </View>
                                         <View style={{width:250,flexDirection:'row'}}>
                                             <Text style={{margin:5}}>{socker.mode==='0'?'慢充':'快充'}{socker.acdc==='0'?'交流':'直流'}  {socker.plugType}</Text>

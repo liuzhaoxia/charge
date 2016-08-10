@@ -23,7 +23,7 @@ const initialState = {
         "distance": 2,//距离
         "payment": ["4"], //支付方式（参数pid时，返回）
         "plotPic": ['https://images.unsplash.com/photo-1441742917377-57f78ee0e582?h=1024','https://images.unsplash.com/photo-1441716844725-09cedc13a4e7?h=1024'],//图片信息（参数pid时，返回）
-        "telephone": "",//电话
+        "telephone": '',//电话
         "servicePro": "0",//服务提供商
         "open24H": 2,//是否24小时开放1为是，2为否（参数pid时，返回）
         "parking_fee": 0,//停车费（参数pid时，返回）
@@ -45,6 +45,7 @@ const detailReducer = handleActions({
     [detailActions.setDetailData]: (state, action) => {
         state = Object.assign({}, state);
         state.detailData = action.payload;
+        //if(state.detailData[0].servicePro)
         return state;
     }
 }, initialState);

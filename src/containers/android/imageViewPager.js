@@ -28,10 +28,10 @@ const styles = StyleSheet.create({
         height:40,
         backgroundColor:'#00BFFF',
     },avatarimage: {
-        width: 40,
-        height: 30,
+        width: 24,
+        height: 24,
         alignSelf: 'center',
-        borderRadius:126
+        marginTop:3
     },textTitle:{
         width:100,
         height:40,
@@ -79,7 +79,7 @@ class imageViewPager extends React.Component{
                     <View>
                         <TouchableHighlight underlayColor='transparent'
                                             onPress={this.backDetail}>
-                            <Image source={require('../../image/back.jpg')} style={styles.avatarimage}/>
+                            <Image source={require('../../image/back.png')} style={styles.avatarimage}/>
                         </TouchableHighlight>
                     </View>
                     <View style={{width:300}}>

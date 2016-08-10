@@ -10,7 +10,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider, connect } from 'react-redux';
 import { Router, Scene, Modal } from 'react-native-router-flux';
 
-import Map from './MapContainer';
+//import Map from './MapContainer';
 import Choose from './../../containers/android/Choose';
 // import ListView from './../../containers/android/ListView';
 // import ImagePicker from './../../containers/android/ImagePicker';
@@ -37,7 +37,7 @@ class App extends React.Component {
                     <Scene key="modal" component={Modal}>
                         <Scene key="root" hideNavBar hideTabBar>
                             <Scene key="mainModule" direction="vertical" initial={true}>
-                                <Scene key="map" component={Map} title="Map"
+                                <Scene key="map" component={shellsDetail} title="Map"
                                        hideNavBar/>
                                 <Scene key="shellsDetail" component={shellsDetail} title="shellsDetail"
                                        hideNavBar/>
