@@ -13,7 +13,7 @@ import DefaultTabBar from './DefaultTabBar'
 import detailActions  from '../../actions/detailActions'
 import { Actions } from "react-native-router-flux";
 
-import imageViewPager from './imageViewPager'
+// import imageViewPager from './imageViewPager'
 const styles = StyleSheet.create({
     container: {
         flexDirection:'row',

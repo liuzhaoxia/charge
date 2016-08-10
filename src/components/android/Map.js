@@ -1,4 +1,3 @@
-
 /**
  * Created by liwanchong on 2016/8/2.
  */
@@ -12,9 +11,10 @@ import {
     ScrollView
 } from 'react-native';
 import Mapbox, {MapView} from 'react-native-mapbox-gl';
-
-import appConfig from '../../constants/appConfig'
-import  helper from '../../utils/helper'
+import { Actions } from "react-native-router-flux";
+import appConfig from '../../constants/appConfig';
+import  helper from '../../utils/helper';
+import shellsDetail from '../../containers/android/shellsDetail';
 const accessToken = appConfig.mapBoxToken;
 Mapbox.setAccessToken(accessToken);
 
@@ -75,17 +75,24 @@ class Map extends Component {
         };
         helper.bindMethod(this);
     }
-    componentDidMount(){
 
-        this.props.setVisitorData({"originLat":40.018928097309,"originLng":116.48599579179,"latitude":40.018869147739,"longitude":116.48619658964,"radius":5000});
+    componentDidMount() {
+
+        this.props.setVisitorData({
+            "originLat": 40.018928097309,
+            "originLng": 116.48599579179,
+            "latitude": 40.018869147739,
+            "longitude": 116.48619658964,
+            "radius": 5000
+        });
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps) {
         let showMarkerArr = [];
-        nextProps.visitorData.map(item=>{
+        nextProps.visitorData.map(item=> {
             showMarkerArr.push({
-                coordinates:[item["location"]["latitude"],item["location"]["longitude"]],
-                id:item.pid.toString(),
+                coordinates: [item["location"]["latitude"], item["location"]["longitude"]],
+                id: item.pid.toString(),
                 title: 'Important!',
                 type: 'point',
                 annotationImage: {
@@ -96,17 +103,19 @@ class Map extends Component {
             })
         })
         console.log(showMarkerArr.length);
-         this.setState({
-             annotations:[...this.state.annotations,...showMarkerArr]
-         })
+        this.setState({
+            annotations: [...this.state.annotations, ...showMarkerArr]
+        })
     }
+
     onRegionDidChange = (location) => {
         this.props.setVisitorData({
-            "originLat":location.latitude,
-            "originLng":location.longitude,
-            "latitude":location.latitude,
-            "longitude":location.longitude,
-            "radius":500});
+            "originLat": location.latitude,
+            "originLng": location.longitude,
+            "latitude": location.latitude,
+            "longitude": location.longitude,
+            "radius": 500
+        });
         this.setState({currentZoom: location.zoomLevel});
         console.log('onRegionDidChange', location);
     };
@@ -227,6 +236,7 @@ class Map extends Component {
                     onLongPress={this.onLongPress}
                     onTap={this.onTap}
                 />
+                {shellsDetail}
 
             </View>
         );

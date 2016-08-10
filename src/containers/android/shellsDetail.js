@@ -84,14 +84,14 @@ const styles = StyleSheet.create({
         textAlign:'center',
     },
 });
-class shellsDetail extends React.Component {
+class shellsDetail extends Component {
 // 初始化模拟数据
     constructor(props) {
         super(props);
 
         this.state = {
             detailData:this.props.detailData,
-            show:false
+            show:true
         };
         this._setModalVisible=this._setModalVisible.bind(this);
         this.toDetailContainer=this.toDetailContainer.bind(this);
@@ -100,9 +100,8 @@ class shellsDetail extends React.Component {
 
 
     _setModalVisible() {
-        let isShow = this.state.show;
         this.setState({
-            show:!isShow,
+            show:!this.state.show,
         });
     }
     toDetailContainer(){
@@ -122,7 +121,6 @@ class shellsDetail extends React.Component {
         let data=this.state.detailData[0];
         return (
             <View style={{flex:1}}>
-                <Text onPress={() => this._setModalVisible()}>点击弹框</Text>
                 <Modal
                     animationType='slide'
                     transparent={true}
@@ -139,7 +137,7 @@ class shellsDetail extends React.Component {
                                     <Text style={styles.nameTitle}>{data.name}</Text>
                                 </View>
                                 <View>
-                                    <Image source={data.carBrand==='3'?require('../../image/bmw.png'):require('../../image/bmw.png')}></Image>
+                                    <Image source={data.carBrand==='3'?require('../../image/bmw.png'):require('../../image/bmw.png')}/>
                                 </View>
                             </View>
                             <View style={{flexDirection:'row'}}>
@@ -149,7 +147,7 @@ class shellsDetail extends React.Component {
                             </View>
                             <View style={{flexDirection:'row'}}>
                                 <View style={{marginLeft:30,marginTop:5}}>
-                                    <Image source={data.state===0?require('../../image/charge_avail.png'):require('../../image/charge_unavail.png')}></Image>
+                                    <Image source={data.state===0?require('../../image/charge_avail.png'):require('../../image/charge_unavail.png')}/>
                                 </View>
                                 <View >
                                     <Text style={{width:200}}>慢充</Text>
@@ -160,7 +158,7 @@ class shellsDetail extends React.Component {
                             </View>
                             <View style={{flexDirection:'row'}}>
                                 <View style={{marginLeft:30,marginTop:5}}>
-                                    <Image source={data.state===0?require('../../image/text_paytype.png'):require('../../image/charge_unavail.png')}></Image>
+                                    <Image source={data.state===0?require('../../image/text_paytype.png'):require('../../image/charge_unavail.png')}/>
                                 </View>
                                 <View>
                                     <Text>{data.payment}</Text>
@@ -195,7 +193,8 @@ class shellsDetail extends React.Component {
 }
 function mapStateToProps(state) {
     return {
-        detailData:state.detailReducer.detailData
+        detailData:state.detailReducer.detailData,
+        showOrHide:state.mapReducer.showOrHide,
     }
 }
 
