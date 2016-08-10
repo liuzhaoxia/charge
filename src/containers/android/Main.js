@@ -7,7 +7,7 @@ import {View, Text, StyleSheet,TextInput,Image,TouchableHighlight,DrawerLayoutAn
 import { connect } from 'react-redux'
 import  {bindActionCreators} from 'redux'
 import Button from "react-native-button";
-import Map from './../../components/android/map';
+import Map from './MapContainer';
 import LeftMenu from './LeftMenu';
 
 const styles = StyleSheet.create({
