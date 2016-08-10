@@ -10,8 +10,8 @@ const api = {
         fetchMethod.Get,
         {parameter: parameter}
     ),
-    allList: (parameter)=> createFetch(
-        `${appConfig.serviceRoot}app/listAll`,
+    getVisitorData: (parameter)=> createFetch(
+        `${appConfig.serviceRoot}Charge/charge/app/visitorQuery`,
         fetchMethod.Get,
         {parameter: parameter}
     )
