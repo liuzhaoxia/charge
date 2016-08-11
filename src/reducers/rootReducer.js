@@ -4,13 +4,13 @@
 
 import { combineReducers } from 'redux';
 import LoginReducer from './loginReducer';
-// import listViewReducer from './listViewReducer';
-// import articleInfoReducer from './articleInfoReducer'
-// ... other reducers
+import mapReducer from './mapReducer';
+import detailReducer from './detailReducer';
 
 const RootReducer = combineReducers({
   LoginReducer,
-  // ... other reducers
+  mapReducer,
+  detailReducer,
 });
 
 export default RootReducer;
