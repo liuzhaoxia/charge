@@ -74,7 +74,7 @@ class Detail extends React.Component {
     }
 
     backShells(){
-        Actions.shellsDetail();
+        Actions.main();
     }
 
     render(){
@@ -93,7 +93,7 @@ class Detail extends React.Component {
                         <Text style={styles.textTitle}>详情</Text>
                     </View>
                 </View>
-                <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
+                <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}/>
                 <View style={{flexDirection:'row',backgroundColor:'#00BFFF'}}>
                     <View>
                         <TouchableHighlight underlayColor='transparent'
@@ -103,70 +103,70 @@ class Detail extends React.Component {
                     </View>
                     <View style={{width:200}}>
                         <Text style={styles.nameTitle}>{data.name}</Text>
-                        <Image style={{marginLeft:10}} source={data.carBrand==='3'?require('../../image/bmw.png'):require('../../image/bmw.png')}></Image>
+                        <Image style={{marginLeft:10}} source={data.carBrand==='3'?require('../../image/bmw.png'):require('../../image/bmw.png')}/>
                         <View style={{flexDirection:'row',marginTop:20}}>
-                            <Image style={{marginLeft:10}} source={require('../../image/xposition.png')}></Image>
+                            <Image style={{marginLeft:10}} source={require('../../image/xposition.png')}/>
                             <Text style={{color:'#FFFFFF',margin:4}}>{data.distance}km</Text>
                         </View>
                     </View>
                 </View>
                 <View style={{flexDirection:'row',height:40,padding:4}}>
                     <View>
-                        <Image source={require('../../image/position.png')}></Image>
+                        <Image source={require('../../image/position.png')}/>
                     </View>
                     <View style={{width:275}}>
                         <Text style={{margin:5,fontSize: 14}}>{data.address}</Text>
                     </View>
-                    <View style={{borderLeftColor:'#e5e5e5',borderLeftWidth:1,height:25,marginTop:2,marginBottom:2}}></View>
+                    <View style={{borderLeftColor:'#e5e5e5',borderLeftWidth:1,height:25,marginTop:2,marginBottom:2}}/>
                     <View >
                         <Text style={{margin:5,color:'#00BFFF'}}>前往</Text>
                     </View>
                 </View>
                 <View style={{flexDirection:'row'}}>
                     <View>
-                        <Image source={require('../../image/positionMap.jpg')} style={{flex:1}}></Image>
+                        <Image source={require('../../image/positionMap.jpg')} style={{flex:1}}/>
                     </View>
                 </View>
                 <View style={{flexDirection:'row',marginLeft:10}}>
                     <View style={{flexDirection:'row',width:90,height:30,marginTop:10}}>
-                        <Image source={require('../../image/detail_icon_ok.png')}></Image>
+                        <Image source={require('../../image/detail_icon_ok.png')}/>
                         <Text>可充电</Text>
                     </View>
                     <View style={{flexDirection:'row',width:90,height:30,marginTop:10}}>
-                        <Image source={require('../../image/detail_icon_ok.png')}></Image>
+                        <Image source={require('../../image/detail_icon_ok.png')}/>
                         <Text>可停车</Text>
                     </View>
                     <View style={{flexDirection:'row',width:90,height:30,marginTop:10}}>
-                        <Image source={require('../../image/detail_icon_no.png')} ></Image>
+                        <Image source={require('../../image/detail_icon_no.png')} />
                         <Text>可预约</Text>
                     </View>
                     <View style={{flexDirection:'row',width:90,height:30,marginTop:10}}>
-                        <Image source={data.open24H===1?require('../../image/detail_icon_ok.png'):require('../../image/detail_icon_no.png')} ></Image>
+                        <Image source={data.open24H===1?require('../../image/detail_icon_ok.png'):require('../../image/detail_icon_no.png')} />
                         <Text>24小时</Text>
                     </View>
                 </View>
-                <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:3}}></View>
+                <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:3}}/>
                 <View style={{flexDirection:'row'}}>
                     <View style={{marginTop:3,marginLeft:5}}>
-                        <Image source={require('../../image/socket_icon.png')}></Image>
+                        <Image source={require('../../image/socket_icon.png')}/>
                     </View>
                     <View style={{width:280}}>
                         <Text style={{margin:5,fontSize: 15,fontWeight: 'bold'}}>慢充2</Text>
                     </View>
                     <View style={{flex:1,marginTop:10}}>
-                        <Image source={data.state===0?require('../../image/charge_avail.png'):require('../../image/charge_unavail.png')}></Image>
+                        <Image source={data.state===0?require('../../image/charge_avail.png'):require('../../image/charge_unavail.png')}/>
                     </View>
                 </View>
-                <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
+                <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}/>
                 <View style={{flexDirection:'row'}}>
                     <View style={{marginTop:3,marginLeft:5}}>
-                        <Image source={require('../../image/tele_icon.png')}></Image>
+                        <Image source={require('../../image/tele_icon.png')}/>
                     </View>
                     <View style={{width:280}}>
                         <Text style={{margin:5,fontSize: 15,fontWeight: 'bold'}}>{data.telephone}</Text>
                     </View>
                 </View>
-                <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:3}}></View>
+                <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:3}}/>
                 <ScrollableTabView
                     renderTabBar={() => <DefaultTabBar tabNames={tabNames}/>}
                     tabBarPosition='top'>
@@ -201,7 +201,7 @@ class Detail extends React.Component {
                                 <Text style={{margin:5}}>{data.parking_fee}</Text>
                             </View>
                         </View>
-                        <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
+                        <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}/>
                         <View style={styles.content}>
                             <View style={{width:100}}>
                                 <Text style={{margin:5}}>支付方式</Text>
@@ -210,7 +210,7 @@ class Detail extends React.Component {
                                 <Text style={{margin:5}}>{data.payment}</Text>
                             </View>
                         </View>
-                        <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
+                        <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}/>
                         <View style={styles.content}>
                             <View style={{width:100}}>
                                 <Text style={{margin:5}}>服务厂商</Text>

@@ -5,30 +5,29 @@ import React, { Component } from 'react';
 import {  View,
     Text,
     Image,
-    Modal,
     Navigator,
     TextInput,
     ScrollView,
     StyleSheet,
     Dimensions,
     TouchableHighlight} from "react-native";
-import Button from "react-native-button";
+import Modal from "react-native-modalbox";
 import { connect } from 'react-redux';
 import  {bindActionCreators} from 'redux';
 import detailActions  from '../../actions/detailActions'
 import { Actions } from "react-native-router-flux";
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        backgroundColor: '#ECECF0',
+    wrapper: {
+        flex: 1
     },
     // modal的样式
     modalStyle: {
-        // backgroundColor:'#ccc',
-        alignItems: 'flex-end',
-        justifyContent:'flex-end',
-        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    modalHeight:{
+        height:200
     },
     // modal上子View的样式
     subView:{
@@ -84,17 +83,18 @@ const styles = StyleSheet.create({
         textAlign:'center',
     },
 });
-class shellsDetail extends Component {
+class ShellsDetail extends Component {
 // 初始化模拟数据
     constructor(props) {
         super(props);
 
         this.state = {
             detailData:this.props.detailData,
-            show:true
+            show:this.props.showOrHide
         };
         this._setModalVisible=this._setModalVisible.bind(this);
         this.toDetailContainer=this.toDetailContainer.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
 
@@ -110,24 +110,25 @@ class shellsDetail extends Component {
         });
         Actions.DetailInfo();
     }
-
     componentWillReceiveProps(nextProps) {
         this.setState({
-            detailData:nextProps.detailData
+            show:nextProps.showOrHide,
+            detailData:nextProps.singeData
         });
     }
-
+    closeModal(){
+        this.setState({show: false});
+    }
     render(){
         let data=this.state.detailData[0];
         return (
-            <View style={{flex:1}}>
                 <Modal
-                    animationType='slide'
-                    transparent={true}
-                    visible={this.state.show}
-                    onShow={() => {}}
-                    onRequestClose={() => {}} >
-                    <View style={styles.modalStyle}>
+                    position={"bottom"}
+                    isOpen={this.state.show}
+                    style={[styles.modalStyle,styles.modalHeight]}
+                    onClosed={this.closeModal}
+                    backdrop={false}
+                    swipeArea={20}>
                         <View style={styles.subView}>
                             <View style={{flexDirection:'row',marginTop:5}}>
                                 <View>
@@ -184,16 +185,14 @@ class shellsDetail extends Component {
                                 </TouchableHighlight>
                             </View>
                         </View>
-                    </View>
                 </Modal>
-            </View>
-
         )
     }
 }
 function mapStateToProps(state) {
     return {
         detailData:state.detailReducer.detailData,
+        singeData:state.mapReducer.singeData,
         showOrHide:state.mapReducer.showOrHide,
     }
 }
@@ -205,4 +204,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(shellsDetail)
+)(ShellsDetail)

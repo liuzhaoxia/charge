@@ -14,7 +14,6 @@ import Mapbox, {MapView} from 'react-native-mapbox-gl';
 import { Actions } from "react-native-router-flux";
 import appConfig from '../../constants/appConfig';
 import  helper from '../../utils/helper';
-import shellsDetail from '../../containers/android/shellsDetail';
 const accessToken = appConfig.mapBoxToken;
 Mapbox.setAccessToken(accessToken);
 
@@ -31,7 +30,7 @@ class Map extends Component {
             zoom: 11,
             userTrackingMode: Mapbox.userTrackingMode.none,
             annotations: [{
-                coordinates: [40.72052634, -73.97686958312988],
+                coordinates: [39.9, 116.3],
                 type: 'point',
                 title: 'This is marker 1',
                 subtitle: 'It has a rightCalloutAccessory too',
@@ -47,7 +46,7 @@ class Map extends Component {
                 },
                 id: 'marker1'
             }, {
-                coordinates: [40.714541341726175, -74.00579452514648],
+                coordinates: [39.9, 116.3],
                 type: 'point',
                 title: 'Important!',
                 subtitle: 'Neat, this is a custom annotation image',
@@ -102,7 +101,6 @@ class Map extends Component {
                 },
             })
         })
-        console.log(showMarkerArr.length);
         this.setState({
             annotations: [...this.state.annotations, ...showMarkerArr]
         })
@@ -188,7 +186,7 @@ class Map extends Component {
                     return annotation;
                 }
                 return {
-                    coordinates: [40.714541341726175, -74.00579452514648],
+                    coordinates: [39.9, 116.3],
                     'type': 'point',
                     title: 'New Title!',
                     subtitle: 'New Subtitle',
@@ -236,7 +234,6 @@ class Map extends Component {
                     onLongPress={this.onLongPress}
                     onTap={this.onTap}
                 />
-                {shellsDetail}
 
             </View>
         );
