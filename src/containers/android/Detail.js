@@ -87,7 +87,7 @@ class Detail extends React.Component {
     }
 
     handleClick() {
-        SendIntentAndroid.openCalendar();
+        SendIntentAndroid.sendPhoneDial('+55 48 9999-9999');
     }
 
     render(){
