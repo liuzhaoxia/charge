@@ -1,8 +1,8 @@
 /**
  * Created by wangtun on 2016/7/21.
  */
-const loginActionEnum = {
-    LOGIN_REQUEST: 'LOGIN_REQUEST'
+const LoginActionEnum = {
+  SET_USER: 'SET_USER',
 };
 
-export default loginActionEnum;
+export default LoginActionEnum;

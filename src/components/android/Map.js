@@ -11,6 +11,7 @@ import {
     View,
     ScrollView
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import appConfig from '../../constants/appConfig'
 import  helper from '../../utils/helper'
 const accessToken = appConfig.mapBoxToken;
@@ -195,7 +196,9 @@ class Map extends Component {
                     onLongPress={this.onLongPress}
                     onTap={this.onTap}
                 />
-
+                <Text onPress={Actions.login}>
+                    登陆
+                </Text>
             </View>
         );
     }
