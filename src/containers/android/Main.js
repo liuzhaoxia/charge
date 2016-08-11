@@ -9,6 +9,7 @@ import  {bindActionCreators} from 'redux'
 import Button from "react-native-button";
 import Map from './MapContainer';
 import LeftMenu from './LeftMenu';
+import { Actions } from "react-native-router-flux";
 
 const styles = StyleSheet.create({
     container: {
@@ -64,6 +65,8 @@ class Main extends Component {
 
     search() {
         console.log("search");
+
+        Actions.shellsDetail();
     }
 
 
@@ -89,7 +92,7 @@ class Main extends Component {
                         <Button style={styles.search} onPress={this.search} >搜索</Button>
                     </View>
                     <View style={styles.map}>
-                        <Map></Map>
+
                     </View>
 
                 </View>

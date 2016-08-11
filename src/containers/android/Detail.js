@@ -3,7 +3,8 @@
  */
 //搜索结果详情
 import React, { Component } from 'react';
-import {View, Text,TextInput ,TouchableHighlight,StyleSheet,Image,ScrollView} from "react-native";
+import {View, Text,TextInput ,IntentAndroid,TouchableNativeFeedback,
+    TouchableHighlight,StyleSheet,Image,ScrollView} from "react-native";
 import Button from "react-native-button";
 import { connect } from 'react-redux';
 import  {bindActionCreators} from 'redux';
@@ -12,7 +13,7 @@ import ScrollableTabView  from 'react-native-scrollable-tab-view';
 import DefaultTabBar from './DefaultTabBar'
 import detailActions  from '../../actions/detailActions'
 import { Actions } from "react-native-router-flux";
-
+import SendIntentAndroid from 'react-native-send-intent';
 import imageViewPager from './imageViewPager'
 const styles = StyleSheet.create({
     container: {
@@ -40,7 +41,8 @@ const styles = StyleSheet.create({
         height: 80,
         alignSelf: 'center',
         marginTop:5,
-        marginLeft:5
+        marginLeft:5,
+        marginBottom:5,
     },
     nameTitle:{
         fontSize: 15,
@@ -67,6 +69,7 @@ class Detail extends React.Component {
         this.backShells=this.backShells.bind(this);
 
         this.openViewPage=this.openViewPage.bind(this);
+        this.handleClick=this.handleClick.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -81,6 +84,10 @@ class Detail extends React.Component {
 
     openViewPage(){
         Actions.imageViewPage();
+    }
+
+    handleClick() {
+        SendIntentAndroid.openCalendar();
     }
 
     render(){
@@ -100,19 +107,25 @@ class Detail extends React.Component {
                     </View>
                 </View>
                 <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
-                <View style={{flexDirection:'row',backgroundColor:'#00BFFF'}}>
+                <View style={{flexDirection:'row',backgroundColor:'#00BFFF',height:90}}>
                     <View>
                         <TouchableHighlight underlayColor='transparent'
                                             onPress={this.openViewPage}>
                                  <Image source={{uri:data.plotPic[0]}} style={styles.logoImage}/>
                         </TouchableHighlight>
-                        <View style={{backgroundColor:'#000000',width:20,height:20,marginTop:-20,marginLeft:60,}}>
+                        <View style={{backgroundColor:'#000000',width:20,height:20,marginTop:-25,marginLeft:60,}}>
                             <Text style={{color:'#FFFFFF',marginLeft:5}}>{data.plotPic.length}</Text>
                         </View>
                     </View>
                     <View style={{width:240,marginLeft:5}}>
                         <Text style={styles.nameTitle}>{data.name}</Text>
-                        <Image source={data.carBrand==='3'?require('../../image/bmw.png'):require('../../image/bmw.png')}></Image>
+                        {
+                            data.carBrand.map((car,i)=>{
+                                car===''?'':(<View style={{flexDirection:'row'}}>
+                                    <Image source={car==='1'?require('../../image/bmw.png'):require('../../image/tesla.png')}></Image>
+                                </View>)
+                            })
+                        }
                         <View style={{flexDirection:'row',marginTop:20}}>
                             <Image  source={require('../../image/xposition.png')}></Image>
                             <Text style={{color:'#FFFFFF',fontSize:13}}>{data.distance}km</Text>
@@ -128,7 +141,13 @@ class Detail extends React.Component {
                     </View>
                     <View style={{borderLeftColor:'#e5e5e5',borderLeftWidth:1,height:25,marginTop:2,marginBottom:2}}></View>
                     <View >
-                        <Text style={{margin:5,color:'#00BFFF'}}>前往</Text>
+                        <TouchableNativeFeedback
+                            onPress={this.handleClick}>
+                            <View>
+                                <Text style={{margin:5,color:'#00BFFF'}}>前往</Text>
+                            </View>
+                        </TouchableNativeFeedback>
+
                     </View>
                 </View>
                 <View style={{flexDirection:'row'}}>
@@ -190,7 +209,7 @@ class Detail extends React.Component {
                                         <View>
                                             <Image source={socker.plugType==='0'?require('../../image/socket_jiaoliudian3kongjiayong.png'):(socker.plugType==='1'?require('../../image/socket_guobiaojiaoliudian7kong.png'):(socker.plugType==='2'?require('../../image/socket_guobiaojiaoliudian9kong.png'):(socker.plugType==='3'?require('../../image/socket_meishijiaoliu5kong.png'):(socker.plugType==='4'?require('../../image/socket_meishizhiliucombo.png'):(socker.plugType==='5'?require('../../image/socket_oushijiaoliu7kong.png'):(socker.plugType==='6'?require('../../image/socket_oshizhiliucombo.png'):(socker.plugType==='7'?require('../../image/socket_rishizhiliuchademo.png'):(socker.plugType==='8'?require('../../image/socket_tesilachachao.png'):(socker.plugType==='9'?require('../../image/socket_qita.png'):'')))))))))} style={{width:25,height:25,margin:5}}/>
                                         </View>
-                                        <View style={{width:250,flexDirection:'row'}}>
+                                        <View style={{width:250,flexDirection:'row',height:40,padding:5}}>
                                             <Text style={{margin:5}}>{socker.mode==='0'?'慢充':'快充'}{socker.acdc==='0'?'交流':'直流'}  {socker.plugType}</Text>
                                         </View>
                                         <View style={{flexDirection:'row'}}>
@@ -205,32 +224,72 @@ class Detail extends React.Component {
                     </View>
                     <View style={{flex:1}} tabLabel='key2'>
                         <ScrollView>
+                            {
+                                data.charge_fee===''?(<View></View>):(
+                                    <View>
+                                    <View style={styles.content}>
+                                    <View style={{width:100}}>
+                                        <Text style={{margin:5}}>计费方式</Text>
+                                    </View>
+                                    <View >
+                                        <Text style={{margin:5}}>{data.charge_fee}</Text>
+                                    </View>
+                                </View>
+                                        <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
+                                    </View>
+                                        )
+                            }
+
                         <View style={styles.content}>
                             <View style={{width:100}}>
-                                <Text style={{margin:5}}>计费方式</Text>
+                                <Text style={{margin:5}}>停车计费</Text>
                             </View>
                             <View >
-                                <Text style={{margin:5}}>{data.parking_fee}</Text>
+                                <Text style={{margin:5}}>{data.parking_fee===1?'付费':'免费'}</Text>
                             </View>
                         </View>
-                        <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
-                        <View style={styles.content}>
-                            <View style={{width:100}}>
-                                <Text style={{margin:5}}>支付方式</Text>
-                            </View>
-                            <View >
-                                <Text style={{margin:5}}>{data.payment}</Text>
-                            </View>
-                        </View>
-                        <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
-                        <View style={styles.content}>
-                            <View style={{width:100}}>
-                                <Text style={{margin:5}}>服务厂商</Text>
-                            </View>
-                            <View >
-                                <Text style={{margin:5}}>{data.servicePro}</Text>
-                            </View>
-                        </View>
+                            {
+                                data.openHour===''?(<View></View>):(
+                                    <View>
+                                        <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
+                                    <View style={styles.content}>
+                                    <View style={{width:100}}>
+                                        <Text style={{margin:5}}>营业时间</Text>
+                                    </View>
+                                    <View >
+                                        <Text style={{margin:5}}>{data.openHour}</Text>
+                                    </View>
+                                </View>
+                                    </View>
+                                        )
+                            }
+                            {
+                                data.payment.length===0?(<View></View>):(<View>
+                                    <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
+                                    <View style={styles.content}>
+                                        <View style={{width:100}}>
+                                            <Text style={{margin:5}}>支付方式</Text>
+                                        </View>
+                                        <View >
+                                            <Text style={{margin:5}}>{data.payment}</Text>
+                                        </View>
+                                    </View>
+                                </View>)
+                            }
+                            {
+                                data.servicePro.length===0?(<View></View>):(<View>
+                                    <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
+                                    <View style={styles.content}>
+                                        <View style={{width:100}}>
+                                            <Text style={{margin:5}}>服务厂商</Text>
+                                        </View>
+                                        <View >
+                                            <Text style={{margin:5}}>{data.servicePro}</Text>
+                                        </View>
+                                    </View>
+                                </View>)
+                            }
+
                             </ScrollView>
                     </View>
                 </ScrollableTabView>

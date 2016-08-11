@@ -47,7 +47,6 @@ class App extends React.Component {
                                 <Scene key="imageViewPage" component={imageViewPage} title="imageViewPage"
                                        hideNavBar/>
                             </Scene>
-
                             <Scene direction="horizontal" key="About" component={About} schema="modal" title="About"
                                    hideNavBar/>
 
