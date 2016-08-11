@@ -2,7 +2,7 @@
  * Created by wangtun on 2016/7/21.
  */
 import { createAction } from 'redux-actions';
-import loginActionEnum from '../constants/loginActionEnum'
+import loginActionEnum from '../constants/actionEnum'
 //import { api, callApi } from '../apis/api'
 import { Actions } from "react-native-router-flux";
 const loginActions = {

@@ -8,17 +8,19 @@ import {
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider, connect } from 'react-redux';
-import { Router, Scene, Modal } from 'react-native-router-flux';
-import map from './../../components/android/map';
+import { Router, Scene, Modal,ActionConst } from 'react-native-router-flux';
 import Choose from './../../containers/android/Choose';
-// import ListView from './../../containers/android/ListView';
-// import ImagePicker from './../../containers/android/ImagePicker';
-// import main from './../../components/android/Main';
+import Main from './../../containers/android/Main';
+import About from './../../containers/android/About';
 import routeReducerCreator from './../../reducers/routeReducerCreator';
 // import helper from './../../utils/helper'
  import store from './../../store/store';
 // import ArticleInfo from './../../containers/android/MessInfo'
+import DetailInfo from '../../containers/android/Detail'
 
+import shellsDetail from '../../containers/android/shellsDetail'
+
+import test from '../../containers/android/test'
 
 class App extends React.Component {
     constructor(props) {
@@ -31,10 +33,18 @@ class App extends React.Component {
                 <Router createReducer={routeReducerCreator}>
                     <Scene key="modal" component={Modal}>
                         <Scene key="root" hideNavBar hideTabBar>
-                            <Scene key="mainModule" direction="vertical" initial={true} title="Map">
-                                <Scene key="map" component={map}
+                            <Scene key="mainModule"  direction="horizontal" initial={true}>
+                                <Scene key="main" component={Main} title="main"
                                        hideNavBar/>
+                                <Scene key="shellsDetail" component={shellsDetail} title="shellsDetail"
+                                hideNavBar/>
+                                <Scene key="DetailInfo" component={DetailInfo} title="DetailInfo"
+                                hideNavBar/>
                             </Scene>
+
+                            <Scene direction="horizontal" key="About" component={About} schema="modal" title="About"
+                                   hideNavBar/>
+
 
                         </Scene>
                         <Scene key="error" component={Error}/>
