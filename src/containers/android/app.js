@@ -20,7 +20,6 @@ import DetailInfo from '../../containers/android/Detail'
 
 import shellsDetail from '../../containers/android/shellsDetail'
 
-import test from '../../containers/android/test'
 
 class App extends React.Component {
     constructor(props) {
@@ -40,6 +39,8 @@ class App extends React.Component {
                                 hideNavBar/>
                                 <Scene key="DetailInfo" component={DetailInfo} title="DetailInfo"
                                 hideNavBar/>
+                                <Scene key="Choose" component={Choose} title="Choose"
+                                       hideNavBar/>
                             </Scene>
 
                             <Scene direction="horizontal" key="About" component={About} schema="modal" title="About"
