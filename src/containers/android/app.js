@@ -17,6 +17,7 @@ import Login from '../../containers/android/Login';
 import Start from '../../containers/android/Start';
 import DetailInfo from '../../containers/android/Detail';
 import shellsDetail from '../../containers/android/shellsDetail';
+import Choose from '../../containers/android/Choose';
 import About from './../../containers/android/About';
 
 class App extends React.Component {
@@ -42,6 +43,7 @@ class App extends React.Component {
                   title="DetailInfo"
                   hideNavBar
                 />
+                <Scene key="Choose" component={Choose} title="Choose" hideNavBar />
               </Scene>
               <Scene
                 direction="horizontal"
