@@ -1,7 +1,14 @@
 /**
  * Created by liwanchong on 2016/8/2.
  */
-
+import React, { Component } from 'react';
+import {
+  View,
+  Image,
+  Text,
+} from 'react-native';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Provider, connect } from 'react-redux';
 import { Router, Scene, Modal } from 'react-native-router-flux';
 import map from './../../components/android/map';
 import routeReducerCreator from './../../reducers/routeReducerCreator';
