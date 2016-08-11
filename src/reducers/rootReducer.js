@@ -3,16 +3,14 @@
  */
 
 import { combineReducers } from 'redux';
-import loginReducer from './loginReducer';
-import  mapReducer from "./mapReducer"
-// import listViewReducer from './listViewReducer';
-// import articleInfoReducer from './articleInfoReducer'
-import detailReducer from './detailReducer'
-// ... other reducers
+import LoginReducer from './loginReducer';
+import mapReducer from './mapReducer';
+import detailReducer from './detailReducer';
 
-const rootReducer = combineReducers({
-    loginReducer,mapReducer,detailReducer
-
+const RootReducer = combineReducers({
+  LoginReducer,
+  mapReducer,
+  detailReducer,
 });
 
-export default rootReducer;
+export default RootReducer;

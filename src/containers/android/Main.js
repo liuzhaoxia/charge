@@ -3,14 +3,17 @@
  */
 //主页面
 import React,{Component} from 'react';
-import {View, Text, StyleSheet,TextInput,Image,TouchableHighlight,DrawerLayoutAndroid} from "react-native";
+import {View, Text, StyleSheet,TextInput,Image,TouchableHighlight,DrawerLayoutAndroid,TouchableWithoutFeedback} from "react-native";
 import { connect } from 'react-redux'
 import  {bindActionCreators} from 'redux'
 import Button from "react-native-button";
 import Map from './MapContainer';
 import LeftMenu from './LeftMenu';
 import { Actions } from "react-native-router-flux";
+<<<<<<< HEAD
 
+=======
+>>>>>>> charge/master
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -43,6 +46,13 @@ const styles = StyleSheet.create({
     search:{
         color: '#FFFFFF',
         fontSize: 16
+    },
+    image:{
+        width:50,
+        height:50,
+        left:320,
+        top:100
+
     }
 });
 
@@ -57,6 +67,7 @@ class Main extends Component {
         };
 
         this.openDrawer = this.openDrawer.bind(this);
+        this.imagePress = this.imagePress.bind(this);
     }
 
     openDrawer() {
@@ -68,7 +79,9 @@ class Main extends Component {
 
         Actions.shellsDetail();
     }
-
+    imagePress() {
+        Actions.Choose();
+    }
 
     render(){
         var navigationView = (
@@ -92,6 +105,14 @@ class Main extends Component {
                         <Button style={styles.search} onPress={this.search} >搜索</Button>
                     </View>
                     <View style={styles.map}>
+<<<<<<< HEAD
+=======
+                        <Map></Map>
+                        <TouchableWithoutFeedback  onPress={this.imagePress}>
+                            <Image style={styles.image}
+                                   source={require('../../image/custom_icon_normal.png')} />
+                        </TouchableWithoutFeedback  >
+>>>>>>> charge/master
 
                     </View>
 
