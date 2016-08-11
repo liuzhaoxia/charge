@@ -36,7 +36,6 @@ class App extends React.Component {
                 <Router createReducer={routeReducerCreator}>
                     <Scene key="modal" component={Modal}>
                         <Scene key="root" hideNavBar hideTabBar>
-
                             <Scene key="mainModule"  direction="horizontal" initial={true}>
                                 <Scene key="main" component={Main} title="main"
                                        hideNavBar/>

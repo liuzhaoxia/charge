@@ -99,9 +99,11 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: 10,
         color: '#3366FF'
-    },abc: {
-       overflow:'visible'
-    },
+    },testObj:{
+        position:'absolute',
+        left :100,
+        top:100
+    }
 });
 class Choose extends Component {
     constructor(props) {
