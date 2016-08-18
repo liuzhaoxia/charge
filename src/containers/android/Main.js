@@ -110,11 +110,6 @@ class Main extends Component {
 
                             </TouchableHighlight>
                         </View>
-                        <TouchableWithoutFeedback  onPress={this.imagePress}>
-                            <Image style={styles.image}
-                                   source={require('../../image/custom_icon_normal.png')} />
-                        </TouchableWithoutFeedback  >
-
                     </View>
                 </View>
             </DrawerLayoutAndroid>

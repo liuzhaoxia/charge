@@ -219,6 +219,8 @@ class Map extends Component {
                     initialDirection={0}
                     rotateEnabled={true}
                     scrollEnabled={true}
+                    logoIsHidden={true}
+                    attributionButtonIsHidden={true}
                     zoomEnabled={true}
                     showsUserLocation={true}
                     styleURL={Mapbox.mapStyles.streets}
