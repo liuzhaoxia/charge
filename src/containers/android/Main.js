@@ -3,13 +3,14 @@
  */
 //主页面
 import React,{Component} from 'react';
-import {View, Text, StyleSheet,TextInput,Image,TouchableHighlight,DrawerLayoutAndroid} from "react-native";
+import {View, Text, StyleSheet,TextInput,Image,TouchableHighlight,DrawerLayoutAndroid,TouchableWithoutFeedback} from "react-native";
 import { connect } from 'react-redux'
 import  {bindActionCreators} from 'redux'
 import Button from "react-native-button";
 import Map from './MapContainer';
 import LeftMenu from './LeftMenu';
 import ShellsDetail from './ShellsDetail';
+import { Actions } from "react-native-router-flux";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -42,6 +43,11 @@ const styles = StyleSheet.create({
     search:{
         color: '#FFFFFF',
         fontSize: 16
+    },
+    image:{
+        width:50,
+        height:50
+
     }
 });
 
@@ -56,6 +62,7 @@ class Main extends Component {
         };
 
         this.openDrawer = this.openDrawer.bind(this);
+        this.imagePress = this.imagePress.bind(this);
     }
 
     openDrawer() {
@@ -65,7 +72,9 @@ class Main extends Component {
     search() {
         console.log("search");
     }
-
+    imagePress() {
+        Actions.Choose();
+    }
 
     render(){
         var navigationView = (
@@ -89,8 +98,18 @@ class Main extends Component {
                         <Button style={styles.search} onPress={this.search} >搜索</Button>
                     </View>
                     <View style={styles.map}>
-                        <Map></Map>
-                        <ShellsDetail></ShellsDetail>
+                        <Map/>
+                        <ShellsDetail/>
+                        <View style={{flex: 1,top: 60,position:"absolute",right:10}}>
+                            <TouchableHighlight style={{  width: 24, height: 24, justifyContent: 'center', alignItems: 'center'}}
+                                                onPress={this.imagePress}  >
+                                <Image
+                                       source={require('../../image/funnel.png')} />
+
+                            </TouchableHighlight>
+                        </View>
+
+
                     </View>
                 </View>
             </DrawerLayoutAndroid>
