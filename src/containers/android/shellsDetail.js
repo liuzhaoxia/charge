@@ -138,9 +138,6 @@ class ShellsDetail extends Component {
                                     <Text style={styles.nameTitle}>{data.name}</Text>
                                 </View>
                                 <View>
-<<<<<<< HEAD
-                                    <Image source={data.carBrand==='3'?require('../../image/bmw.png'):require('../../image/bmw.png')}/>
-=======
                                     {
                                         data.carBrand.map((car,i)=>{
                                             car===''?'':(<View style={{flexDirection:'row'}}>
@@ -148,7 +145,6 @@ class ShellsDetail extends Component {
                                             </View>)
                                         })
                                     }
->>>>>>> charge/master
                                 </View>
                             </View>
                             <View style={{flexDirection:'row'}}>
@@ -178,7 +174,7 @@ class ShellsDetail extends Component {
                                     }
                                 </View>
                                 <View style={{flexDirection:'row',marginTop:20}}>
-                                    <Image style={{marginTop:5}}  source={require('../../image/xposition.png')}></Image>
+                                    <Image style={{marginTop:5}}  source={require('../../image/xposition.png')}/>
                                     <Text style={{margin:4}}>{data.distance}km</Text>
                                 </View>
                             </View>

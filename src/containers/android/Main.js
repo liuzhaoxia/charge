@@ -11,10 +11,6 @@ import Map from './MapContainer';
 import LeftMenu from './LeftMenu';
 import ShellsDetail from './ShellsDetail';
 import { Actions } from "react-native-router-flux";
-<<<<<<< HEAD
-
-=======
->>>>>>> charge/master
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -104,7 +100,6 @@ class Main extends Component {
                         <Button style={styles.search} onPress={this.search} >搜索</Button>
                     </View>
                     <View style={styles.map}>
-<<<<<<< HEAD
                         <Map/>
                         <ShellsDetail/>
                         <View style={{flex: 1,top: 60,position:"absolute",right:10}}>
@@ -115,17 +110,10 @@ class Main extends Component {
 
                             </TouchableHighlight>
                         </View>
-=======
-<<<<<<< HEAD
-=======
-                        <Map></Map>
                         <TouchableWithoutFeedback  onPress={this.imagePress}>
                             <Image style={styles.image}
                                    source={require('../../image/custom_icon_normal.png')} />
                         </TouchableWithoutFeedback  >
->>>>>>> charge/master
->>>>>>> charge/master
-
 
                     </View>
                 </View>

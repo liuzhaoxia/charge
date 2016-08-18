@@ -13,13 +13,8 @@ import ScrollableTabView  from 'react-native-scrollable-tab-view';
 import DefaultTabBar from './DefaultTabBar'
 import detailActions  from '../../actions/detailActions'
 import { Actions } from "react-native-router-flux";
-<<<<<<< HEAD
-
-// import imageViewPager from './imageViewPager'
-=======
-import SendIntentAndroid from 'react-native-send-intent';
+// import SendIntentAndroid from 'react-native-send-intent';
 import imageViewPager from './imageViewPager'
->>>>>>> charge/master
 const styles = StyleSheet.create({
     container: {
         flexDirection:'row',
@@ -92,7 +87,7 @@ class Detail extends React.Component {
     }
 
     handleClick() {
-        SendIntentAndroid.sendPhoneDial('+55 48 9999-9999');
+        // SendIntentAndroid.sendPhoneDial('+55 48 9999-9999');
     }
 
     render(){
@@ -111,13 +106,8 @@ class Detail extends React.Component {
                         <Text style={styles.textTitle}>详情</Text>
                     </View>
                 </View>
-<<<<<<< HEAD
                 <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}/>
-                <View style={{flexDirection:'row',backgroundColor:'#00BFFF'}}>
-=======
-                <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
                 <View style={{flexDirection:'row',backgroundColor:'#00BFFF',height:90}}>
->>>>>>> charge/master
                     <View>
                         <TouchableHighlight underlayColor='transparent'
                                             onPress={this.openViewPage}>
@@ -129,23 +119,16 @@ class Detail extends React.Component {
                     </View>
                     <View style={{width:240,marginLeft:5}}>
                         <Text style={styles.nameTitle}>{data.name}</Text>
-<<<<<<< HEAD
-                        <Image style={{marginLeft:10}} source={data.carBrand==='3'?require('../../image/bmw.png'):require('../../image/bmw.png')}/>
-                        <View style={{flexDirection:'row',marginTop:20}}>
-                            <Image style={{marginLeft:10}} source={require('../../image/xposition.png')}/>
-                            <Text style={{color:'#FFFFFF',margin:4}}>{data.distance}km</Text>
-=======
                         {
                             data.carBrand.map((car,i)=>{
                                 car===''?'':(<View style={{flexDirection:'row'}}>
-                                    <Image source={car==='1'?require('../../image/bmw.png'):require('../../image/tesla.png')}></Image>
+                                    <Image source={car==='1'?require('../../image/bmw.png'):require('../../image/tesla.png')}/>
                                 </View>)
                             })
                         }
                         <View style={{flexDirection:'row',marginTop:20}}>
-                            <Image  source={require('../../image/xposition.png')}></Image>
+                            <Image  source={require('../../image/xposition.png')}/>
                             <Text style={{color:'#FFFFFF',fontSize:13}}>{data.distance}km</Text>
->>>>>>> charge/master
                         </View>
                     </View>
                 </View>
@@ -202,31 +185,20 @@ class Detail extends React.Component {
                         <Image source={data.state===0?require('../../image/charge_avail.png'):require('../../image/charge_unavail.png')}/>
                     </View>
                 </View>
-<<<<<<< HEAD
-                <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}/>
-                <View style={{flexDirection:'row'}}>
-                    <View style={{marginTop:3,marginLeft:5}}>
-                        <Image source={require('../../image/tele_icon.png')}/>
-=======
+
                 {
                     data.telephone!==''?(<View><View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
                     <View style={{flexDirection:'row'}}>
                     <View style={{marginTop:3,marginLeft:5}}>
-                    <Image source={require('../../image/tele_icon.png')}></Image>
->>>>>>> charge/master
+                    <Image source={require('../../image/tele_icon.png')}/>
                     </View>
                     <View style={{width:280}}>
                     <Text style={{margin:5,fontSize: 15,fontWeight: 'bold'}}>{data.telephone}</Text>
                     </View>
-<<<<<<< HEAD
-                </View>
-                <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:3}}/>
-=======
                     </View></View>):(<View></View>)
                 }
 
-                <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:3}}></View>
->>>>>>> charge/master
+                <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:3}}/>
                 <ScrollableTabView
                     renderTabBar={() => <DefaultTabBar tabNames={tabNames}/>}
                     tabBarPosition='top'>
@@ -271,29 +243,7 @@ class Detail extends React.Component {
 
                         <View style={styles.content}>
                             <View style={{width:100}}>
-<<<<<<< HEAD
-                                <Text style={{margin:5}}>计费方式</Text>
-                            </View>
-                            <View >
-                                <Text style={{margin:5}}>{data.parking_fee}</Text>
-                            </View>
-                        </View>
-                        <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}/>
-                        <View style={styles.content}>
-                            <View style={{width:100}}>
-                                <Text style={{margin:5}}>支付方式</Text>
-                            </View>
-                            <View >
-                                <Text style={{margin:5}}>{data.payment}</Text>
-                            </View>
-                        </View>
-                        <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}/>
-                        <View style={styles.content}>
-                            <View style={{width:100}}>
-                                <Text style={{margin:5}}>服务厂商</Text>
-=======
                                 <Text style={{margin:5}}>停车计费</Text>
->>>>>>> charge/master
                             </View>
                             <View >
                                 <Text style={{margin:5}}>{data.parking_fee===1?'付费':'免费'}</Text>
@@ -302,7 +252,7 @@ class Detail extends React.Component {
                             {
                                 data.openHour===''?(<View></View>):(
                                     <View>
-                                        <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
+                                        <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}/>
                                     <View style={styles.content}>
                                     <View style={{width:100}}>
                                         <Text style={{margin:5}}>营业时间</Text>
@@ -316,7 +266,7 @@ class Detail extends React.Component {
                             }
                             {
                                 data.payment.length===0?(<View></View>):(<View>
-                                    <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
+                                    <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}/>
                                     <View style={styles.content}>
                                         <View style={{width:100}}>
                                             <Text style={{margin:5}}>支付方式</Text>
@@ -329,7 +279,7 @@ class Detail extends React.Component {
                             }
                             {
                                 data.servicePro.length===0?(<View></View>):(<View>
-                                    <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}></View>
+                                    <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}/>
                                     <View style={styles.content}>
                                         <View style={{width:100}}>
                                             <Text style={{margin:5}}>服务厂商</Text>

@@ -2,7 +2,6 @@
  * Created by liwanchong on 2016/8/2.
  */
 import React, {Component} from 'react';
-import Mapbox, {MapView} from 'react-native-mapbox-gl';
 import {
     AppRegistry,
     StyleSheet,
@@ -25,13 +24,13 @@ class Map extends Component {
         // 初始状态
         this.state = {
             center: {
-                latitude: 40.72052634,
-                longitude: -73.97686958312988
+                latitude: 40.008456800067,
+                longitude: 116.47474416608
             },
             zoom: 11,
             userTrackingMode: Mapbox.userTrackingMode.none,
             annotations: [{
-                coordinates: [40.72052634, -73.97686958312988],
+                coordinates: [39.9, 116.3],
                 type: 'point',
                 title: 'This is marker 1',
                 subtitle: 'It has a rightCalloutAccessory too',
@@ -47,7 +46,7 @@ class Map extends Component {
                 },
                 id: 'marker1'
             }, {
-                coordinates: [40.714541341726175, -74.00579452514648],
+                coordinates: [39.9, 116.3],
                 type: 'point',
                 title: 'Important!',
                 subtitle: 'Neat, this is a custom annotation image',
@@ -76,7 +75,6 @@ class Map extends Component {
         helper.bindMethod(this);
     }
 
-<<<<<<< HEAD
     componentDidMount() {
 
         this.props.setVisitorData({
@@ -116,10 +114,6 @@ class Map extends Component {
             "longitude": location.longitude,
             "radius": 500
         });
-=======
-
-    onRegionDidChange = (location) => {
->>>>>>> charge/master
         this.setState({currentZoom: location.zoomLevel});
         console.log('onRegionDidChange', location);
     };
@@ -130,6 +124,7 @@ class Map extends Component {
         console.log('onUpdateUserLocation', location);
     };
     onOpenAnnotation = (annotation) => {
+        this.props.setSingleData({pid: annotation.id});
         console.log('onOpenAnnotation', annotation);
     };
     onRightAnnotationTapped = (e) => {
@@ -191,7 +186,7 @@ class Map extends Component {
                     return annotation;
                 }
                 return {
-                    coordinates: [40.714541341726175, -74.00579452514648],
+                    coordinates: [39.9, 116.3],
                     'type': 'point',
                     title: 'New Title!',
                     subtitle: 'New Subtitle',
@@ -225,8 +220,8 @@ class Map extends Component {
                     rotateEnabled={true}
                     scrollEnabled={true}
                     zoomEnabled={true}
-                    showsUserLocation={false}
-                    styleURL={Mapbox.mapStyles.dark}
+                    showsUserLocation={true}
+                    styleURL={Mapbox.mapStyles.streets}
                     userTrackingMode={this.state.userTrackingMode}
                     annotations={this.state.annotations}
                     annotationsAreImmutable
@@ -239,112 +234,7 @@ class Map extends Component {
                     onLongPress={this.onLongPress}
                     onTap={this.onTap}
                 />
-                <Text onPress={Actions.login}>
-                    登陆
-                </Text>
-            </View>
-        );
-    }
 
-    _renderButtons() {
-        return (
-            <View>
-                <Text onPress={() => this._map && this._map.setDirection(0)}>
-                    Set direction to 0
-                </Text>
-                <Text onPress={() => this._map && this._map.setZoomLevel(6)}>
-                    Zoom out to zoom level 6
-                </Text>
-                <Text onPress={() => this._map && this._map.setCenterCoordinate(48.8589, 2.3447)}>
-                    Go to Paris at current zoom level {parseInt(this.state.currentZoom)}
-                </Text>
-                <Text onPress={() => this._map && this._map.setCenterCoordinateZoomLevel(35.68829, 139.77492, 14)}>
-                    Go to Tokyo at fixed zoom level 14
-                </Text>
-                <Text onPress={() => this._map && this._map.easeTo({ pitch: 30 })}>
-                    Set pitch to 30 degrees
-                </Text>
-                <Text onPress={this.addNewMarkers}>
-                    Add new marker
-                </Text>
-                <Text onPress={this.updateMarker2}>
-                    Update marker2
-                </Text>
-                <Text onPress={() => this._map && this._map.selectAnnotation('marker1')}>
-                    Open marker1 popup
-                </Text>
-                <Text onPress={this.removeMarker2}>
-                    Remove marker2 annotation
-                </Text>
-                <Text onPress={() => this.setState({ annotations: [] })}>
-                    Remove all annotations
-                </Text>
-                <Text
-                    onPress={() => this._map && this._map.setVisibleCoordinateBounds(40.712, -74.227, 40.774, -74.125, 100, 0, 0, 0)}>
-                    Set visible bounds to 40.7, -74.2, 40.7, -74.1
-                </Text>
-                <Text onPress={() => this.setState({ userTrackingMode: Mapbox.userTrackingMode.followWithHeading })}>
-                    Set userTrackingMode to followWithHeading
-                </Text>
-                <Text onPress={() => this._map && this._map.getCenterCoordinateZoomLevel((location)=> {
-            console.log(location);
-          })}>
-                    Get location
-                </Text>
-                <Text onPress={() => this._map && this._map.getDirection((direction)=> {
-            console.log(direction);
-          })}>
-                    Get direction
-                </Text>
-                <Text onPress={() => this._map && this._map.getBounds((bounds)=> {
-            console.log(bounds);
-          })}>
-                    Get bounds
-                </Text>
-                <Text onPress={() => {
-            Mapbox.addOfflinePack({
-              name: 'test',
-              type: 'bbox',
-              bounds: [0, 0, 0, 0],
-              minZoomLevel: 0,
-              maxZoomLevel: 0,
-              metadata: { anyValue: 'you wish' },
-              styleURL: Mapbox.mapStyles.dark
-            }).then(() => {
-              console.log('Offline pack added');
-            }).catch(err => {
-              console.log(err);
-            });
-        }}>
-                    Create offline pack
-                </Text>
-                <Text onPress={() => {
-            Mapbox.getOfflinePacks()
-              .then(packs => {
-                console.log(packs);
-              })
-              .catch(err => {
-                console.log(err);
-              });
-        }}>
-                    Get offline packs
-                </Text>
-                <Text onPress={() => {
-            Mapbox.removeOfflinePack('test')
-              .then(info => {
-                if (info.deleted) {
-                  console.log('Deleted', info.deleted);
-                } else {
-                  console.log('No packs to delete');
-                }
-              })
-              .catch(err => {
-                console.log(err);
-              });
-        }}>
-                    Remove pack with name 'test'
-                </Text>
-                <Text>User tracking mode is {this.state.userTrackingMode}</Text>
             </View>
         );
     }
@@ -352,7 +242,7 @@ class Map extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1000,
+        flex: 1,
         alignItems: 'stretch'
     },
     map: {
