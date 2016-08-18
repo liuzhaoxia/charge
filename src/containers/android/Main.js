@@ -17,11 +17,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#2B3745'
     },
     header:{
-        height:40,
-        //flex:1,
+        height:50,
         flexDirection: 'row',
-        justifyContent:'space-around',
+        backgroundColor:'#4EC3EE',
         alignItems: 'center',
+        paddingTop:5,
+        paddingBottom:5
     },
 
     map:{
@@ -30,24 +31,24 @@ const styles = StyleSheet.create({
 
     textinput: {
         flex: 1,
-        borderBottomColor:'#FFFFFF',
-        borderBottomWidth:1,
-        color: '#FFFFFF',
+        backgroundColor: '#FFFFFF',
+        color: '#e5e5e5',
         fontSize: 16
     },
 
     logintext: {
         color: '#FFFFFF',
+        padding:5,
         fontSize: 16
     },
     search:{
         color: '#FFFFFF',
+        padding:5,
         fontSize: 16
     },
     image:{
         width:50,
         height:50
-
     }
 });
 
