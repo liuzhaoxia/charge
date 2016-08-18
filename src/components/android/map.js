@@ -48,7 +48,7 @@ class Map extends Component {
             }, {
                 coordinates: [39.9, 116.3],
                 type: 'point',
-                title: 'Important!',
+                title: '',
                 subtitle: 'Neat, this is a custom annotation image',
                 annotationImage: {
                     source: {uri: 'https://cldup.com/7NLZklp8zS.png'},
@@ -92,7 +92,7 @@ class Map extends Component {
             showMarkerArr.push({
                 coordinates: [item["location"]["latitude"], item["location"]["longitude"]],
                 id: item.pid.toString(),
-                title: 'Important!',
+                title: '',
                 type: 'point',
                 annotationImage: {
                     source: {uri: 'https://cldup.com/7NLZklp8zS.png'},
