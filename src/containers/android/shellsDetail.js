@@ -132,13 +132,23 @@ class ShellsDetail extends Component {
                         <View style={styles.subView}>
                             <View style={{flexDirection:'row',marginTop:5}}>
                                 <View>
-                                    <Image source={require('../../image/charge_station_common.png')} />
+                                    <Image source={data.plotKind===0?require('../../image/charge_station_common.png'):require('../../image/ex_station_special.png.png')} />
                                 </View>
                                 <View style={{width:200}}>
                                     <Text style={styles.nameTitle}>{data.name}</Text>
                                 </View>
                                 <View>
+<<<<<<< HEAD
                                     <Image source={data.carBrand==='3'?require('../../image/bmw.png'):require('../../image/bmw.png')}/>
+=======
+                                    {
+                                        data.carBrand.map((car,i)=>{
+                                            car===''?'':(<View style={{flexDirection:'row'}}>
+                                                <Image source={car==='1'?require('../../image/bmw.png'):require('../../image/tesla.png')}></Image>
+                                            </View>)
+                                        })
+                                    }
+>>>>>>> charge/master
                                 </View>
                             </View>
                             <View style={{flexDirection:'row'}}>
@@ -150,10 +160,25 @@ class ShellsDetail extends Component {
                                 <View style={{marginLeft:30,marginTop:5}}>
                                     <Image source={data.state===0?require('../../image/charge_avail.png'):require('../../image/charge_unavail.png')}/>
                                 </View>
-                                <View >
-                                    <Text style={{width:200}}>慢充</Text>
+                                <View style={{width:200}}>
+                                    {
+                                        data.sockerParams.map((socker,i)=>{
+                                            return (
+                                                <View key={i} style={{flexDirection:'row',marginLeft:5}}>
+                                                    <View style={{flexDirection:'row'}}>
+                                                        <Text >{socker.mode==='0'?'慢充':'快充'}</Text>
+                                                    </View>
+                                                    <View style={{flexDirection:'row'}}>
+                                                        <Text >{socker.chargingplot_count}</Text>
+                                                        <Text >个</Text>
+                                                    </View>
+                                                </View>
+                                            )
+                                        })
+                                    }
                                 </View>
-                                <View>
+                                <View style={{flexDirection:'row',marginTop:20}}>
+                                    <Image style={{marginTop:5}}  source={require('../../image/xposition.png')}></Image>
                                     <Text style={{margin:4}}>{data.distance}km</Text>
                                 </View>
                             </View>

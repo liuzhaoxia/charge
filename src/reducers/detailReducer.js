@@ -21,9 +21,9 @@ const initialState = {
             "sDCslow_num": 0},//插孔数量（直流快充，交流快充，交流慢充，交流慢充）
         "address": "望京西园222",//地址
         "distance": 2,//距离
-        "payment": ["4"], //支付方式（参数pid时，返回）
-        "plotPic": ["",],//图片信息（参数pid时，返回）
-        "telephone": "",//电话
+        "payment": ["现金","信用卡"], //支付方式（参数pid时，返回）
+        "plotPic": ['https://images.unsplash.com/photo-1441742917377-57f78ee0e582?h=1024','https://images.unsplash.com/photo-1441716844725-09cedc13a4e7?h=1024'],//图片信息（参数pid时，返回）
+        "telephone": '',//电话
         "servicePro": "0",//服务提供商
         "open24H": 2,//是否24小时开放1为是，2为否（参数pid时，返回）
         "parking_fee": 0,//停车费（参数pid时，返回）
@@ -37,14 +37,63 @@ const initialState = {
         "charge_fee": "",//充电费用（参数pid时，返回）
         "owner": "null",//个人充电桩所有者（参数pid时，返回）
         "openHour": "00:00-23:59",//营业时间（参数pid时，返回）
+        plotKind:0, //整数	0：公共，1：私人，默认null	除了固定充电桩和私人充电桩为：1，其他在转入时均为0
 
-    }]
+
+}]
 };
 
 const detailReducer = handleActions({
     [detailActions.setDetailData]: (state, action) => {
         state = Object.assign({}, state);
-        state.detailData = action.payload;
+        let data=action.payload;
+        //服务提供商
+        if(data[0].servicePro==='0'){
+            data[0].servicePro='其它';
+        }else if(data[0].servicePro==='1'){
+            data[0].servicePro='国家电网';
+        }else if(data[0].servicePro==='2'){
+            data[0].servicePro='南方电网';
+        }else if(data[0].servicePro==='3'){
+            data[0].servicePro='中石油';
+        }else if(data[0].servicePro==='4'){
+            data[0].servicePro='中石化';
+        }else if(data[0].servicePro==='5'){
+            data[0].servicePro='中海油';
+        }else if(data[0].servicePro==='6'){
+            data[0].servicePro='中国普天';
+        }else if(data[0].servicePro==='7'){
+            data[0].servicePro='特来电';
+        }else if(data[0].servicePro==='8'){
+            data[0].servicePro='循道新能源';
+        }else if(data[0].servicePro==='9'){
+            data[0].servicePro='富电科技';
+        }else if(data[0].servicePro==='10'){
+            data[0].servicePro='华商三优';
+        }else if(data[0].servicePro==='12'){
+            data[0].servicePro='港灯';
+        }else if(data[0].servicePro==='13'){
+            data[0].servicePro='澳电';
+        }else if(data[0].servicePro==='11'){
+            data[0].servicePro='中电';
+        }
+        //支付方式
+        for(let i in data[0].payment){
+            if(data[0].payment[i]==='0'){
+                data[0].payment[i]='其他';
+            }else if(data[0].payment[i]==='1'){
+                data[0].payment[i]='现金';
+            }else if(data[0].payment[i]==='2'){
+                data[0].payment[i]='信用卡';
+            }else if(data[0].payment[i]==='3'){
+                data[0].payment[i]='借记卡';
+            }else if(data[0].payment[i]==='4'){
+                data[0].payment[i]='特制充值卡';
+            }else if(data[0].payment[i]==='5'){
+                data[0].payment[i]='APP';
+            }
+        }
+        state.detailData = data;
         return state;
     }
 }, initialState);
