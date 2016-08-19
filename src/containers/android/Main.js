@@ -3,7 +3,7 @@
  */
 //主页面
 import React,{Component} from 'react';
-import {View, Text, StyleSheet,TextInput,Image,TouchableHighlight,DrawerLayoutAndroid,TouchableWithoutFeedback} from "react-native";
+import {View, Linking, Text, StyleSheet,TextInput,Image,TouchableHighlight,DrawerLayoutAndroid,TouchableWithoutFeedback} from "react-native";
 import { connect } from 'react-redux'
 import  {bindActionCreators} from 'redux'
 import Button from "react-native-button";
@@ -71,9 +71,7 @@ class Main extends Component {
     }
 
     search() {
-        console.log("search");
 
-        Actions.shellsDetail();
     }
     imagePress() {
         Actions.Choose();

@@ -103,6 +103,15 @@ class ShellsDetail extends Component {
         this.setState({
             show:!this.state.show,
         });
+
+        const url = 'baidumap://map/direction?destination=39.6,116.5'
+            Linking.canOpenURL(url).then(supported => {
+                if (supported) {
+                    Linking.openURL(url);
+                } else {
+                    console.log('Don\'t know how to open URI: ' + this.props.url);
+        }
+        });
     }
     toDetailContainer(){
         this.setState({

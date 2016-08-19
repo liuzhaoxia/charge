@@ -37,7 +37,7 @@ class App extends React.Component {
         <Scene key="DetailInfo" component={DetailInfo} title="DetailInfo"
         hideNavBar/>
         </Scene>
-
+        <Scene key="Choose" component={Choose} title="Choose" hideNavBar />
         <Scene direction="horizontal" key="About" component={About} schema="modal" title="About"
         hideNavBar/>
 
