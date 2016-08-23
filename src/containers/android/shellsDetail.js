@@ -5,30 +5,29 @@ import React, { Component } from 'react';
 import {  View,
     Text,
     Image,
-    Modal,
     Navigator,
     TextInput,
     ScrollView,
     StyleSheet,
     Dimensions,
     TouchableHighlight} from "react-native";
-import Button from "react-native-button";
+import Modal from "react-native-modalbox";
 import { connect } from 'react-redux';
 import  {bindActionCreators} from 'redux';
 import detailActions  from '../../actions/detailActions'
 import { Actions } from "react-native-router-flux";
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        backgroundColor: '#ECECF0',
+    wrapper: {
+        flex: 1
     },
     // modal的样式
     modalStyle: {
-        // backgroundColor:'#ccc',
-        alignItems: 'flex-end',
-        justifyContent:'flex-end',
-        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    modalHeight:{
+        height:200
     },
     // modal上子View的样式
     subView:{
@@ -84,25 +83,34 @@ const styles = StyleSheet.create({
         textAlign:'center',
     },
 });
-class shellsDetail extends React.Component {
+class ShellsDetail extends Component {
 // 初始化模拟数据
     constructor(props) {
         super(props);
 
         this.state = {
             detailData:this.props.detailData,
-            show:false
+            show:this.props.showOrHide
         };
         this._setModalVisible=this._setModalVisible.bind(this);
         this.toDetailContainer=this.toDetailContainer.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
 
 
     _setModalVisible() {
-        let isShow = this.state.show;
         this.setState({
-            show:!isShow,
+            show:!this.state.show,
+        });
+
+        const url = 'baidumap://map/direction?destination=39.6,116.5'
+            Linking.canOpenURL(url).then(supported => {
+                if (supported) {
+                    Linking.openURL(url);
+                } else {
+                    console.log('Don\'t know how to open URI: ' + this.props.url);
+        }
         });
     }
     toDetailContainer(){
@@ -111,25 +119,25 @@ class shellsDetail extends React.Component {
         });
         Actions.DetailInfo();
     }
-
     componentWillReceiveProps(nextProps) {
         this.setState({
-            detailData:nextProps.detailData
+            show:nextProps.showOrHide,
+            detailData:nextProps.singeData
         });
     }
-
+    closeModal(){
+        this.setState({show: false});
+    }
     render(){
         let data=this.state.detailData[0];
         return (
-            <View style={{flex:1}}>
-                <Text onPress={() => this._setModalVisible()}>点击弹框</Text>
                 <Modal
-                    animationType='slide'
-                    transparent={true}
-                    visible={this.state.show}
-                    onShow={() => {}}
-                    onRequestClose={() => {}} >
-                    <View style={styles.modalStyle}>
+                    position={"bottom"}
+                    isOpen={this.state.show}
+                    style={[styles.modalStyle,styles.modalHeight]}
+                    onClosed={this.closeModal}
+                    backdrop={false}
+                    swipeArea={20}>
                         <View style={styles.subView}>
                             <View style={{flexDirection:'row',marginTop:5}}>
                                 <View>
@@ -155,7 +163,7 @@ class shellsDetail extends React.Component {
                             </View>
                             <View style={{flexDirection:'row'}}>
                                 <View style={{marginLeft:30,marginTop:5}}>
-                                    <Image source={data.state===0?require('../../image/charge_avail.png'):require('../../image/charge_unavail.png')}></Image>
+                                    <Image source={data.state===0?require('../../image/charge_avail.png'):require('../../image/charge_unavail.png')}/>
                                 </View>
                                 <View style={{width:200}}>
                                     {
@@ -175,13 +183,13 @@ class shellsDetail extends React.Component {
                                     }
                                 </View>
                                 <View style={{flexDirection:'row',marginTop:20}}>
-                                    <Image style={{marginTop:5}}  source={require('../../image/xposition.png')}></Image>
+                                    <Image style={{marginTop:5}}  source={require('../../image/xposition.png')}/>
                                     <Text style={{margin:4}}>{data.distance}km</Text>
                                 </View>
                             </View>
                             <View style={{flexDirection:'row'}}>
                                 <View style={{marginLeft:30,marginTop:5}}>
-                                    <Image source={data.state===0?require('../../image/text_paytype.png'):require('../../image/charge_unavail.png')}></Image>
+                                    <Image source={data.state===0?require('../../image/text_paytype.png'):require('../../image/charge_unavail.png')}/>
                                 </View>
                                 <View>
                                     <Text>{data.payment}</Text>
@@ -207,16 +215,15 @@ class shellsDetail extends React.Component {
                                 </TouchableHighlight>
                             </View>
                         </View>
-                    </View>
                 </Modal>
-            </View>
-
         )
     }
 }
 function mapStateToProps(state) {
     return {
-        detailData:state.detailReducer.detailData
+        detailData:state.detailReducer.detailData,
+        singeData:state.mapReducer.singeData,
+        showOrHide:state.mapReducer.showOrHide,
     }
 }
 
@@ -227,4 +234,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(shellsDetail)
+)(ShellsDetail)
