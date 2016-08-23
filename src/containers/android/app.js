@@ -15,6 +15,8 @@ import About from './../../containers/android/About';
 import routeReducerCreator from './../../reducers/routeReducerCreator';
 import store from './../../store/store';
 import DetailInfo from '../../containers/android/Detail';
+import imageViewPage from '../../containers/android/imageViewPager';
+
 
 
 
@@ -33,7 +35,9 @@ class App extends React.Component {
                                 <Scene key="mainModule"  direction="horizontal" initial={true}>
                                 <Scene key="main" component={Main} title="main" hideNavBar/>
                                 <Scene key="DetailInfo" component={DetailInfo} title="DetailInfo" hideNavBar/>
-                            </Scene>
+                                    <Scene key="imageViewPage" component={imageViewPage} title="imageViewPage"
+                                           hideNavBar/>
+                                </Scene>
                             <Scene key="Choose" component={Choose} title="Choose" hideNavBar />
                             <Scene direction="horizontal" key="About" component={About} schema="modal" title="About" hideNavBar/>
                        </Scene>

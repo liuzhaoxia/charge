@@ -7,10 +7,11 @@ import {View, Linking, Text, StyleSheet,TextInput,Image,TouchableHighlight,Drawe
 import { connect } from 'react-redux'
 import  {bindActionCreators} from 'redux'
 import Button from "react-native-button";
-import Map from './MapContainer';
+//import Map from './MapContainer';
 import LeftMenu from './LeftMenu';
-import ShellsDetail from './ShellsDetail';
+//import ShellsDetail from './ShellsDetail';
 import { Actions } from "react-native-router-flux";
+import Detail from './Detail'
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -77,6 +78,10 @@ class Main extends Component {
         Actions.Choose();
     }
 
+    detailPress(){
+        Actions.DetailInfo();
+    }
+
     render(){
         var navigationView = (
             <LeftMenu></LeftMenu>
@@ -99,13 +104,20 @@ class Main extends Component {
                         <Button style={styles.search} onPress={this.search} >搜索</Button>
                     </View>
                     <View style={styles.map}>
-                        <Map/>
-                        <ShellsDetail/>
+
+
                         <View style={{flex: 1,top: 60,position:"absolute",right:10}}>
                             <TouchableHighlight style={{  width: 24, height: 24, justifyContent: 'center', alignItems: 'center'}}
                                                 onPress={this.imagePress}  >
                                 <Image
                                        source={require('../../image/funnel.png')} />
+
+                            </TouchableHighlight>
+                        </View>
+                        <View style={{flex: 1,top: 100,position:"absolute",right:30}}>
+                            <TouchableHighlight style={{  width: 44, height: 24, justifyContent: 'center', alignItems: 'center'}}
+                                                onPress={this.detailPress}  >
+                                    <Text style={{color:'red'}}>详情</Text>
 
                             </TouchableHighlight>
                         </View>
