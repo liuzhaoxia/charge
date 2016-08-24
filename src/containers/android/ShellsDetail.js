@@ -163,7 +163,7 @@ class ShellsDetail extends Component {
                     }
 
                     return (
-                      <View style={{ flexDirection: 'row' }}>
+                      <View key={i} style={{ flexDirection: 'row' }}>
                         <Image
                           source={
                           car === '1' ?
