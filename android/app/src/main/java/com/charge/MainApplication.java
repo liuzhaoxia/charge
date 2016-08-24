@@ -10,7 +10,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.mapbox.reactnativemapboxgl.ReactNativeMapboxGLPackage; // <-- import
 import com.theweflex.react.WeChatPackage;
-
+import com.burnweb.rnsendintent.RNSendIntentPackage;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,7 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
           new ReactNativeMapboxGLPackage(), // <-- Register package here
-          new WeChatPackage()
+          new WeChatPackage(),
+          new RNSendIntentPackage()
       );
     }
   };

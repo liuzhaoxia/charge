@@ -3,12 +3,13 @@
  */
 //主页面
 import React,{Component} from 'react';
-import {View, Text, StyleSheet,TextInput,Image,TouchableHighlight,DrawerLayoutAndroid,TouchableWithoutFeedback} from "react-native";
+import {View, Linking, Text, StyleSheet,TextInput,Image,TouchableHighlight,DrawerLayoutAndroid,TouchableWithoutFeedback} from "react-native";
 import { connect } from 'react-redux'
 import  {bindActionCreators} from 'redux'
 import Button from "react-native-button";
 import Map from './MapContainer';
 import LeftMenu from './LeftMenu';
+import ShellsDetail from './ShellsDetail';
 import { Actions } from "react-native-router-flux";
 const styles = StyleSheet.create({
     container: {
@@ -16,11 +17,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#2B3745'
     },
     header:{
-        height:40,
-        //flex:1,
+        height:50,
         flexDirection: 'row',
-        justifyContent:'space-around',
+        backgroundColor:'#4EC3EE',
         alignItems: 'center',
+        paddingTop:5,
+        paddingBottom:5
     },
 
     map:{
@@ -29,26 +31,24 @@ const styles = StyleSheet.create({
 
     textinput: {
         flex: 1,
-        borderBottomColor:'#FFFFFF',
-        borderBottomWidth:1,
-        color: '#FFFFFF',
+        backgroundColor: '#FFFFFF',
+        color: '#e5e5e5',
         fontSize: 16
     },
 
     logintext: {
         color: '#FFFFFF',
+        padding:5,
         fontSize: 16
     },
     search:{
         color: '#FFFFFF',
+        padding:5,
         fontSize: 16
     },
     image:{
         width:50,
-        height:50,
-        left:320,
-        top:100
-
+        height:50
     }
 });
 
@@ -71,7 +71,7 @@ class Main extends Component {
     }
 
     search() {
-        console.log("search");
+
     }
     imagePress() {
         Actions.Choose();
@@ -99,14 +99,17 @@ class Main extends Component {
                         <Button style={styles.search} onPress={this.search} >搜索</Button>
                     </View>
                     <View style={styles.map}>
-                        <Map></Map>
-                        <TouchableWithoutFeedback  onPress={this.imagePress}>
-                            <Image style={styles.image}
-                                   source={require('../../image/custom_icon_normal.png')} />
-                        </TouchableWithoutFeedback  >
+                        <Map/>
+                        <ShellsDetail/>
+                        <View style={{flex: 1,top: 60,position:"absolute",right:10}}>
+                            <TouchableHighlight style={{  width: 24, height: 24, justifyContent: 'center', alignItems: 'center'}}
+                                                onPress={this.imagePress}  >
+                                <Image
+                                       source={require('../../image/funnel.png')} />
 
+                            </TouchableHighlight>
+                        </View>
                     </View>
-
                 </View>
             </DrawerLayoutAndroid>
         );
