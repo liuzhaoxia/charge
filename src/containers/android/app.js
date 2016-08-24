@@ -30,7 +30,7 @@ class App extends React.Component {
               <Scene key="start" component={Start} title="Start" hideNavBar hideTabBar initial />
               <Scene key="login" component={Login} title="Login" hideNavBar />
               <Scene key="mainModule" direction="horizontal">
-                <Scene key="main" component={map} title="Main" hideNavBar />
+                <Scene key="main" component={Main} title="Main" hideNavBar />
                 <Scene
                   key="shellsDetail"
                   component={ShellsDetail}
