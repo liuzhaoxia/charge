@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image, TextInput, Text } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import * as WeChat from 'react-native-wechat';
 import LoginActions from '../../actions/loginActions';
 import Helper from '../../utils/helper';
 
@@ -117,6 +118,20 @@ class Login extends Component {
     this.props.actions.loginRequest(parameter);
   }
 
+  //async onWeiXinLogin() {
+  //  try {
+  //    const result = await WeChat.sendAuthRequest();
+  //    console.log(result);
+  //  } catch (e) {
+  //    console.log(e);
+  //  }
+  //}
+
+  //onWeiXinLogin() {
+  //  //const result = await WeChat.sendAuthRequest();
+  //  console.log('test');
+  //}
+
   changeState(key, value) {
     this.setState({ [key]: value });
   }
@@ -152,7 +167,7 @@ class Login extends Component {
                 onChangeText={text => { this.changeState('userName', text); }}
               />
             </View>
-            <View style={styles.lineContainer} />
+            <View style={styles.lineContainer}/>
             <View style={styles.rowContainer}>
               <View style={styles.smallImageContainer}>
                 <Image
@@ -172,7 +187,7 @@ class Login extends Component {
                 onChangeText={text => { this.changeState('password', text); }}
               />
             </View>
-            <View style={styles.lineContainer} />
+            <View style={styles.lineContainer}/>
             <View style={[styles.rowContainer, styles.rightRowContainer]}>
               <Text
                 style={styles.forgetPassword}
