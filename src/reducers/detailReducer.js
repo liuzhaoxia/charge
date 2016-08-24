@@ -4,6 +4,7 @@
 import { handleActions } from 'redux-actions'
 import detailActions  from '../actions/detailActions'
 const initialState = {
+    thridPlug:false,
     detailData: [{
         "carBrand": ["3"],//汽车品牌
         "pid": 74609018,// 充电桩/站的永久ID
@@ -44,6 +45,11 @@ const initialState = {
 };
 
 const detailReducer = handleActions({
+    [detailActions.changeThridModalStatus]:(state,action)=>{
+        state = Object.assign({}, state);
+        state.thridPlug=action.payload;
+        return state;
+    },
     [detailActions.setDetailData]: (state, action) => {
         state = Object.assign({}, state);
         let data=action.payload;

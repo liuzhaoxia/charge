@@ -11,7 +11,7 @@ const api = {
     { parameter }
   ),
   getVisitorData: (parameter) => createFetch(
-    `${appConfig.serviceRoot}Charge/charge/app/visitorQuery`,
+    `${appConfig.serviceRoot}Charge/charge/wechat/query`,
     FetchMethod.Get,
     { parameter }
   ),

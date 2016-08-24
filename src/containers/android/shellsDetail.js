@@ -10,6 +10,7 @@ import {  View,
     ScrollView,
     StyleSheet,
     Dimensions,
+    Linking,
     TouchableHighlight} from "react-native";
 import Modal from "react-native-modalbox";
 import { connect } from 'react-redux';
@@ -24,21 +25,23 @@ const styles = StyleSheet.create({
     // modal的样式
     modalStyle: {
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderRadius: 10,
+        marginBottom:10,
     },
     modalHeight:{
-        height:200
+        height:180,
+        width: 350
     },
     // modal上子View的样式
     subView:{
-        marginLeft:20,
-        marginRight:20,
+        height:180,
         backgroundColor:'#fff',
         alignSelf: 'stretch',
         justifyContent:'center',
         borderRadius: 10,
         borderWidth: 0.5,
-        borderColor:'#ccc',
+        borderColor:'#ccc'
     },
     // 标题
     titleText:{
@@ -165,7 +168,7 @@ class ShellsDetail extends Component {
                                 <View style={{marginLeft:30,marginTop:5}}>
                                     <Image source={data.state===0?require('../../image/charge_avail.png'):require('../../image/charge_unavail.png')}/>
                                 </View>
-                                <View style={{width:200}}>
+                                <View style={{width:150}}>
                                     {
                                         data.sockerParams.map((socker,i)=>{
                                             return (
@@ -182,7 +185,7 @@ class ShellsDetail extends Component {
                                         })
                                     }
                                 </View>
-                                <View style={{flexDirection:'row',marginTop:20}}>
+                                <View style={{flexDirection:'row'}}>
                                     <Image style={{marginTop:5}}  source={require('../../image/xposition.png')}/>
                                     <Text style={{margin:4}}>{data.distance}km</Text>
                                 </View>

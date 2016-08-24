@@ -15,6 +15,7 @@ import detailActions  from '../../actions/detailActions'
 import { Actions } from "react-native-router-flux";
 // import SendIntentAndroid from 'react-native-send-intent';
 import imageViewPager from './imageViewPager'
+import Modal from "react-native-modalbox";
 const styles = StyleSheet.create({
     container: {
         flexDirection:'row',
@@ -54,6 +55,27 @@ const styles = StyleSheet.create({
     },scrollView: {
         height: 800,
     },
+    // modal的样式
+    modalStyle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        marginBottom:10,
+    },
+    modalHeight:{
+        height:180,
+        width: 350
+    },
+    // modal上子View的样式
+    subView:{
+        height:180,
+        backgroundColor:'#fff',
+        alignSelf: 'stretch',
+        justifyContent:'center',
+        borderRadius: 10,
+        borderWidth: 0.5,
+        borderColor:'#ccc'
+    },
 
 });
 class Detail extends React.Component {
@@ -64,6 +86,8 @@ class Detail extends React.Component {
         this.state = {
             detailData:this.props.detailData,
             tabNames: ['充电插口', '服务信息'],
+            singeData:this.props.singeData,
+            thridPlug:false,
         };
 
         this.backShells=this.backShells.bind(this);
@@ -87,12 +111,17 @@ class Detail extends React.Component {
     }
 
     handleClick() {
-        // SendIntentAndroid.sendPhoneDial('+55 48 9999-9999');
+        //SendIntentAndroid.sendPhoneDial('+55 48 9999-9999');
+        //this.props.openThridModal(true);
+        this.state.thridPlug=true;
+        this.setState({thridPlug:true});
     }
 
     render(){
+        console.log(this.state.singeData);
         let tabNames = this.state.tabNames;
-        let data=this.state.detailData[0];
+        let data=this.state.singeData[0];
+        let picUrl=data.plotPic.length>0?'http://chargingtest.navinfo.com/Charge/resources/photo/'+data.plotPic[0].url:'';
         return (
             <View style={{flex:1}}>
                 <View style={styles.container}>
@@ -109,10 +138,11 @@ class Detail extends React.Component {
                 <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}/>
                 <View style={{flexDirection:'row',backgroundColor:'#00BFFF',height:90}}>
                     <View>
-                        <TouchableHighlight underlayColor='transparent'
+                        {data.plotPic.length>0?(<TouchableHighlight underlayColor='transparent'
                                             onPress={this.openViewPage}>
-                                 <Image source={{uri:data.plotPic[0]}} style={styles.logoImage}/>
-                        </TouchableHighlight>
+                                <Image source={{uri:picUrl}} style={styles.logoImage}/>
+                        </TouchableHighlight>):(<TouchableHighlight underlayColor='transparent'><Text>无</Text></TouchableHighlight>)}
+
                         <View style={{backgroundColor:'#000000',width:20,height:20,marginTop:-25,marginLeft:60,}}>
                             <Text style={{color:'#FFFFFF',marginLeft:5}}>{data.plotPic.length}</Text>
                         </View>
@@ -208,7 +238,7 @@ class Detail extends React.Component {
                                 return (
                                     <View key={i} style={{flexDirection:'row'}}>
                                         <View>
-                                            <Image source={socker.plugType==='0'?require('../../image/socket_jiaoliudian3kongjiayong.png'):(socker.plugType==='1'?require('../../image/socket_guobiaojiaoliudian7kong.png'):(socker.plugType==='2'?require('../../image/socket_guobiaojiaoliudian9kong.png'):(socker.plugType==='3'?require('../../image/socket_meishijiaoliu5kong.png'):(socker.plugType==='4'?require('../../image/socket_meishizhiliucombo.png'):(socker.plugType==='5'?require('../../image/socket_oushijiaoliu7kong.png'):(socker.plugType==='6'?require('../../image/socket_oshizhiliucombo.png'):(socker.plugType==='7'?require('../../image/socket_rishizhiliuchademo.png'):(socker.plugType==='8'?require('../../image/socket_tesilachachao.png'):(socker.plugType==='9'?require('../../image/socket_qita.png'):'')))))))))} style={{width:25,height:25,margin:5}}/>
+                                            <Image source={socker.plugType==='0'?require('../../image/socket_jiaoliudian3kongjiayong.png'):(socker.plugType==='1'?require('../../image/socket_guobiaojiaoliudian7kong.png'):(socker.plugType==='2'?require('../../image/socket_guobiaozhiliudian9kong.png'):(socker.plugType==='3'?require('../../image/socket_meishijiaoliu5kong.png'):(socker.plugType==='4'?require('../../image/socket_meishizhiliucombo.png'):(socker.plugType==='5'?require('../../image/socket_oushijiaoliu7kong.png'):(socker.plugType==='6'?require('../../image/socket_oshizhiliucombo.png'):(socker.plugType==='7'?require('../../image/socket_rishizhiliuchademo.png'):(socker.plugType==='8'?require('../../image/socket_tesilachachao.png'):(socker.plugType==='9'?require('../../image/socket_qita.png'):'')))))))))} style={{width:25,height:25,margin:5}}/>
                                         </View>
                                         <View style={{width:250,flexDirection:'row',height:40,padding:5}}>
                                             <Text style={{margin:5}}>{socker.mode==='0'?'慢充':'快充'}{socker.acdc==='0'?'交流':'直流'}  {socker.plugType}</Text>
@@ -294,6 +324,36 @@ class Detail extends React.Component {
                             </ScrollView>
                     </View>
                 </ScrollableTabView>
+                <Modal
+                    position={"bottom"}
+                    isOpen={this.state.thridPlug}
+                    style={[styles.modalStyle,styles.modalHeight]}
+                    onClosed={this.closeModal}
+                    backdrop={false}
+                    swipeArea={20}>
+                    <View style={styles.subView}>
+                        <View style={styles.buttonView}>
+                            <TouchableHighlight underlayColor='transparent'
+                                                onPress={this._setModalVisible}>
+                                <Text >
+                                    百度
+                                </Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight underlayColor='transparent'
+                                                onPress={this._setModalVisible}>
+                                <Text >
+                                    高德
+                                </Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight underlayColor='transparent'
+                                                onPress={this._setModalVisible}>
+                                <Text >
+                                    其他
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+                </Modal>
             </View>
 
 
@@ -302,7 +362,8 @@ class Detail extends React.Component {
 }
 function mapStateToProps(state) {
     return {
-        detailData:state.detailReducer.detailData
+        detailData:state.detailReducer.detailData,
+        singeData:state.mapReducer.singeData,
     }
 }
 

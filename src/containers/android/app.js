@@ -35,9 +35,9 @@ class App extends React.Component {
                                 <Scene key="mainModule"  direction="horizontal" initial={true}>
                                 <Scene key="main" component={Main} title="main" hideNavBar/>
                                 <Scene key="DetailInfo" component={DetailInfo} title="DetailInfo" hideNavBar/>
-                                    <Scene key="imageViewPage" component={imageViewPage} title="imageViewPage"
+                                <Scene key="imageViewPage" component={imageViewPage} title="imageViewPage"
                                            hideNavBar/>
-                                </Scene>
+                            </Scene>
                             <Scene key="Choose" component={Choose} title="Choose" hideNavBar />
                             <Scene direction="horizontal" key="About" component={About} schema="modal" title="About" hideNavBar/>
                        </Scene>
