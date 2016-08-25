@@ -12,6 +12,7 @@ const initialState = {
 const mapReducer =handleActions ({
     [mapAction.getVisitorData]: (state, action)=> {
         state = Object.assign({}, state);
+        state.showOrHide = false;
         state.visitorData = action.payload.data;
         return state;
     },

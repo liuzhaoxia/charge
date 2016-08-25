@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, TextInput, Text } from 'react-native';
-//import { bindActionCreators } from 'redux';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-//import loginActions from '../../actions/loginActions';
-import DB from '../../store/DB';
+import * as WeChat from 'react-native-wechat';
+import LoginActions from '../../actions/loginActions';
 import Helper from '../../utils/helper';
+import { Global } from '../../Global';
 
 const styles = StyleSheet.create({
   rootContainer: {
@@ -56,9 +57,9 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16,
   },
-  borderBottomContainer: {
-    borderBottomColor: '#808080',
-    borderBottomWidth: 1,
+  lineContainer: {
+    backgroundColor: '#808080',
+    height: 1,
   },
   textInput: {
     flex: 9,
@@ -101,20 +102,49 @@ const styles = StyleSheet.create({
 class Login extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      userName: '',
+      password: '',
+    };
 
     Helper.bindMethod(this);
   }
 
   componentWillMount() {
-    const user = this.getUser();
-    if (user) {
-      console.log('进入主页面');
+    if (Global.appState.user) {
+      this.setState({
+        userName: Global.appState.user.name,
+        password: Global.appState.user.password,
+      });
     }
   }
 
-  async getUser() {
-    const user = await DB.user.find();
-    return user;
+  onLogin() {
+    const parameter = {
+      name: Number(this.state.userName),
+      password: Number(this.state.password),
+      clientId: 2,
+    };
+
+    this.props.actions.loginRequest(parameter);
+  }
+
+  //async onWeiXinLogin() {
+  //  try {
+  //    const result = await WeChat.sendAuthRequest();
+  //    console.log(result);
+  //  } catch (e) {
+  //    console.log(e);
+  //  }
+  //}
+
+  //onWeiXinLogin() {
+  //  //const result = await WeChat.sendAuthRequest();
+  //  console.log('test');
+  //}
+
+  changeState(key, value) {
+    this.setState({ [key]: value });
   }
 
   render() {
@@ -142,10 +172,13 @@ class Login extends Component {
                 placeholder="请输入手机号"
                 placeholderTextColor="#808080"
                 style={styles.textInput}
+                underlineColorAndroid="transparent"
                 keyboardType="default"
+                value={this.state.userName}
+                onChangeText={text => { this.changeState('userName', text); }}
               />
             </View>
-            <View style={styles.borderBottomContainer} />
+            <View style={styles.lineContainer}/>
             <View style={styles.rowContainer}>
               <View style={styles.smallImageContainer}>
                 <Image
@@ -154,14 +187,18 @@ class Login extends Component {
                 />
               </View>
               <TextInput
+                ref={c => { this.passwordInput = c; }}
                 placeholder="请输入密码"
                 placeholderTextColor="#808080"
                 style={styles.textInput}
                 secureTextEntry
+                underlineColorAndroid="transparent"
                 keyboardType="default"
+                value={this.state.password}
+                onChangeText={text => { this.changeState('password', text); }}
               />
             </View>
-            <View style={styles.borderBottomContainer} />
+            <View style={styles.lineContainer}/>
             <View style={[styles.rowContainer, styles.rightRowContainer]}>
               <Text
                 style={styles.forgetPassword}
@@ -181,7 +218,7 @@ class Login extends Component {
             <View style={[styles.rowContainer, styles.textWeiXinLoginContainer]}>
               <Text
                 style={styles.textWeiXinLogin}
-                onPress={this.onLogin}
+                onPress={this.onWeiXinLogin}
               >
                 微信登陆
               </Text>
@@ -195,13 +232,13 @@ class Login extends Component {
 
 function mapStateToProps(state) {
   return {
-    //state: state.loginReducer,
+    state: {},
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    //actions: bindActionCreators(loginActions, dispatch),
+    actions: bindActionCreators(LoginActions, dispatch),
   };
 }
 

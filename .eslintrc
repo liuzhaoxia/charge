@@ -5,6 +5,12 @@
   // 使用eslint-config-airbnb预定义规则
   "extends": "airbnb",
 
+  // 添加全局函数和对象
+  "globals": {
+    "fetch": true,
+    "Linking": true,
+  },
+
   /**
    * "off" 或 0 - 关闭规则
    * "warn" 或 1 - 开启规则，使用警告级别的错误：warn (不会导致程序退出),
@@ -19,6 +25,12 @@
     "react/jsx-filename-extension": 0,
 
     // 关闭规则，因为此条规则会导致npm run lint崩溃,主要用于处理async/await
-    "generator-star-spacing": 0
+    "generator-star-spacing": 0,
+
+    // 关闭规则，允许函数中的参数不被使用
+    "no-unused-vars": 0,
+
+    // 关闭规则，允许使用类方式创建无状态react组件
+    "react/prefer-stateless-function": 0
   }
 }
