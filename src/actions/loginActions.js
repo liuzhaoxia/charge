@@ -23,6 +23,7 @@ const loginActions = {
   loginRequestSuccess: (data) =>
     dispatch => {
       Global.appState.user = data;
+      Actions.pop();
     },
   loginRequestFail: err =>
     dispatch => {

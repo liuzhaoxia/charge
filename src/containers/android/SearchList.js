@@ -19,7 +19,7 @@ import Modal from "react-native-modalbox";
 import { connect } from 'react-redux';
 import  {bindActionCreators} from 'redux';
 import { Actions } from "react-native-router-flux";
-import searchActions from '../../actions/searchActions';
+import searchActions from '../../actions/SearchActions';
 import Helper from '../../utils/helper';
 import store from 'react-native-simple-store';
 
@@ -69,7 +69,7 @@ class SearchList extends Component {
   componentDidMount() {
 
   }
-
+  
   changeState(key,value){
     this.setState({ [key]: value });
   }

@@ -20,6 +20,7 @@
     "react-native-send-intent": "^1.0.11",
     "react-native-simple-store": "^1.0.1",
     "react-native-swipeout": "^2.0.12",
+    "react-native-swiper": "^1.4.10",
     "react-native-viewpager": "^0.2.11",
     "react-native-wechat": "^1.5.5",
     "react-redux": "^4.4.5",

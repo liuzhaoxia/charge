@@ -8,21 +8,22 @@ import {
   Text,
 } from 'react-native';
 import { createStore, applyMiddleware, compose } from 'redux';
+import { Router, Scene, Modal,ActionConst } from 'react-native-router-flux';
+import ChargeView from './../../containers/android/ChargeView';
 import { Provider, connect } from 'react-redux';
-import { Router, Scene, Modal } from 'react-native-router-flux';
 import store from 'react-native-simple-store';
 import routeReducerCreator from './../../reducers/routeReducerCreator';
 import ReduxStore from './../../store/store';
 import Login from '../../containers/android/Login';
 import Start from '../../containers/android/Start';
 import DetailInfo from '../../containers/android/Detail';
+import Helper from '../../utils/helper';
 import ShellsDetail from '../../containers/android/ShellsDetail';
 import Choose from '../../containers/android/Choose';
 import About from './../../containers/android/About';
 import Main from './../../containers/android/Main';
 import SearchList from '../../containers/android/SearchList';
 import { Global } from '../../Global';
-
 class App extends React.Component {
   componentWillUnmount() {
     store.get('appState')
@@ -34,13 +35,16 @@ class App extends React.Component {
         store.save('appState', Global.appState);
       });
   }
-
+    test1(){
+        alert(111);
+    }
   render() {
     return (
+
       <Provider store={ReduxStore}>
         <Router createReducer={routeReducerCreator}>
           <Scene key="modal" component={Modal}>
-            <Scene key="root" hideNavBar hideTabBar>
+            <Scene key="root">
               <Scene key="start" component={Start} title="Start" hideNavBar hideTabBar initial />
               <Scene key="login" component={Login} title="Login" hideNavBar />
               <Scene key="mainModule" direction="horizontal">
@@ -58,18 +62,19 @@ class App extends React.Component {
                   hideNavBar
                 />
               </Scene>
+                <Scene
+                    key="Choose"
+                    component={Choose}
+                    title="个人定制"
+                    rightTitle="重置"
+                    onRight={this.test1}
+                />
               <Scene
-                 key="Choose"
-                 component={Choose}
-                 title="Choose"
-                 hideNavBar
-                 />
-              <Scene
-                 key="SearchList"
-                 component={SearchList}
-                 title="搜索"
-                 hideNavBar
-                 />
+                key="SearchList"
+                component={SearchList}
+                title="搜索"
+                hideNavBar
+              />
               <Scene
                 direction="horizontal"
                 key="About" component={About}
@@ -77,6 +82,12 @@ class App extends React.Component {
                 title="About"
                 hideNavBar
               />
+               <Scene
+                    key="ChargeView"
+                    component={ChargeView}
+                    title="桩家视界"
+                    hideNavBar
+               />
             </Scene>
             <Scene key="error" component={Error} />
           </Scene>
@@ -84,6 +95,7 @@ class App extends React.Component {
       </Provider>
     );
   }
+
 }
 
 export default App;

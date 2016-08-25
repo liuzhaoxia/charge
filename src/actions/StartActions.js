@@ -14,7 +14,7 @@ const StartActions = {
       store.get('appState')
         .then(res => {
           Global.appState = res;
-          if (!Global) {
+          if (!Global.appState) {
             Global.appState = deepcopy(appStateDefault);
           }
           Actions.mainModule();

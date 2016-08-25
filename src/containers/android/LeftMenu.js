@@ -8,6 +8,7 @@ import  {bindActionCreators} from 'redux'
 import Button from "react-native-button";
 import { Actions} from 'react-native-router-flux';
 import UserInfo from './UserInfo';
+import { Global } from '../../Global';
 
 const styles = StyleSheet.create({
     container: {
@@ -40,12 +41,14 @@ class LeftMenu extends Component {
             transparent: false,
         };
         this.about = this.about.bind(this);
-
+        this.getChargeView = this.getChargeView.bind(this);
     }
     about() {
         Actions.About()
     }
-
+    getChargeView(){
+        Actions.ChargeView()
+    }
     render(){
         return(
             <View style={styles.container}>
@@ -53,7 +56,7 @@ class LeftMenu extends Component {
                 <View  style={styles.contentitem} >
                     <UserInfo
                         state={{
-                            user: null
+                            user: Global.appState.user
                         }}
                         actions={{
 
@@ -62,12 +65,12 @@ class LeftMenu extends Component {
                 </View>
                 <View style={styles.splitters}/>
 
-                <View style={styles.contentitem}>
+                <View style={styles.contentitem} >
                     <TouchableHighlight underlayColor='transparent'>
                         <Image source={require('../../image/global_days.png')} />
                     </TouchableHighlight>
                     <TouchableHighlight underlayColor='transparent'>
-                        <Text style={styles.text} >桩家视界</Text>
+                        <Text style={styles.text} onPress={this.getChargeView}>桩家视界</Text>
                     </TouchableHighlight>
 
                 </View>
