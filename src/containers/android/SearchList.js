@@ -19,7 +19,7 @@ import Modal from "react-native-modalbox";
 import { connect } from 'react-redux';
 import  {bindActionCreators} from 'redux';
 import { Actions } from "react-native-router-flux";
-import searchActions from '../../actions/searchActions';
+import searchActions from '../../actions/SearchActions';
 import Helper from '../../utils/helper';
 import store from 'react-native-simple-store';
 
@@ -70,23 +70,7 @@ class SearchList extends Component {
     }
 
     search(){
-      if(global.storage){
-        global.storage.load({
-          key: 'searchHistory',
 
-          // autoSync(default true) means if data not found or expired,
-          // then invoke the corresponding sync method
-          autoSync: true,
-
-          // syncInBackground(default true) means if data expired,
-          // return the outdated data first while invoke the sync method.
-          // It can be set to false to always return data provided by sync method when expired.(Of course it's slower)
-          syncInBackground: true
-        }).then(ret = >() {
-
-          console.log(ret);
-        })
-      }
     }
 
     componentWillReceiveProps(nextProps) {

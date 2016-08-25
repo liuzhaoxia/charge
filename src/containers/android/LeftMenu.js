@@ -8,6 +8,7 @@ import  {bindActionCreators} from 'redux'
 import Button from "react-native-button";
 import { Actions} from 'react-native-router-flux';
 import UserInfo from './UserInfo';
+import { Global } from '../../Global';
 
 const styles = StyleSheet.create({
     container: {
@@ -53,7 +54,7 @@ class LeftMenu extends Component {
                 <View  style={styles.contentitem} >
                     <UserInfo
                         state={{
-                            user: null
+                            user: Global.appState.user
                         }}
                         actions={{
 
