@@ -59,17 +59,17 @@ class App extends React.Component {
                 />
               </Scene>
               <Scene
-                 key="Choose"
-                 component={Choose}
-                 title="Choose"
-                 hideNavBar
-                 />
+                key="Choose"
+                component={Choose}
+                title="Choose"
+                hideNavBar
+              />
               <Scene
-                 key="SearchList"
-                 component={SearchList}
-                 title="搜索"
-                 hideNavBar
-                 />
+                key="SearchList"
+                component={SearchList}
+                title="搜索"
+                hideNavBar
+              />
               <Scene
                 direction="horizontal"
                 key="About" component={About}
