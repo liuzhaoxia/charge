@@ -17,10 +17,8 @@ import routeReducerCreator from './../../reducers/routeReducerCreator';
  import store from './../../store/store';
 // import ArticleInfo from './../../containers/android/MessInfo'
 import DetailInfo from '../../containers/android/Detail'
-
+import Help from '../../containers/android/Help'
 import shellsDetail from '../../containers/android/shellsDetail'
-
-import test from '../../containers/android/test'
 
 class App extends React.Component {
     constructor(props) {
@@ -43,9 +41,10 @@ class App extends React.Component {
                                 hideNavBar/>
                             </Scene>
 
-                            <Scene direction="horizontal" key="About" component={About} schema="modal" title="About"
+                            <Scene direction="horizontal" key="About" component={About}  title="About"
                                    hideNavBar/>
-
+                            <Scene direction="horizontal" key="Help" component={Help}  title="Help"
+                                   hideNavBar/>
 
                         </Scene>
                         <Scene key="error" component={Error}/>

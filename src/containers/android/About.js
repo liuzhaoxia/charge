@@ -10,9 +10,7 @@ import {View, Text, StyleSheet,TextInput,Image,Modal,ToolbarAndroid,ListView,  T
 import { Actions} from 'react-native-router-flux';
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: 'red',
-
+        flex: 1
     },
     bgcontainer: {
         flex: 1,
@@ -53,6 +51,7 @@ class About extends Component {
         this.state={
             dataSource:ds.cloneWithRows(MENU),
         }
+
     }
 
 
@@ -78,16 +77,17 @@ class About extends Component {
                         </Image>
 
                     <View  style={{flex:2}}>
+                        <View style={{height:0.8,backgroundColor:'#CCCCCC'}}></View>
                         <View  style={{flex:5,backgroundColor:'#FFFFFF'}}>
                             <ListView
                                 dataSource={this.state.dataSource}
-                                renderRow={this.renderRow}
+                                renderRow={this.renderRow.bind(this)}
                                 renderSeparator={this.renderSeparator}
                             />
                         </View>
                         <View  style={{flex:1,backgroundColor:'#e9eaed',alignItems:'center', justifyContent:'center'}}>
                             <View>
-                                <Text style={{color:'red',textAlign:'center',flex:4}}>Copyright 2016 evzhuangjia.com |版权所有</Text>
+                                <Text style={{color:'red',textAlign:'center',flex:4}}>Copyright 2016 evzhuangjia.com | 版权所有</Text>
                             </View>
 
                         </View>
@@ -134,6 +134,11 @@ class About extends Component {
         );
     }
 
+    onSelectItem(position){
+        // var func=this.props.onMenuItem;
+        // func&&func(position);
+        Actions.Help()
+    }
 
 }
 
