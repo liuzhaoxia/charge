@@ -6,9 +6,9 @@ import appConfig from '../constants/appConfig';
 
 const api = {
   login: (parameter) => createFetch(
-    `${appConfig.serviceRoot}service/man/userInfo/login`,
+    `${appConfig.serviceRoot}Charge/charge/users/login`,
     FetchMethod.Get,
-    { parameter }
+    parameter
   ),
   getVisitorData: (parameter) => createFetch(
     `${appConfig.serviceRoot}Charge/charge/app/visitorQuery`,

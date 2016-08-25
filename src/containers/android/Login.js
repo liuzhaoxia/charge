@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as WeChat from 'react-native-wechat';
 import LoginActions from '../../actions/loginActions';
 import Helper from '../../utils/helper';
+import { Global } from '../../Global';
 
 const styles = StyleSheet.create({
   rootContainer: {
@@ -109,10 +110,20 @@ class Login extends Component {
     Helper.bindMethod(this);
   }
 
+  componentWillMount() {
+    if (Global.appState.user) {
+      this.setState({
+        userName: Global.appState.user.name,
+        password: Global.appState.user.password,
+      });
+    }
+  }
+
   onLogin() {
     const parameter = {
-      userNickName: this.state.userName,
-      userPassword: this.state.password,
+      name: Number(this.state.userName),
+      password: Number(this.state.password),
+      clientId: 2,
     };
 
     this.props.actions.loginRequest(parameter);
@@ -221,7 +232,7 @@ class Login extends Component {
 
 function mapStateToProps(state) {
   return {
-    state: state.loginReducer,
+    state: {},
   };
 }
 

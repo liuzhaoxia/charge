@@ -7,6 +7,7 @@
     "lint": "eslint index.android.js index.ios.js src"
   },
   "dependencies": {
+    "deepcopy": "^0.6.3",
     "react": "15.2.1",
     "react-native": "0.30.0",
     "react-native-button": "^1.6.0",
