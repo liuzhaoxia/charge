@@ -25,7 +25,7 @@ function createFetch(url, method, jsonObj) {
     case FetchMethod.Get:
       {
         const queryStr = jsonToQueryString(jsonObj);
-        const urlWithQueryStr = `${url}?access_token=0005Y3SN00OCGFM35ABE6DBF4E6E80912AC98A7FA6F2B9E8&${queryStr}`;
+        const urlWithQueryStr = `${url}?access_token=0005Y3SN00OCIAG8FA1847D95C5413C63778E9B122D5A905&${queryStr}`;
         const options = {
           method: FetchMethod.Get,
         };

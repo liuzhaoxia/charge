@@ -46,11 +46,10 @@ class imageViewPager extends React.Component{
         super(props);
         let pic=[];
         for(let i in this.props.singeData[0].plotPic){
-            pic.push('http://chargingtest.navinfo.com/Charge/resources/photo/'+this.props.singeData[0].plotPic.url);
+            pic.push('http://chargingtest.navinfo.com/Charge/resources/photo/'+this.props.singeData[0].plotPic[i].url);
         }
 
         this.state={
-
             dataSource: dataSource.cloneWithPages(pic),
             page: 0
         }
@@ -63,7 +62,7 @@ class imageViewPager extends React.Component{
         let pic=[];
         if(this.state.singeData!=nextProps.singeData){
             for(let i in nextProps.singeData[0].plotPic){
-                pic.push('http://chargingtest.navinfo.com/Charge/resources/photo/'+nextProps.singeData[0].plotPic.url);
+                pic.push('http://chargingtest.navinfo.com/Charge/resources/photo/'+nextProps.singeData[0].plotPic[i].url);
             }
         }
         this.setState({
@@ -74,6 +73,7 @@ class imageViewPager extends React.Component{
 
 
     _renderPage(data){
+        console.log("imageView");
         console.log(data);
             return (
                 <Image source={{uri: data}} style={{width:400,height:500}}/>
@@ -81,7 +81,7 @@ class imageViewPager extends React.Component{
 
     }
     backDetail(){
-        Actions.DetailInfo();
+        Actions.pop();
     }
 
     render(){

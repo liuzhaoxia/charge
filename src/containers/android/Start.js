@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, TextInput, Text } from 'react-native';
 import { bindActionCreators } from 'redux';
+import * as WeChat from 'react-native-wechat';
 import { connect } from 'react-redux';
 import StartActions from '../../actions/StartActions';
 import Helper from '../../utils/helper';
@@ -17,6 +18,10 @@ class Start extends Component {
 
   componentWillMount() {
     this.props.actions.loadUser();
+  }
+
+  componentDidMount() {
+    WeChat.registerApp('wx248881ad9815ad88');
   }
 
   render() {

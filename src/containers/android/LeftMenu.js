@@ -54,7 +54,7 @@ class LeftMenu extends Component {
                         <Image source={require('../../image/header.png')} />
                     </TouchableHighlight>
                     <TouchableHighlight underlayColor='transparent'>
-                        <Text style={styles.text}>请点击登录</Text>
+                        <Text style={styles.text} onPress={() => { Actions.login(); }}>请点击登录</Text>
                     </TouchableHighlight>
                 </View>
                 <View style={styles.splitters}/>

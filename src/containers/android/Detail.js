@@ -4,7 +4,7 @@
 //搜索结果详情
 import React, { Component } from 'react';
 import {View, Text,TextInput ,IntentAndroid,TouchableNativeFeedback,
-    TouchableHighlight,StyleSheet,Image,ScrollView} from "react-native";
+    TouchableHighlight,StyleSheet,Image,ScrollView,Linking} from "react-native";
 import Button from "react-native-button";
 import { connect } from 'react-redux';
 import  {bindActionCreators} from 'redux';
@@ -16,6 +16,7 @@ import { Actions } from "react-native-router-flux";
 // import SendIntentAndroid from 'react-native-send-intent';
 import imageViewPager from './imageViewPager'
 import Modal from "react-native-modalbox";
+import DetailMapDirection from './DetailMapDirection'
 const styles = StyleSheet.create({
     container: {
         flexDirection:'row',
@@ -76,6 +77,25 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor:'#ccc'
     },
+    buttonText: {
+        fontSize: 16,
+        textAlign: 'center',
+    },
+    buttonStyle: {
+        flex: 1,
+        height: 44,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    horizontalLine: {
+        height: 0.5,
+        backgroundColor: '#ccc',
+    },
+    buttonView: {
+        flex: 1,
+        alignItems: 'center',
+        height: 44,
+    },
 
 });
 class Detail extends React.Component {
@@ -88,13 +108,23 @@ class Detail extends React.Component {
             tabNames: ['充电插口', '服务信息'],
             singeData:this.props.singeData,
             thridPlug:false,
+            newLinkUrls:[
+                {
+                    url:'baidumap://map/direction?destination=39.6,116.5',
+                    name:'百度'
+                },{
+                    url:'androidamap://viewMap?sourceApplication=appname&poiname=abc&lat=36.2&lon=116.1&dev=0',
+                    name:'高德'
+                },,{
+                    url:'',
+                    name:'取消'
+                }]
         };
-
         this.backShells=this.backShells.bind(this);
-
         this.openViewPage=this.openViewPage.bind(this);
         this.handleClick=this.handleClick.bind(this);
     }
+
 
     componentWillReceiveProps(nextProps) {
         this.setState({
@@ -103,22 +133,38 @@ class Detail extends React.Component {
     }
 
     backShells(){
-        Actions.main();
+        Actions.pop();
     }
 
     openViewPage(){
         Actions.imageViewPage();
     }
 
+    openMapUrl(index){
+        if(this.state.newLinkUrls[index].url==''){
+            this.setState({thridPlug:false});
+        }else {
+            Linking.canOpenURL(this.state.newLinkUrls[index].url).then(supported => {
+                if (supported) {
+                    return Linking.openURL(this.state.newLinkUrls[index].url);
+                }else{
+                    if(this.state.newLinkUrls[index].name=='百度'){
+                        return Linking.openURL('http://shouji.baidu.com/software/9831363.html');
+                    }else  if(this.state.newLinkUrls[index].name=='高德'){
+                        return Linking.openURL("http://www.autonavi.com/");
+                    }
+
+                }
+            });
+        }
+    }
+
     handleClick() {
-        //SendIntentAndroid.sendPhoneDial('+55 48 9999-9999');
-        //this.props.openThridModal(true);
-        this.state.thridPlug=true;
         this.setState({thridPlug:true});
     }
 
     render(){
-        console.log(this.state.singeData);
+        console.log(this.state.singeData[0])
         let tabNames = this.state.tabNames;
         let data=this.state.singeData[0];
         let picUrl=data.plotPic.length>0?'http://chargingtest.navinfo.com/Charge/resources/photo/'+data.plotPic[0].url:'';
@@ -141,7 +187,10 @@ class Detail extends React.Component {
                         {data.plotPic.length>0?(<TouchableHighlight underlayColor='transparent'
                                             onPress={this.openViewPage}>
                                 <Image source={{uri:picUrl}} style={styles.logoImage}/>
-                        </TouchableHighlight>):(<TouchableHighlight underlayColor='transparent'><Text>无</Text></TouchableHighlight>)}
+                        </TouchableHighlight>):(
+                            <TouchableHighlight underlayColor='transparent'>
+                                <Image  source={require('../../image/noImage.jpg')} style={styles.logoImage}/>
+                            </TouchableHighlight>)}
 
                         <View style={{backgroundColor:'#000000',width:20,height:20,marginTop:-25,marginLeft:60,}}>
                             <Text style={{color:'#FFFFFF',marginLeft:5}}>{data.plotPic.length}</Text>
@@ -162,7 +211,7 @@ class Detail extends React.Component {
                         </View>
                     </View>
                 </View>
-                <View style={{flexDirection:'row',height:40,padding:4}}>
+                <View style={{flexDirection:'row',height:46,padding:4}}>
                     <View>
                         <Image source={require('../../image/position.png')}/>
                     </View>
@@ -181,8 +230,8 @@ class Detail extends React.Component {
                     </View>
                 </View>
                 <View style={{flexDirection:'row'}}>
-                    <View>
-                        <Image source={require('../../image/positionMap.jpg')} style={{flex:1}}/>
+                    <View style={{flex:1,height:200}}>
+                        <DetailMapDirection />
                     </View>
                 </View>
                 <View style={{flexDirection:'row',marginLeft:10}}>
@@ -325,38 +374,34 @@ class Detail extends React.Component {
                     </View>
                 </ScrollableTabView>
                 <Modal
-                    position={"bottom"}
+                    position={"center"}
                     isOpen={this.state.thridPlug}
                     style={[styles.modalStyle,styles.modalHeight]}
-                    onClosed={this.closeModal}
                     backdrop={false}
                     swipeArea={20}>
                     <View style={styles.subView}>
-                        <View style={styles.buttonView}>
-                            <TouchableHighlight underlayColor='transparent'
-                                                onPress={this._setModalVisible}>
-                                <Text >
-                                    百度
-                                </Text>
-                            </TouchableHighlight>
-                            <TouchableHighlight underlayColor='transparent'
-                                                onPress={this._setModalVisible}>
-                                <Text >
-                                    高德
-                                </Text>
-                            </TouchableHighlight>
-                            <TouchableHighlight underlayColor='transparent'
-                                                onPress={this._setModalVisible}>
-                                <Text >
-                                    其他
-                                </Text>
-                            </TouchableHighlight>
-                        </View>
+                        {
+                            this.state.newLinkUrls.map((linkUrl,index)=>{
+                                return (
+                                    <View key={index}>
+                                        <TouchableHighlight underlayColor='transparent' key={index}
+                                            onPress={()=>{return this.openMapUrl(index)}} style={styles.buttonStyle}
+                                        >
+                                        <Text key={index} style={styles.buttonText}>
+                                                {linkUrl.name}
+                                        </Text>
+
+                                        </TouchableHighlight>
+                                        {
+                                            index<this.state.newLinkUrls.length-1?(<View style={styles.horizontalLine}/>):(<View />)
+                                        }
+                                    </View>
+                                )
+                            })
+                        }
                     </View>
                 </Modal>
             </View>
-
-
         )
     }
 }
