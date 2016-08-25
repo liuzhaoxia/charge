@@ -4,43 +4,29 @@
 import { createAction } from 'redux-actions';
 import { Actions } from 'react-native-router-flux';
 import store from 'react-native-simple-store';
-import LoginActionEnum from '../constants/loginActionEnum';
 import { api, callApi } from '../apis/api';
+import { Global } from '../Global';
 
 const loginActions = {
-  setUser: createAction(LoginActionEnum.SET_USER),
   loginRequest: (parameter) =>
     dispatch => {
       callApi(
         api.login(parameter),
         data => {
-          dispatch(loginActions.loginRequestSuccess(data, parameter));
+          dispatch(loginActions.loginRequestSuccess(data));
         },
         err => {
           dispatch(loginActions.loginRequestFail(err));
         }
       );
     },
-  loginRequestSuccess: (data, user) =>
+  loginRequestSuccess: (data) =>
     dispatch => {
-      dispatch(loginActions.setUser(user));
-      store.get('user')
-        .then(res => {
-          if (res) {
-            return store.update('user', user);
-          }
-          return store.save('user', user);
-        });
+      Global.appState.user = data;
     },
   loginRequestFail: err =>
     dispatch => {
-      dispatch(loginActions.setUser(null));
-      store.get('user')
-        .then(res => {
-          if (res) {
-            store.update('user', null);
-          }
-        });
+      Global.appState.user = null;
     },
 };
 

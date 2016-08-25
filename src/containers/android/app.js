@@ -10,8 +10,9 @@ import {
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider, connect } from 'react-redux';
 import { Router, Scene, Modal } from 'react-native-router-flux';
+import store from 'react-native-simple-store';
 import routeReducerCreator from './../../reducers/routeReducerCreator';
-import Store from './../../store/store';
+import ReduxStore from './../../store/store';
 import Login from '../../containers/android/Login';
 import Start from '../../containers/android/Start';
 import DetailInfo from '../../containers/android/Detail';
@@ -19,11 +20,23 @@ import ShellsDetail from '../../containers/android/ShellsDetail';
 import Choose from '../../containers/android/Choose';
 import About from './../../containers/android/About';
 import Main from './../../containers/android/Main';
+import { Global } from '../../Global';
 
 class App extends React.Component {
+  componentWillUnmount() {
+    store.get('appState')
+      .then(res => {
+        if (res) {
+          store.update('appState', Global.appState);
+          return;
+        }
+        store.save('appState', Global.appState);
+      });
+  }
+
   render() {
     return (
-      <Provider store={Store}>
+      <Provider store={ReduxStore}>
         <Router createReducer={routeReducerCreator}>
           <Scene key="modal" component={Modal}>
             <Scene key="root" hideNavBar hideTabBar>
