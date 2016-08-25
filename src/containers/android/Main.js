@@ -71,7 +71,7 @@ class Main extends Component {
     }
 
     search() {
-
+        Actions.SearchList();
     }
     imagePress() {
         Actions.Choose();

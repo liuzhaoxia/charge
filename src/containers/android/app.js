@@ -20,6 +20,7 @@ import ShellsDetail from '../../containers/android/ShellsDetail';
 import Choose from '../../containers/android/Choose';
 import About from './../../containers/android/About';
 import Main from './../../containers/android/Main';
+import SearchList from '../../containers/android/SearchList';
 import { Global } from '../../Global';
 
 class App extends React.Component {
@@ -56,8 +57,19 @@ class App extends React.Component {
                   title="DetailInfo"
                   hideNavBar
                 />
-                <Scene key="Choose" component={Choose} title="Choose" hideNavBar />
               </Scene>
+              <Scene
+                 key="Choose"
+                 component={Choose}
+                 title="Choose"
+                 hideNavBar
+                 />
+              <Scene
+                 key="SearchList"
+                 component={SearchList}
+                 title="搜索"
+                 hideNavBar
+                 />
               <Scene
                 direction="horizontal"
                 key="About" component={About}
