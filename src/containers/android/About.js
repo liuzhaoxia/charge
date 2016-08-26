@@ -61,7 +61,7 @@ class About extends Component {
                 Actions.HelpView();
                 break;
             case "3":
-                const url = data.content;
+                const url = 'mailto:'+data.content;
                 Linking.canOpenURL(url).then(supported => {
                     if (!supported) {
                         console.log('Can\'t handle url: ' + url);
