@@ -111,15 +111,6 @@ class Login extends Component {
     Helper.bindMethod(this);
   }
 
-  componentWillMount() {
-    if (Global.appState.user) {
-      this.setState({
-        userName: Global.appState.user.name,
-        password: Global.appState.user.password,
-      });
-    }
-  }
-
   onLogin() {
     const parameter = {
       name: Number(this.state.userName),

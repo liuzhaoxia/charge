@@ -3,8 +3,7 @@ import { StyleSheet, View, Image, TextInput, Text } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import store from 'react-native-simple-store';
-import LoginActions from '../../actions/UserManagementActions';
+import UserManagementActions from '../../actions/UserManagementActions';
 import Helper from '../../utils/helper';
 
 const styles = StyleSheet.create({
@@ -122,18 +121,6 @@ class UserInfo extends Component {
   }
 
   render() {
-    //const user = {
-    //  name: '测试人员',
-    //  access_token: '0005Y3SN00OCGL0378A7C91A800FA7F918FD1BE13CC80476',
-    //  userId: 9989303,
-    //  expires_in: 86400,
-    //  phone: 1,
-    //  wechat: 1,
-    //  icon: 'http://chargingtest.navinfo.com/Charge/resources/avatar/9989303_201603221505_pic.jpg',
-    //};
-
-    //const user = null;
-    console.log(this.props);
     const { user } = this.props.state;
     if (!user) {
       return this.renderNoLogin();
@@ -143,4 +130,19 @@ class UserInfo extends Component {
   }
 }
 
-export default UserInfo;
+function mapStateToProps(state) {
+  return {
+    state: state.UserManagementReducer,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(UserManagementActions, dispatch),
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserInfo);
