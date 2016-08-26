@@ -29,7 +29,7 @@ import imageViewPage from '../../containers/android/imageViewPager';
 import Regist from './Regist';
 import UserAgreement from './UserAgreement';
 import FindPassword from './FindPassword';
-import Error from './Error'
+import Error from './Error';
 
 class App extends React.Component {
   componentWillUnmount() {
@@ -44,23 +44,27 @@ class App extends React.Component {
   }
 
   test1() {
-    alert(111);
+    // alert(111);
   }
 
   render() {
     return (
-
       <Provider store={ReduxStore}>
         <Router createReducer={routeReducerCreator}>
           <Scene key="modal" component={Modal}>
             <Scene key="root">
-              <Scene key="start" component={Start} title="Start" hideNavBar hideTabBar initial />
-              <Scene key="login" component={Login} title="登陆" hideNavBar={false} />
-              <Scene key="regist" component={Regist} title="注册" hideNavBar={false} />
-              <Scene key="userAgreement" component={UserAgreement} title="用户协议" hideNavBar={false} />
-              <Scene key="findPassword" component={FindPassword} title="手机找回密码" hideNavBar={false} />
+              <Scene key="start" component={Start} title="Start" hideNavBar hideTabBar initial/>
+              <Scene key="login" component={Login} title="登陆" hideNavBar={false}/>
+              <Scene key="regist" component={Regist} title="注册" hideNavBar={false}/>
+              <Scene key="userAgreement" component={UserAgreement} title="用户协议" hideNavBar={false}/>
+              <Scene key="findPassword" component={FindPassword} title="手机找回密码" hideNavBar={false}/>
               <Scene key="mainModule" direction="horizontal">
-                <Scene key="main" component={Main} title="Main" hideNavBar />
+                <Scene
+                  key="main"
+                  component={Main}
+                  title="Main"
+                  hideNavBar
+                />
                 <Scene
                   key="shellsDetail"
                   component={ShellsDetail}
@@ -73,20 +77,21 @@ class App extends React.Component {
                   title="DetailInfo"
                   hideNavBar
                 />
-              <Scene
+                <Scene
                   key="imageViewPage"
                   component={imageViewPage}
                   title="imageViewPage"
-                  hideNavBar/>
-              </Scene>
-                <Scene
-                    key="Choose"
-                    component={Choose}
-                    title="个人定制"
-                    rightTitle="重置"
-                    onRight={this.test1}
-                    hideNavBar={false}
+                  hideNavBar
                 />
+              </Scene>
+              <Scene
+                key="Choose"
+                component={Choose}
+                title="个人定制"
+                rightTitle="重置"
+                onRight={this.test1}
+                hideNavBar={false}
+              />
               <Scene
                 key="SearchList"
                 component={SearchList}
@@ -99,19 +104,22 @@ class App extends React.Component {
                 hideNavBar={false}
               />
               <Scene
-                  key="HelpView"
-                  component={HelpView}
-                  title="帮助"
-                  hideNavBar={false}
+                key="HelpView"
+                component={HelpView}
+                title="帮助"
+                hideNavBar={false}
               />
-               <Scene
-                    key="ChargeView"
-                    component={ChargeView}
-                    title="桩家视界"
-                    hideNavBar={false}
-               />
+              <Scene
+                key="ChargeView"
+                component={ChargeView}
+                title="桩家视界"
+                hideNavBar={false}
+              />
             </Scene>
-            <Scene key="error" component={Error} />
+            <Scene
+              key="error"
+              component={Error}
+            />
           </Scene>
         </Router>
       </Provider>

@@ -7,8 +7,7 @@
 
   // 添加全局函数和对象
   "globals": {
-    "fetch": true,
-    "Linking": true,
+    "fetch": true
   },
 
   /**
@@ -31,6 +30,9 @@
     "no-unused-vars": 0,
 
     // 关闭规则，允许使用类方式创建无状态react组件
-    "react/prefer-stateless-function": 0
+    "react/prefer-stateless-function": 0,
+
+    // 关闭规则，允许关闭标签之前没有空格
+    "react/jsx-space-before-closing": 0
   }
 }
