@@ -3,9 +3,9 @@
  */
 import React, { Component } from 'react';
 import {
-  View,
-  Image,
-  Text,
+    View,
+    Image,
+    Text,
 } from 'react-native';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Router, Scene, Modal,ActionConst } from 'react-native-router-flux';
@@ -25,6 +25,7 @@ import HelpView from './../../containers/android/HelpView';
 import Main from './../../containers/android/Main';
 import SearchList from '../../containers/android/SearchList';
 import { Global } from '../../Global';
+import imageViewPage from '../../containers/android/imageViewPager';
 class App extends React.Component {
   componentWillUnmount() {
     store.get('appState')
@@ -62,6 +63,11 @@ class App extends React.Component {
                   title="DetailInfo"
                   hideNavBar
                 />
+              <Scene
+                  key="imageViewPage"
+                  component={imageViewPage}
+                  title="imageViewPage"
+                  hideNavBar/>
               </Scene>
                 <Scene
                     key="Choose"

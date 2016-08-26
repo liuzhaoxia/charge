@@ -26,7 +26,7 @@ import store from 'react-native-simple-store';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2B3745'
+    backgroundColor: '#FFFFFF'
   },
   header:{
     height:50,
@@ -58,36 +58,56 @@ const styles = StyleSheet.create({
 class SearchList extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      searchText: '',
+      history:null,
+    };
     Helper.bindMethod(this);
   }
 
   componentDidMount() {
 
-    console.log("search")
   }
-    back(){
-      Actions.pop();
-    }
+  
+  changeState(key,value){
+    this.setState({ [key]: value });
+  }
 
-    search(){
+  back(){
+    Actions.pop();
+  }
 
-    }
+  search(){
 
-    componentWillReceiveProps(nextProps) {
+  }
 
-    }
+  componentWillReceiveProps(nextProps) {
 
-    render(){
-        return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Button style={styles.logintext} onPress={this.back}>返回</Button>
-                <TextInput placeholder="搜索地点" placeholderTextColor ='#E0E0E0' onSubmitEditing={this.search}  style={styles.textinput} underlineColorAndroid='transparent' keyboardType = 'default' />
-                <Button style={styles.search} onPress={this.back} >取消</Button>
-            </View>
+  }
+
+  render(){
+    return (
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Button style={styles.logintext} onPress={this.back}>返回</Button>
+             <TextInput
+                value={this.state.searchText}
+                onChangeText={text => {
+                   this.changeState('searchText', text);
+                }}
+               placeholder="搜索地点"
+               placeholderTextColor ='#E0E0E0'
+               onSubmitEditing={this.search}
+               style={styles.textinput}
+               underlineColorAndroid='transparent'
+               keyboardType = 'default' />
+
+          <Button style={styles.search} onPress={this.back} >取消</Button>
         </View>
-        )
-    }
+      </View>
+    )
+  }
 }
 function mapStateToProps(state) {
     return {

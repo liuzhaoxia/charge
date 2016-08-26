@@ -8,8 +8,8 @@ import { Actions } from "react-native-router-flux";
 const detailActions = {
     getDetailByPid: (parameter)=> {
         return dispatch=> {
-             callApi(
-                 api.getDetailByPid(parameter),//根据pid获取详情
+            callApi(
+                api.getDetailByPid(parameter),//根据pid获取详情
                 (data)=>dispatch(detailActions.getDetailRequest(data)),
                 (err)=>console.warn(err)
             );
