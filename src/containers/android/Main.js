@@ -94,8 +94,8 @@ class Main extends Component {
                     <View style={styles.header}>
                         <Button style={styles.logintext} onPress={this.openDrawer}>登 录</Button>
                         <TextInput placeholder="搜索地点" placeholderTextColor ='#E0E0E0'  style={styles.textinput} underlineColorAndroid='transparent'
-                                   keyboardType = 'default'>
-                        </TextInput>
+                                               keyboardType = 'default' onFocus={this.search}>
+                    </TextInput>
                         <Button style={styles.search} onPress={this.search} >搜索</Button>
                     </View>
                     <View style={styles.map}>
@@ -109,7 +109,6 @@ class Main extends Component {
 
                             </TouchableHighlight>
                         </View>
-
                     </View>
                 </View>
             </DrawerLayoutAndroid>
