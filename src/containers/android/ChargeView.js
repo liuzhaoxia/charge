@@ -85,7 +85,7 @@ class ChargeView extends Component {
     render() {
         return (
             <ScrollView>
-                <View>
+                <View style={{marginTop:40}}>
                     <Swiper style={styles.wrapper} height={240} paginationStyle={{bottom: 10, right: 60,}}
                             loop={true} autoplay={true}>
                         <View style={styles.slide}>

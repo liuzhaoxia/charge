@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import store from 'react-native-simple-store';
-import LoginActions from '../../actions/loginActions';
+import LoginActions from '../../actions/UserManagementActions';
 import Helper from '../../utils/helper';
 
 const styles = StyleSheet.create({

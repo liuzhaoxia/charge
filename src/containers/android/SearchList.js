@@ -19,9 +19,10 @@ import Modal from "react-native-modalbox";
 import { connect } from 'react-redux';
 import  {bindActionCreators} from 'redux';
 import { Actions } from "react-native-router-flux";
-import searchActions from '../../actions/SearchActions';
+import searchActions from '../../actions/searchActions';
 import Helper from '../../utils/helper';
 import store from 'react-native-simple-store';
+import { Global } from '../../Global';
 
 const styles = StyleSheet.create({
   container: {
@@ -61,15 +62,19 @@ class SearchList extends Component {
 
     this.state = {
       searchText: '',
-      history:null,
+      history:Global.appState.searchHistory || {list:[]},
     };
     Helper.bindMethod(this);
   }
 
   componentDidMount() {
-
+    if(!Global.appState.searchHistory){
+      Global.appState.searchHistory = {
+        list:[]
+      }
+    }
   }
-  
+
   changeState(key,value){
     this.setState({ [key]: value });
   }
@@ -79,11 +84,10 @@ class SearchList extends Component {
   }
 
   search(){
-
-  }
-
-  componentWillReceiveProps(nextProps) {
-
+    if(Global.appState.searchHistory){
+      Global.appState.searchHistory.list.push(this.state.searchText);
+    }
+    this.setState({"history":Global.appState.searchHistory});
   }
 
   render(){
@@ -104,6 +108,29 @@ class SearchList extends Component {
                keyboardType = 'default' />
 
           <Button style={styles.search} onPress={this.back} >取消</Button>
+        </View>
+        <View>
+          {
+            this.state.history.list.map((text,i)=>{
+              return (
+                <View style={{flexDirection:"row"}}>
+                   <View style={{flex:1}}>
+                   <Image
+                      source={require('../../image/history.png')}
+                    />
+                   </View>
+                   <View style={{flex:8,underlineColorAndroid:"gray"}}>
+                      <Text key={text+i} style={{color:"#000000"}}>{text}</Text>
+                   </View>
+                   <View style={{flex:1}}>
+                   <Image
+                      source={require('../../image/arrow.png')}
+                    />
+                   </View>
+                </View>
+              )
+            })
+          }
         </View>
       </View>
     )

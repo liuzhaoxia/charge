@@ -1,12 +1,10 @@
 /**
  * Created by zhongxiaoming on 2016/8/5.
  */
-//关于
-
 import React,{Component} from 'react';
-import {View, Text, StyleSheet,TextInput,Image,Modal,ToolbarAndroid,ListView,  TouchableHighlight,
+import {View, Text, StyleSheet,TextInput,Image,Modal,ToolbarAndroid,ListView,TouchableHighlight,Linking,
     TouchableOpacity,} from "react-native";
-
+import  {bindActionCreators} from 'redux'
 import { Actions} from 'react-native-router-flux';
 const styles = StyleSheet.create({
     container: {
@@ -53,18 +51,30 @@ class About extends Component {
         this.state={
             dataSource:ds.cloneWithRows(MENU),
         }
+        this.test2 = this.test2.bind(this);
+        this.renderRow = this.renderRow.bind(this);
     }
 
-
+    test2(id,data){
+        switch(id){
+            case "0":
+                Actions.HelpView();
+                break;
+            case "3":
+                const url = 'mailto:'+data.content;
+                Linking.canOpenURL(url).then(supported => {
+                    if (!supported) {
+                        console.log('Can\'t handle url: ' + url);
+                    } else {
+                        return Linking.openURL(url);
+                    }
+                }).catch(err => console.error('An error occurred', err));
+        }
+    }
     render(){
         return (
             <View style={styles.container}>
                 <View style={styles.bgcontainer}>
-                    <View style={styles.toolbar}>
-                        <Text style={{flex:1}}  onPress={Actions.mainModule}>返回</Text>
-                        <Text style={{color:'#fff',textAlign:'center',flex:9}}>关于</Text>
-                    </View>
-
                         <Image
                             style={styles.bg}
                             source={require('../../image/bg_about.png')}>
@@ -72,9 +82,7 @@ class About extends Component {
                                 <View>
                                     <Text style={{color:'red',textAlign:'center',flex:4}}>1.0.21</Text>
                                 </View>
-
                             </View>
-
                         </Image>
 
                     <View  style={{flex:2}}>
@@ -110,11 +118,10 @@ class About extends Component {
             />
         );
     }
-
     renderRow(data,sectionID,rowID){
         return(
             <View style={{flex:1}}>
-                <TouchableHighlight underlayColor='#ddd' onPress={()=>this.onSelectItem(rowID)}>
+                <TouchableHighlight underlayColor='#ddd' onPress={()=>this.test2(rowID,data)}>
                     <View style={styles.menuitem} >
                         <View>
                             <Text style={{color:'#333333',textAlign:'left',fontSize:16}}>{data.title}</Text>
@@ -125,11 +132,8 @@ class About extends Component {
                         <View>
                             <Text style={{color:'#333333',textAlign:'center',fontSize:19}}>{data.arrow}</Text>
                         </View>
-
-
                     </View>
                 </TouchableHighlight>
-
             </View>
         );
     }
