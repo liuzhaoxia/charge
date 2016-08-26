@@ -9,7 +9,7 @@ const FetchMethod = {
 function jsonToQueryString(jsonObj) {
   let queryStr = '';
   Object.keys(jsonObj).forEach(key => {
-    const value = encodeURIComponent(JSON.stringify(jsonObj[key]));
+    const value = JSON.stringify(jsonObj[key]);
     queryStr += `${key}=${value}&`;
   });
 

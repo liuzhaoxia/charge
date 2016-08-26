@@ -2,10 +2,11 @@
  * Created by zhaohang on 2016/8/8.
  */
 import React ,{Component}from 'react';
-import {View, Text, StyleSheet,TextInput,Image,ListView,TouchableHighlight,Platform,TouchableWithoutFeedback,ScrollView} from "react-native";
+import {View, Text, StyleSheet,TextInput,Image,ListView,TouchableHighlight,Platform,TouchableWithoutFeedback,ScrollView,ToolbarAndroid} from "react-native";
 import { connect } from 'react-redux'
 import  {bindActionCreators} from 'redux'
 import Button from "react-native-button";
+import Helper from '../../utils/helper';
 const styles = StyleSheet.create({
     thumb: {
         padding: 10,
@@ -78,7 +79,8 @@ const styles = StyleSheet.create({
     container: {
         height: 250,
         borderBottomWidth: 1,
-        borderBottomColor: '#D8D8D8'
+        borderBottomColor: '#D8D8D8',
+        marginTop: 20
     },
     chargeContainer: {
         height: 70,
@@ -99,11 +101,15 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: 10,
         color: '#3366FF'
-    },testObj:{
-        position:'absolute',
-        left :100,
-        top:100
-    }
+    }, testObj: {
+        position: 'absolute',
+        left: 100,
+        top: 100
+    },
+    toolbar: {
+        backgroundColor: '#e9eaed',
+        height: 56,
+    },
 });
 class Choose extends Component {
     constructor(props) {
@@ -270,7 +276,7 @@ class Choose extends Component {
                         select: false
                     }
                 ]
-            ],payCard: [
+            ], payCard: [
                 [
                     {
                         name: '国网普通卡',
@@ -299,7 +305,11 @@ class Choose extends Component {
                         select: false
                     }
                 ]
-            ]
+            ],
+            toolbar: {
+                backgroundColor: '#e9eaed',
+                height: 56,
+            },
         };
         this.test = this.test.bind(this);
         this.renderTask = this.renderTask.bind(this);
@@ -377,6 +387,7 @@ class Choose extends Component {
         }
         this.setState({property: property});
     }
+
     handleAllPayPress(name) {
         let allPay = this.state.allPay;
         let quickPay = this.state.quickPay;
@@ -396,6 +407,7 @@ class Choose extends Component {
         this.setState({quickPay: quickPay});
         this.setState({payCard: payCard});
     }
+
     handleQuickPayPress(name) {
         let allPay = this.state.allPay;
         let quickPay = this.state.quickPay;
@@ -410,6 +422,7 @@ class Choose extends Component {
         this.setState({allPay: allPay});
         this.setState({quickPay: quickPay});
     }
+
     handlePayCardPress(name) {
         let allPay = this.state.allPay;
         let payCard = this.state.payCard;
@@ -427,56 +440,66 @@ class Choose extends Component {
 
     render() {
         return (
-            <ScrollView >
-            <View>
-                <View style={styles.container}>
-                    <Text style={styles.brand}>按车辆品牌</Text>
+            <View style={{flex:1}}>
+                <ScrollView >
                     <View>
-                        {this.state.brands.map(this.test)}
+                        <View style={styles.container}>
+                            <Text style={styles.brand}>按车辆品牌</Text>
+                            <View>
+                                {this.state.brands.map(this.test)}
+                            </View>
+                        </View>
+                        <View style={styles.chargeContainer}>
+                            <Text style={styles.brand}>按快冲慢充</Text>
+                            <View style={styles.flexContainer}>
+                                {this.state.chargeType.map(this.charge)}
+                            </View>
+                        </View>
+                        <View style={styles.chargeContainer}>
+                            <Text style={styles.brand}>按停车收费（元/小时）</Text>
+                            <View style={styles.flexContainer}>
+                                {this.state.parking.map(this.parking)}
+                            </View>
+                        </View>
+                        <View style={styles.chargeContainer}>
+                            <Text style={styles.brand}>按属性</Text>
+                            <View style={styles.flexContainer}>
+                                {this.state.property.map(this.property)}
+                            </View>
+                        </View>
+                        <View style={styles.payContainer}>
+                            <Text style={styles.brand}>按支付方式（可多选）</Text>
+                            <View style={styles.flexContainer}>
+                                {this.state.allPay.map(this.allPay)}
+                            </View>
+                            <Text style={styles.brand}>便捷支付</Text>
+                            <View>
+                                {this.state.quickPay.map(this.quickPay)}
+                            </View>
+                            <Text style={styles.brand}>充值卡</Text>
+                            <View>
+                                {this.state.payCard.map(this.payCard)}
+                            </View>
+                        </View>
                     </View>
-                </View>
-                <View style={styles.chargeContainer}>
-                    <Text style={styles.brand}>按快冲慢充</Text>
-                    <View style={styles.flexContainer}>
-                        {this.state.chargeType.map(this.charge)}
+                </ScrollView>
+                <ToolbarAndroid
+                    style={styles.toolbar}>
+                    <View style={{height: 56, flexDirection: 'row', alignItems: 'center'}}>
+                        <Button>保存</Button>
                     </View>
-                </View>
-                <View style={styles.chargeContainer}>
-                    <Text style={styles.brand}>按停车收费（元/小时）</Text>
-                    <View style={styles.flexContainer}>
-                        {this.state.parking.map(this.parking)}
-                    </View>
-                </View>
-                <View style={styles.chargeContainer}>
-                    <Text style={styles.brand}>按属性</Text>
-                    <View style={styles.flexContainer}>
-                        {this.state.property.map(this.property)}
-                    </View>
-                </View>
-                <View style={styles.payContainer}>
-                    <Text style={styles.brand}>按支付方式（可多选）</Text>
-                    <View style={styles.flexContainer}>
-                        {this.state.allPay.map(this.allPay)}
-                    </View>
-                    <Text style={styles.brand}>便捷支付</Text>
-                    <View>
-                        {this.state.quickPay.map(this.quickPay)}
-                    </View>
-                    <Text style={styles.brand}>充值卡</Text>
-                    <View>
-                        {this.state.payCard.map(this.payCard)}
-                    </View>
-                </View>
+                </ToolbarAndroid>
             </View>
-            </ScrollView>
         )
     }
+
     allPay(data, index) {
         if (data.select) {
             return (
                 <Button
                     containerStyle={styles.longButton1}
                     key={index}
+                    activeOpacity={1}
                 >
                     <View>
                         <Text style={styles.chargeText1}>{data.name}</Text>
@@ -489,6 +512,7 @@ class Choose extends Component {
                     containerStyle={styles.longButton}
                     key={index}
                     onPress={() => this.handleAllPayPress(data.name)}
+                    activeOpacity={1}
                 >
                     <View>
                         <Text style={styles.chargeText}>{data.name}</Text>
@@ -497,12 +521,14 @@ class Choose extends Component {
             );
         }
     }
+
     property(data, index) {
         if (data.select) {
             return (
                 <Button
                     containerStyle={styles.longButton1}
                     key={index}
+                    activeOpacity={1}
                 >
                     <View>
                         <Text style={styles.chargeText1}>{data.name}</Text>
@@ -515,6 +541,7 @@ class Choose extends Component {
                     containerStyle={styles.longButton}
                     key={index}
                     onPress={() => this.handlePropertyPress(data.name)}
+                    activeOpacity={1}
                 >
                     <View>
                         <Text style={styles.chargeText}>{data.name}</Text>
@@ -530,6 +557,7 @@ class Choose extends Component {
                 <Button
                     containerStyle={styles.longButton1}
                     key={index}
+                    activeOpacity={1}
                 >
                     <View>
                         <Text style={styles.chargeText1}>{data.name}</Text>
@@ -542,6 +570,7 @@ class Choose extends Component {
                     containerStyle={styles.longButton}
                     key={index}
                     onPress={() => this.handleParkingPress(data.name)}
+                    activeOpacity={1}
                 >
                     <View>
                         <Text style={styles.chargeText}>{data.name}</Text>
@@ -557,6 +586,7 @@ class Choose extends Component {
                 <Button
                     containerStyle={styles.longButton1}
                     key={index}
+                    activeOpacity={1}
                 >
                     <View>
                         <Text style={styles.chargeText1}>{data.name}</Text>
@@ -569,6 +599,7 @@ class Choose extends Component {
                     containerStyle={styles.longButton}
                     key={index}
                     onPress={() => this.handleChargePress(data.name)}
+                    activeOpacity={1}
                 >
                     <View>
                         <Text style={styles.chargeText}>{data.name}</Text>
@@ -596,6 +627,7 @@ class Choose extends Component {
                 <Button
                     containerStyle={styles.thumb1}
                     key={index}
+                    activeOpacity={1}
                 >
                     <View>
                         <Image style={styles.image}
@@ -610,6 +642,7 @@ class Choose extends Component {
                     containerStyle={styles.thumb}
                     key={index}
                     onPress={() => this.handlePress(brand.name)}
+                    activeOpacity={1}
                 >
                     <View>
                         <Image style={styles.image}
@@ -637,6 +670,7 @@ class Choose extends Component {
                     containerStyle={styles.longButton1}
                     key={index}
                     onPress={() => this.handleQuickPayPress(quickPay.name)}
+                    activeOpacity={1}
                 >
                     <View>
                         <Text style={styles.chargeText1}>{quickPay.name}</Text>
@@ -649,6 +683,7 @@ class Choose extends Component {
                     containerStyle={styles.longButton}
                     key={index}
                     onPress={() => this.handleQuickPayPress(quickPay.name)}
+                    activeOpacity={1}
                 >
                     <View>
                         <Text style={styles.chargeText}>{quickPay.name}</Text>
@@ -658,6 +693,7 @@ class Choose extends Component {
         }
 
     }
+
     payCard(data, index) {
         return (
             <View style={styles.flexContainer} key={index}>
@@ -673,6 +709,7 @@ class Choose extends Component {
                     containerStyle={styles.longButton1}
                     key={index}
                     onPress={() => this.handlePayCardPress(payCard.name)}
+                    activeOpacity={1}
                 >
                     <View>
                         <Text style={styles.chargeText1}>{payCard.name}</Text>
@@ -685,6 +722,7 @@ class Choose extends Component {
                     containerStyle={styles.longButton}
                     key={index}
                     onPress={() => this.handlePayCardPress(payCard.name)}
+                    activeOpacity={1}
                 >
                     <View>
                         <Text style={styles.chargeText}>{payCard.name}</Text>
