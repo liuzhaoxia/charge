@@ -29,10 +29,22 @@ class App extends React.Component {
     store.get('appState')
       .then(res => {
         if (res) {
+          console.log("---");
+          console.log(Global.appState);
+          console.log("---");
           store.update('appState', Global.appState);
           return;
         }
+      console.log("------");
+        console.log(Global.appState);
+    console.log("------");
         store.save('appState', Global.appState);
+      })
+      .catch(error => {
+          store.save('appState', Global.appState);
+    console.log("----------");
+          console.error(error.message);
+    console.log("----------");
       });
   }
     test1(){

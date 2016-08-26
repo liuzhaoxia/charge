@@ -13,6 +13,7 @@ const StartActions = {
     dispatch => {
       store.get('appState')
         .then(res => {
+          console.log(res)
           Global.appState = res;
           if (!Global.appState) {
             Global.appState = deepcopy(appStateDefault);
