@@ -33,6 +33,9 @@
     "react/prefer-stateless-function": 0,
 
     // 关闭规则，允许关闭标签之前没有空格
-    "react/jsx-space-before-closing": 0
+    "react/jsx-space-before-closing": 0,
+
+    // 关闭规则，允许不验证组件属性
+    "react/prop-types": 0
   }
 }
