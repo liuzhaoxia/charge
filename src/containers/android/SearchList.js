@@ -119,8 +119,8 @@ class SearchList extends Component {
                       source={require('../../image/history.png')}
                     />
                    </View>
-                   <View style={{flex:8,underlineColorAndroid="gray"}}>
-                   <Text key={text+i} style={{color:"#000000"}}>{text}</Text>
+                   <View style={{flex:8,underlineColorAndroid:"gray"}}>
+                      <Text key={text+i} style={{color:"#000000"}}>{text}</Text>
                    </View>
                    <View style={{flex:1}}>
                    <Image
