@@ -12,7 +12,6 @@ import {
   StyleSheet,
   Dimensions,
   TouchableHighlight,
-    Linking,
 } from 'react-native';
 import Modal from 'react-native-modalbox';
 import { Actions } from 'react-native-router-flux';
@@ -30,13 +29,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalHeight: {
-    height: 180,
-    width:350,
-    borderRadius: 10,
+    height: 200,
   },
   // modal上子View的样式
   subView: {
-    height: 180,
+    marginLeft: 20,
+    marginRight: 20,
     backgroundColor: '#fff',
     alignSelf: 'stretch',
     justifyContent: 'center',
@@ -95,18 +93,6 @@ class ShellsDetail extends Component {
     this.state = {
       detailData: this.props.detailData,
       show: this.props.showOrHide,
-      isOpen:false,
-      newLinkUrls:[
-        {
-          url:'baidumap://map/direction?destination=39.6,116.5',
-          name:'百度'
-        },{
-          url:'androidamap://viewMap?sourceApplication=appname&poiname=abc&lat=36.2&lon=116.1&dev=0',
-          name:'高德'
-        },,{
-          url:'',
-          name:'取消'
-        }],
     };
     this.setModalVisible = this.setModalVisible.bind(this);
     this.toDetailContainer = this.toDetailContainer.bind(this);
@@ -122,186 +108,147 @@ class ShellsDetail extends Component {
 
   setModalVisible() {
     this.setState({
-      isOpen: !this.state.isOpen,
+      show: !this.state.show,
     });
-    }
+
+    const url = 'baidumap://map/direction?destination=39.6,116.5';
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      }
+    });
+  }
 
   toDetailContainer() {
     this.setState({
       show: false,
     });
-    Actions.DetailInfo();
+    Actions.detailInfo();
   }
 
   closeModal() {
     this.setState({ show: false });
   }
 
-  openMapUrl(index){
-    if(this.state.newLinkUrls[index].url==''){
-      this.setState({isOpen:false});
-    }else {
-      Linking.canOpenURL(this.state.newLinkUrls[index].url).then(supported => {
-        if (supported) {
-          return Linking.openURL(this.state.newLinkUrls[index].url);
-        }else{
-          if(this.state.newLinkUrls[index].name=='百度'){
-            return Linking.openURL('http://shouji.baidu.com/software/9831363.html');
-          }else  if(this.state.newLinkUrls[index].name=='高德'){
-            return Linking.openURL("http://www.autonavi.com/");
-          }
-        }
-      });
-    }
-  }
-
   render() {
     const data = this.state.detailData[0];
     return (
-        <Modal
-          position={"bottom"}
-          isOpen={this.state.show}
-          style={[styles.modalStyle, styles.modalHeight]}
-          onClosed={this.closeModal}
-          backdrop={false}
-          swipeArea={20}
-        >
-          <View style={styles.subView}>
-            <View style={{ flexDirection: 'row', marginTop: 5 }}>
-              <View>
-                <Image
-                  source={
-                  data.plotKind === 0 ?
-                  require('../../image/charge_station_common.png') :
-                  require('../../image/ex_station_special.png')}
-                />
-              </View>
-              <View style={{ width: 200 }}>
-                <Text style={styles.nameTitle}>{data.name}</Text>
-              </View>
-              <View>
-                {
-                  data.carBrand.map(
-                    (car, i) => {
-                      if (car === '') {
-                        return null;
-                      }
-
-                      return (
-                        <View key={i} style={{ flexDirection: 'row' }}>
-                          <Image
-                            source={
-                            car === '1' ?
-                            require('../../image/bmw.png') :
-                            require('../../image/tesla.png')
-                            }
-                          />
-                        </View>
-                      );
-                    }
-                  )
-                }
-              </View>
+      <Modal
+        position={"bottom"}
+        isOpen={this.state.show}
+        style={[styles.modalStyle, styles.modalHeight]}
+        onClosed={this.closeModal}
+        backdrop={false}
+        swipeArea={20}
+      >
+        <View style={styles.subView}>
+          <View style={{ flexDirection: 'row', marginTop: 5 }}>
+            <View>
+              <Image
+                source={
+                data.plotKind === 0 ?
+                require('../../image/charge_station_common.png') :
+                require('../../image/ex_station_special.png')}
+              />
             </View>
-            <View style={{ flexDirection: 'row' }}>
-              <View>
-                <Text style={{ fontSize: 10, marginLeft: 30 }}>{data.address}</Text>
-              </View>
+            <View style={{ width: 200 }}>
+              <Text style={styles.nameTitle}>{data.name}</Text>
             </View>
-            <View style={{ flexDirection: 'row' }}>
-              <View style={{ marginLeft: 30, marginTop: 5 }}>
-                <Image
-                  source={
-                  data.state === 0 ?
-                  require('../../image/charge_avail.png') :
-                  require('../../image/charge_unavail.png')}
-                />
-              </View>
-              <View style={{ width: 150,flexDirection: 'row'  }}>
-                {
-                  data.sockerParams.map((socker, i) =>
-                    (<View key={i} style={{ flexDirection: 'row', marginLeft: 5 }}>
-                      <View style={{ flexDirection: 'row' }}>
-                        <Text >{socker.mode === '0' ? '慢充' : '快充'}</Text>
-                      </View>
-                      <View style={{ flexDirection: 'row' }}>
-                        <Text >{socker.chargingplot_count}</Text>
-                        <Text >个</Text>
-                      </View>
-                    </View>)
-                  )
-                }
-              </View>
-              <View style={{ flexDirection: 'row' }}>
-                <Image style={{ marginTop: 5 }} source={require('../../image/xposition.png')} />
-                <Text style={{ margin: 4 }}>{data.distance}km</Text>
-              </View>
-            </View>
-            <View style={{ flexDirection: 'row' }}>
-              <View style={{ marginLeft: 30, marginTop: 5 }}>
-                <Image
-                  source={data.state === 0 ?
-                  require('../../image/text_paytype.png') :
-                  require('../../image/charge_unavail.png')}
-                />
-              </View>
-              <View>
-                <Text>{data.payment}</Text>
-              </View>
-            </View>
-
-            <View style={styles.horizontalLine} />
-            <View style={styles.buttonView}>
-              <TouchableHighlight
-                underlayColor="transparent"
-                style={styles.buttonStyle}
-                onPress={this.setModalVisible}
-              >
-                <Text style={styles.buttonText}>
-                  引导
-                </Text>
-              </TouchableHighlight>
-              <View style={styles.verticalLine} />
-              <TouchableHighlight
-                underlayColor="transparent"
-                style={styles.buttonStyle}
-                onPress={this.toDetailContainer}
-              >
-                <Text style={styles.buttonText}>
-                  详情
-                </Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-          <Modal
-              position={"center"}
-              isOpen={this.state.isOpen}
-              style={[styles.modalStyle,styles.modalHeight]}
-              backdrop={false}
-              swipeArea={20}>
-            <View style={styles.subView}>
+            <View>
               {
-                this.state.newLinkUrls.map((linkUrl,index)=>{
-                  return (
-                      <View key={index}>
-                        <TouchableHighlight underlayColor='transparent' key={index}
-                                            onPress={()=>{return this.openMapUrl(index)}} style={styles.buttonStyle}
-                        >
-                          <Text key={index} style={styles.buttonText}>
-                            {linkUrl.name}
-                          </Text>
+                data.carBrand.map(
+                  (car, i) => {
+                    if (car === '') {
+                      return null;
+                    }
 
-                        </TouchableHighlight>
-                        {
-                          index<this.state.newLinkUrls.length-1?(<View style={styles.horizontalLine}/>):(<View />)
-                        }
+                    return (
+                      <View key={i} style={{ flexDirection: 'row' }}>
+                        <Image
+                          source={
+                          car === '1' ?
+                          require('../../image/bmw.png') :
+                          require('../../image/tesla.png')
+                          }
+                        />
                       </View>
-                  )
-                })
+                    );
+                  }
+                )
               }
             </View>
-          </Modal>
-        </Modal>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <View>
+              <Text style={{ fontSize: 10, marginLeft: 30 }}>{data.address}</Text>
+            </View>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{ marginLeft: 30, marginTop: 5 }}>
+              <Image
+                source={
+                data.state === 0 ?
+                require('../../image/charge_avail.png') :
+                require('../../image/charge_unavail.png')}
+              />
+            </View>
+            <View style={{ width: 200 }}>
+              {
+                data.sockerParams.map((socker, i) =>
+                  (<View key={i} style={{ flexDirection: 'row', marginLeft: 5 }}>
+                    <View style={{ flexDirection: 'row' }}>
+                      <Text >{socker.mode === '0' ? '慢充' : '快充'}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row' }}>
+                      <Text >{socker.chargingplot_count}</Text>
+                      <Text >个</Text>
+                    </View>
+                  </View>)
+                )
+              }
+            </View>
+            <View style={{ flexDirection: 'row', marginTop: 20 }}>
+              <Image style={{ marginTop: 5 }} source={require('../../image/xposition.png')} />
+              <Text style={{ margin: 4 }}>{data.distance}km</Text>
+            </View>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{ marginLeft: 30, marginTop: 5 }}>
+              <Image
+                source={data.state === 0 ?
+                require('../../image/text_paytype.png') :
+                require('../../image/charge_unavail.png')}
+              />
+            </View>
+            <View>
+              <Text>{data.payment}</Text>
+            </View>
+          </View>
+
+          <View style={styles.horizontalLine} />
+          <View style={styles.buttonView}>
+            <TouchableHighlight
+              underlayColor="transparent"
+              style={styles.buttonStyle}
+              onPress={this.setModalVisible}
+            >
+              <Text style={styles.buttonText}>
+                引导
+              </Text>
+            </TouchableHighlight>
+            <View style={styles.verticalLine} />
+            <TouchableHighlight
+              underlayColor="transparent"
+              style={styles.buttonStyle}
+              onPress={this.toDetailContainer}
+            >
+              <Text style={styles.buttonText}>
+                详情
+              </Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </Modal>
     );
   }
 }
