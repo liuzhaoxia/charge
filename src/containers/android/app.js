@@ -8,12 +8,15 @@ import {
     Text,
     StyleSheet,
     TextInput,
+  View,
+  Image,
+  Text,
 } from 'react-native';
 import { createStore, applyMiddleware, compose } from 'redux';
-import { Router, Scene, Modal,ActionConst } from 'react-native-router-flux';
-import ChargeView from './../../containers/android/ChargeView';
+import { Router, Scene, Modal, ActionConst } from 'react-native-router-flux';
 import { Provider, connect } from 'react-redux';
 import store from 'react-native-simple-store';
+import ChargeView from './../../containers/android/ChargeView';
 import routeReducerCreator from './../../reducers/routeReducerCreator';
 import ReduxStore from './../../store/store';
 import Login from '../../containers/android/Login';
@@ -28,6 +31,10 @@ import Main from './../../containers/android/Main';
 import SearchList from '../../containers/android/SearchList';
 import { Global } from '../../Global';
 import imageViewPage from '../../containers/android/imageViewPager';
+import Regist from './Regist';
+import UserAgreement from './UserAgreement';
+import FindPassword from './FindPassword';
+import Error from './Error';
 const styles = StyleSheet.create({
     textInput: {
         color: 'black',
@@ -70,9 +77,11 @@ class App extends React.Component {
     test1() {
         console.log(2222);
     }
-    searchCharge(){
+
+    searchCharge() {
 
     }
+
     title() {
         return (
             <View style={styles.container}>
@@ -91,9 +100,17 @@ class App extends React.Component {
                     <Scene key="modal" component={Modal}>
                         <Scene key="root">
                             <Scene key="start" component={Start} title="Start" hideNavBar hideTabBar initial/>
-                            <Scene key="login" component={Login} title="Login" hideNavBar/>
+                            <Scene key="login" component={Login} title="登陆" hideNavBar={false}/>
+                            <Scene key="regist" component={Regist} title="注册" hideNavBar={false}/>
+                            <Scene key="userAgreement" component={UserAgreement} title="用户协议" hideNavBar={false}/>
+                            <Scene key="findPassword" component={FindPassword} title="手机找回密码" hideNavBar={false}/>
                             <Scene key="mainModule" direction="horizontal">
-                                <Scene key="main" component={Main} title="Main" hideNavBar/>
+                                <Scene
+                                    key="main"
+                                    component={Main}
+                                    title="Main"
+                                    hideNavBar
+                                />
                                 <Scene
                                     key="shellsDetail"
                                     component={ShellsDetail}
@@ -110,7 +127,8 @@ class App extends React.Component {
                                     key="imageViewPage"
                                     component={imageViewPage}
                                     title="imageViewPage"
-                                    hideNavBar/>
+                                    hideNavBar
+                                />
                             </Scene>
                             <Scene
                                 key="Choose"
@@ -144,13 +162,15 @@ class App extends React.Component {
                                 hideNavBar={false}
                             />
                         </Scene>
-                        <Scene key="error" component={Error}/>
+                        <Scene
+                            key="error"
+                            component={Error}
+                        />
                     </Scene>
                 </Router>
             </Provider>
         );
     }
-
 }
 
 export default App;

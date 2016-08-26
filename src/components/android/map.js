@@ -9,7 +9,9 @@ import {
     StatusBar,
     View,
     ScrollView,
-    DeviceEventEmitter
+    DeviceEventEmitter,
+    TouchableHighlight,
+    Image
 } from 'react-native';
 import Mapbox, {MapView} from 'react-native-mapbox-gl';
 import { Actions } from "react-native-router-flux";
@@ -17,13 +19,15 @@ import appConfig from '../../constants/appConfig';
 import  helper from '../../utils/helper';
 const accessToken = appConfig.mapBoxToken;
 Mapbox.setAccessToken(accessToken);
-
+let watchID = null;
 class Map extends Component {
     // 构造
     constructor(props) {
         super(props);
         // 初始状态
         this.state = {
+            initialPosition: 'unknown',
+            lastPosition: 'unknown',
             center: {
                 latitude: 40.008456800067,
                 longitude: 116.47474416608
@@ -71,12 +75,31 @@ class Map extends Component {
                 strokeColor: '#ffffff',
                 fillColor: '#0000ff',
                 id: 'zap'
-            }]
+            }],
+            userLocation:{ lng: 0.0, lat: 0.0}
         };
         helper.bindMethod(this);
     }
 
+
     componentDidMount() {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                var initialPosition = JSON.stringify(position);
+                this.setState({initialPosition});
+            },
+            (error) => alert("initialPosition_error"+error.message),
+            {enableHighAccuracy: false}
+        );
+        watchID = navigator.geolocation.watchPosition((position) => {
+                var lastPosition = JSON.stringify(position);
+                alert("lastPosition"+lastPosition);
+                this.setState({
+                    lastPosition
+                })
+            }
+        );
+
 
         this.props.setVisitorData({
             "originLat": 40.018928097309,
@@ -85,6 +108,10 @@ class Map extends Component {
             "longitude": 116.48619658964,
             "radius": 5000
         });
+
+
+
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -125,9 +152,11 @@ class Map extends Component {
         console.log('onUpdateUserLocation', location);
     };
     onOpenAnnotation = (annotation) => {
+        alert("this.state.lastPosition" + this.state.lastPosition);
         this.props.setSingleData({
-            pid: annotation.id,
+            pid: annotation.id
         });
+
         console.log('onOpenAnnotation', annotation);
     };
     onRightAnnotationTapped = (e) => {
@@ -160,6 +189,7 @@ class Map extends Component {
         this._offlineProgressSubscription.remove();
         this._offlineMaxTilesSubscription.remove();
         this._offlineErrorSubscription.remove();
+        navigator.geolocation.clearWatch(watchID);
     }
 
     addNewMarkers = () => {
@@ -210,6 +240,12 @@ class Map extends Component {
         });
     };
 
+    goZoom(level){
+        console.log(this.state.zoom)
+        this._map.setZoomLevel(this.state.zoom+level);
+        this.setState({zoom:this.state.zoom+level})
+    }
+
     render() {
         StatusBar.setHidden(true);
         return (
@@ -225,7 +261,7 @@ class Map extends Component {
                     logoIsHidden={true}
                     attributionButtonIsHidden={true}
                     zoomEnabled={false}
-                    showsUserLocation={false}
+                    showsUserLocation={true}
                     styleURL={Mapbox.mapStyles.streets}
                     userTrackingMode={this.state.userTrackingMode}
                     annotations={this.state.annotations}
@@ -239,7 +275,20 @@ class Map extends Component {
                     onLongPress={this.onLongPress}
                     onTap={this.onTap}
                 />
+                <View style={{flex: 1,bottom: 50,position:"absolute",right:10}}>
+                    <TouchableHighlight style={{  width: 24, height: 24, justifyContent: 'center', alignItems: 'center'}}
+                                        onPress={()=> {return this.goZoom(1)}}  >
+                        <Image
+                            source={require('../../image/zoomout_normal.png')} />
 
+                    </TouchableHighlight>
+                    <TouchableHighlight style={{  width: 24, height: 24, justifyContent: 'center', alignItems: 'center'}}
+                                        onPress={()=> {return this.goZoom(-1)}}  >
+                        <Image
+                            source={require('../../image/zoomin_normal.png')} />
+
+                    </TouchableHighlight>
+                </View>
             </View>
         );
     }
