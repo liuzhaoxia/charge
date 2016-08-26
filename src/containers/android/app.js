@@ -33,18 +33,7 @@ import Error from './Error';
 
 class App extends React.Component {
   componentWillUnmount() {
-    store.get('appState')
-      .then(res => {
-        if (res) {
-          console.log('update');
-          console.log(JSON.stringify(Global.appState));
-          store.update('appState', Global.appState);
-          return;
-        }
-        console.log('save');
-        console.log(JSON.stringify(Global.appState));
-        store.save('appState', Global.appState);
-      });
+    store.save('appState', Global.appState);
   }
 
   test1() {

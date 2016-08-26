@@ -43,7 +43,6 @@ async function callApi(apiService, success, fail) {
     if (!response.ok) {
       throw new Error(`网络错误:${response.status}`);
     }
-    console.log('response.json');
 
     const jsonResult = await response.json();
 
