@@ -21,9 +21,11 @@ import Helper from '../../utils/helper';
 import ShellsDetail from '../../containers/android/ShellsDetail';
 import Choose from '../../containers/android/Choose';
 import About from './../../containers/android/About';
+import HelpView from './../../containers/android/HelpView';
 import Main from './../../containers/android/Main';
 import SearchList from '../../containers/android/SearchList';
 import { Global } from '../../Global';
+import imageViewPage from '../../containers/android/imageViewPager';
 import Regist from './Regist';
 import UserAgreement from './UserAgreement';
 import FindPassword from './FindPassword';
@@ -71,14 +73,20 @@ class App extends React.Component {
                   title="DetailInfo"
                   hideNavBar
                 />
-              </Scene>
               <Scene
-                key="Choose"
-                component={Choose}
-                title="个人定制"
-                rightTitle="重置"
-                onRight={this.test1}
-              />
+                  key="imageViewPage"
+                  component={imageViewPage}
+                  title="imageViewPage"
+                  hideNavBar/>
+              </Scene>
+                <Scene
+                    key="Choose"
+                    component={Choose}
+                    title="个人定制"
+                    rightTitle="重置"
+                    onRight={this.test1}
+                    hideNavBar={false}
+                />
               <Scene
                 key="SearchList"
                 component={SearchList}
@@ -86,18 +94,22 @@ class App extends React.Component {
                 hideNavBar
               />
               <Scene
-                direction="horizontal"
                 key="About" component={About}
-                schema="modal"
-                title="About"
-                hideNavBar
+                title="关于"
+                hideNavBar={false}
               />
               <Scene
-                key="ChargeView"
-                component={ChargeView}
-                title="桩家视界"
-                hideNavBar
+                  key="HelpView"
+                  component={HelpView}
+                  title="帮助"
+                  hideNavBar={false}
               />
+               <Scene
+                    key="ChargeView"
+                    component={ChargeView}
+                    title="桩家视界"
+                    hideNavBar={false}
+               />
             </Scene>
             <Scene key="error" component={Error} />
           </Scene>

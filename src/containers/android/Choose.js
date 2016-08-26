@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         height: 250,
         borderBottomWidth: 1,
         borderBottomColor: '#D8D8D8',
-        marginTop: 20
+        marginTop: 45
     },
     chargeContainer: {
         height: 70,
