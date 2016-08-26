@@ -3,11 +3,11 @@
  */
 import React, { Component } from 'react';
 import {
-    View,
-    Image,
-    Text,
-    StyleSheet,
-    TextInput,
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  TextInput,
 } from 'react-native';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Router, Scene, Modal, ActionConst } from 'react-native-router-flux';
@@ -34,42 +34,42 @@ import FindPassword from './FindPassword';
 import Error from './Error';
 
 const styles = StyleSheet.create({
-    textInput: {
-        color: 'black',
-        flex:1,
-        height:40
-    },
-    container:{
-        width:250,
-        marginLeft:60,
-        borderWidth:1,
-        borderColor:'red',
-        flexDirection: 'row',
-        marginTop:5
-    }
+  textInput: {
+    color: 'black',
+    flex: 1,
+    height: 40
+  },
+  container: {
+    width: 250,
+    marginLeft: 60,
+    borderWidth: 1,
+    borderColor: 'red',
+    flexDirection: 'row',
+    marginTop: 5
+  }
 });
 class App extends React.Component {
   componentWillUnmount() {
     store.save('appState', Global.appState);
   }
 
-    test1() {
-        console.log(2222);
-    }
+  test1() {
+    console.log(2222);
+  }
 
-    searchCharge() {
+  searchCharge() {
 
-    }
+  }
 
-    title() {
-        return (
-            <View style={styles.container}>
-                <TextInput placeholder="搜索地点" placeholderTextColor='black' style={styles.textInput}
-                           underlineColorAndroid='transparent' autoFocus={true} onChange={this.searchCharge}>
-                </TextInput>
-            </View>
-        )
-    }
+  title() {
+    return (
+      <View style={styles.container}>
+        <TextInput placeholder="搜索地点" placeholderTextColor='black' style={styles.textInput}
+                   underlineColorAndroid='transparent' autoFocus={true} onChange={this.searchCharge}>
+        </TextInput>
+      </View>
+    )
+  }
 
   render() {
     return (
@@ -116,12 +116,12 @@ class App extends React.Component {
                 onRight={this.test1}
                 hideNavBar={false}
               />
-                <Scene
-                  key="SearchList"
-                  component={SearchList}
-                  hideNavBar={false}
-                  renderTitle={this.title}
-                />
+              <Scene
+                key="SearchList"
+                component={SearchList}
+                hideNavBar={false}
+                renderTitle={this.title}
+              />
               <Scene
                 key="About" component={About}
                 title="关于"
