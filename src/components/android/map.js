@@ -241,7 +241,9 @@ class Map extends Component {
     };
 
     goZoom(level){
-        this._map.setZoomLevel((this.state.zoom+level), animated = true, ()=>{});
+        console.log(this.state.zoom)
+        this._map.setZoomLevel(this.state.zoom+level);
+        this.setState({zoom:this.state.zoom+level})
     }
 
     render() {
