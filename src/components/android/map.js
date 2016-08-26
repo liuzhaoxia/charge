@@ -9,13 +9,14 @@ import {
     StatusBar,
     View,
     ScrollView,
-    DeviceEventEmitter
+    DeviceEventEmitter,
+    TouchableHighlight,
+    Image
 } from 'react-native';
 import Mapbox, {MapView} from 'react-native-mapbox-gl';
 import { Actions } from "react-native-router-flux";
 import appConfig from '../../constants/appConfig';
 import  helper from '../../utils/helper';
-import RNALocation from 'react-native-android-location'
 const accessToken = appConfig.mapBoxToken;
 Mapbox.setAccessToken(accessToken);
 let watchID = null;
@@ -239,6 +240,10 @@ class Map extends Component {
         });
     };
 
+    goZoom(level){
+        this._map.setZoomLevel((this.state.zoom+level), animated = true, ()=>{});
+    }
+
     render() {
         StatusBar.setHidden(true);
         return (
@@ -268,7 +273,20 @@ class Map extends Component {
                     onLongPress={this.onLongPress}
                     onTap={this.onTap}
                 />
+                <View style={{flex: 1,bottom: 50,position:"absolute",right:10}}>
+                    <TouchableHighlight style={{  width: 24, height: 24, justifyContent: 'center', alignItems: 'center'}}
+                                        onPress={()=> {return this.goZoom(1)}}  >
+                        <Image
+                            source={require('../../image/zoomout_normal.png')} />
 
+                    </TouchableHighlight>
+                    <TouchableHighlight style={{  width: 24, height: 24, justifyContent: 'center', alignItems: 'center'}}
+                                        onPress={()=> {return this.goZoom(-1)}}  >
+                        <Image
+                            source={require('../../image/zoomin_normal.png')} />
+
+                    </TouchableHighlight>
+                </View>
             </View>
         );
     }

@@ -109,6 +109,7 @@ class Main extends Component {
 
                             </TouchableHighlight>
                         </View>
+
                     </View>
                 </View>
             </DrawerLayoutAndroid>
