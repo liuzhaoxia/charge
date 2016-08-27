@@ -99,19 +99,6 @@ class Map extends Component {
                 })
             }
         );
-
-
-        this.props.setVisitorData({
-            "originLat": 40.018928097309,
-            "originLng": 116.48599579179,
-            "latitude": 40.018869147739,
-            "longitude": 116.48619658964,
-            "radius": 5000
-        });
-
-
-
-
     }
 
     componentWillReceiveProps(nextProps) {
@@ -140,7 +127,7 @@ class Map extends Component {
             "originLng": location.longitude,
             "latitude": location.latitude,
             "longitude": location.longitude,
-            "radius": 500
+            "radius": 5000
         });
         this.setState({currentZoom: location.zoomLevel});
         //console.log('onRegionDidChange', location);

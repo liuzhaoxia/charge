@@ -3,7 +3,7 @@
  */
 import { FetchMethod, createFetch } from '../fetch/fetch';
 import appConfig from '../constants/appConfig';
-import Global from '../Global';
+import { Global } from '../Global';
 
 const api = {
   login: (parameter) => createFetch(
@@ -13,10 +13,10 @@ const api = {
   ),
   getVisitorData: (parameter) => {
     let token = '';
-    //console.log(Global);
-    //if (Global.appState && Global.appState.user) {
-    //  token = Global.appState.user.accessToken;
-    //}
+    console.log(Global);
+    if (Global.appState && Global.appState.user) {
+      token = Global.appState.user.accessToken;
+    }
     token = '0005Y3SN00OCLJ5E219D0116393E17936455568B53DE1DA7';
     const newParameter = {
       parameter,
@@ -30,9 +30,9 @@ const api = {
   },
   getDetailByPid: (parameter) => {
     let token = '';
-    //if (Global.appState && Global.appState.user) {
-    //  token = Global.appState.user.accessToken;
-    //}
+    if (Global.appState && Global.appState.user) {
+      token = Global.appState.user.accessToken;
+    }
     token = '0005Y3SN00OCLJ5E219D0116393E17936455568B53DE1DA7';
     const newParameter = {
       parameter,
