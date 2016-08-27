@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -128,8 +128,7 @@ class App extends React.Component {
               <Scene
                 key="SearchList"
                 component={SearchList}
-                hideNavBar={false}
-                renderTitle={this.title}
+                hideNavBar
               />
               <Scene
                 key="About" component={About}
@@ -159,15 +158,4 @@ class App extends React.Component {
     );
   }
 }
-function mapStateToProps(state) {
-  return {};
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(appActions, dispatch);
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export  default App;

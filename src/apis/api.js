@@ -25,6 +25,11 @@ const api = {
     FetchMethod.Get,
     parameter
   ),
+  chargeList: (parameter) => createFetch(
+    `${appConfig.serviceRoot}Charge/charge/wechat/associateSearch`,
+    FetchMethod.Get,
+    parameter
+  ),
   regist: (parameter) => createFetch(
     `${appConfig.serviceRoot}Charge/charge/users/regist/`,
     FetchMethod.Get,
