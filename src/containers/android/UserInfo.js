@@ -62,7 +62,7 @@ class UserInfo extends Component {
       <View style={styles.rootContainer}>
         <View style={styles.rowContainer}>
           <Image
-            source={require('../../image/logo.png')}
+            source={require('../../image/header.png')}
             style={styles.logoImage}
           />
         </View>
@@ -90,13 +90,13 @@ class UserInfo extends Component {
       <View style={styles.rootContainer}>
         <View style={styles.rowContainer}>
           <Image
-            source={require('../../image/logo.png')}
+            source={require('../../image/header.png')}
             style={styles.logoImage}
           />
         </View>
         <View style={styles.rowContainer}>
           <Text style={styles.textRole}>
-            {user.name}
+            {user.nameName}
           </Text>
         </View>
         <View style={styles.rowContainer}>

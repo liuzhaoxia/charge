@@ -44,8 +44,8 @@ function createFetch(url, method, jsonObj) {
         method: FetchMethod.Post,
         body: queryStr,
       };
-      //console.log(url);
-      //console.log(queryStr);
+      // console.log(url);
+      // console.log(queryStr);
       return fetch(url, options);
     }
     default:

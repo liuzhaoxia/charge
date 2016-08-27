@@ -7,25 +7,25 @@ import { api, callApi } from '../apis/api';
 import actionEnum from '../constants/actionEnum';
 
 const searchActions = {
-    setChargeList: createAction(actionEnum.SET_CHARGE_LIST),
-    toDetail: () => {
-      return dispatch => {
-        dispatch(Actions.DetailInfo);
-      };
-    },
-    getChargeList: (parameter) => {
-      return dispatch => {
-        callApi(
-          api.chargeList(parameter),
-          data => {
-            dispatch(searchActions.requestChargeListSuccess(data));
-          },
-          err => {
-            dispatch(searchActions.requestChargeListFail(err));
-          }
-        );
-      };
-    },
+  setChargeList: createAction(actionEnum.SET_CHARGE_LIST),
+  toDetail: () => {
+    return dispatch => {
+      dispatch(Actions.DetailInfo);
+    };
+  },
+  getChargeList: (parameter) => {
+    return dispatch => {
+      callApi(
+        api.chargeList(parameter),
+        data => {
+          dispatch(searchActions.requestChargeListSuccess(data));
+        },
+        err => {
+          dispatch(searchActions.requestChargeListFail(err));
+        }
+      );
+    };
+  },
   requestChargeListSuccess: (data) => {
     return dispatch => {
       dispatch(searchActions.setChargeList(data));

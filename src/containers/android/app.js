@@ -9,7 +9,7 @@ import {
   StyleSheet,
   TextInput,
 } from 'react-native';
-import { createStore, applyMiddleware, compose, bindActionCreators } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Router, Scene, Modal, ActionConst } from 'react-native-router-flux';
 import { Provider, connect } from 'react-redux';
 import store from 'react-native-simple-store';
@@ -20,7 +20,6 @@ import Login from '../../containers/android/Login';
 import Start from '../../containers/android/Start';
 import DetailInfo from '../../containers/android/Detail';
 import Helper from '../../utils/helper';
-import ShellsDetail from '../../containers/android/ShellsDetail';
 import Choose from '../../containers/android/Choose';
 import About from './../../containers/android/About';
 import HelpView from './../../containers/android/HelpView';
@@ -32,7 +31,7 @@ import Regist from './Regist';
 import UserAgreement from './UserAgreement';
 import FindPassword from './FindPassword';
 import Error from './Error';
-import appActions from '../../actions/appActions';
+import Introduction from './Introduction'
 
 const styles = StyleSheet.create({
   textInput: {
@@ -49,35 +48,13 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-    Helper.bindMethod(this);
-  }
-
+class App extends React.Component {
   componentWillUnmount() {
     store.save('appState', Global.appState);
   }
 
   test1() {
     console.log(2222);
-  }
-
-  searchCharge(data) {
-    console.log(data);
-    // this.props.getChargeList()
-  }
-
-  title() {
-    return (
-      <View style={styles.container}>
-        <TextInput
-          placeholder="搜索地点" placeholderTextColor="black" style={styles.textInput}
-          underlineColorAndroid="transparent" autoFocus onChangeText={this.searchCharge}
-        />
-      </View>
-    );
   }
 
   render() {
@@ -99,13 +76,13 @@ class App extends Component {
                   hideNavBar
                 />
                 <Scene
-                  key="shellsDetail"
-                  component={ShellsDetail}
-                  title="shellsDetail"
+                  key="Introduction"
+                  component={Introduction}
+                  title="Introduction"
                   hideNavBar
                 />
                 <Scene
-                  key="DetailInfo"
+                  key="detailInfo"
                   component={DetailInfo}
                   title="DetailInfo"
                   hideNavBar
@@ -158,4 +135,5 @@ class App extends Component {
     );
   }
 }
-export  default App;
+
+export default App;

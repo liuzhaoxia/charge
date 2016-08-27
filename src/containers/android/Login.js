@@ -113,7 +113,7 @@ class Login extends Component {
 
   onLogin() {
     const parameter = {
-      name: Number(this.state.userName),
+      name: this.state.userName,
       password: this.state.password,
       clientId: 2,
     };

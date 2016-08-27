@@ -61,15 +61,15 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF'
   },
-  header: {
-    height: 50,
+  header:{
+    height:50,
     flexDirection: 'row',
-    backgroundColor: '#4EC3EE',
+    backgroundColor:'#4EC3EE',
     alignItems: 'center',
-    paddingTop: 5,
-    paddingBottom: 5,
+    paddingTop:5,
+    paddingBottom:5
   },
 
   textinput: {
