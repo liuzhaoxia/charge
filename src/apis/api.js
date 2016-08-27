@@ -3,6 +3,7 @@
  */
 import { FetchMethod, createFetch } from '../fetch/fetch';
 import appConfig from '../constants/appConfig';
+import Global from '../Global';
 
 const api = {
   login: (parameter) => createFetch(
@@ -10,16 +11,39 @@ const api = {
     FetchMethod.Get,
     parameter
   ),
-  getVisitorData: (parameter) => createFetch(
-    `${appConfig.serviceRoot}Charge/charge/wechat/query`,
-    FetchMethod.Get,
-    { parameter }
-  ),
-  getDetailByPid: (parameter) => createFetch(
-    `${appConfig.serviceRoot}app/listAll`,
-    FetchMethod.Get,
-    { parameter }
-  ),
+  getVisitorData: (parameter) => {
+    let token = '';
+    //console.log(Global);
+    //if (Global.appState && Global.appState.user) {
+    //  token = Global.appState.user.accessToken;
+    //}
+    token = '0005Y3SN00OCLJ5E219D0116393E17936455568B53DE1DA7';
+    const newParameter = {
+      parameter,
+      access_token: token,
+    };
+    return createFetch(
+      `${appConfig.serviceRoot}Charge/charge/wechat/query`,
+      FetchMethod.Get,
+      newParameter
+    );
+  },
+  getDetailByPid: (parameter) => {
+    let token = '';
+    //if (Global.appState && Global.appState.user) {
+    //  token = Global.appState.user.accessToken;
+    //}
+    token = '0005Y3SN00OCLJ5E219D0116393E17936455568B53DE1DA7';
+    const newParameter = {
+      parameter,
+      access_token: token,
+    };
+    return createFetch(
+      `${appConfig.serviceRoot}app/listAll`,
+      FetchMethod.Get,
+      newParameter
+    );
+  },
   getAuthenticationCode: (parameter) => createFetch(
     `${appConfig.serviceRoot}Charge/charge/users/getAuthenticationCode`,
     FetchMethod.Get,

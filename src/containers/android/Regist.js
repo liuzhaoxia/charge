@@ -122,7 +122,7 @@ class Regist extends Component {
   }
 
   getCode() {
-    const parameter = { cellNo: Number(this.state.userName) };
+    const parameter = { cellNo: this.state.userName };
     this.props.actions.getAuthenticationCodeRequest(parameter);
     this.setState({
       isCountDown: true,
@@ -144,9 +144,9 @@ class Regist extends Component {
 
   onRegist() {
     const parameter = {
-      name: Number(this.state.userName),
-      password: Number(this.state.password),
-      authenticationCode: Number(this.state.code),
+      name: this.state.userName,
+      password: this.state.password,
+      authenticationCode: this.state.code,
     };
     this.props.actions.registRequest(parameter);
   }
