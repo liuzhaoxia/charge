@@ -20,7 +20,6 @@ import Login from '../../containers/android/Login';
 import Start from '../../containers/android/Start';
 import DetailInfo from '../../containers/android/Detail';
 import Helper from '../../utils/helper';
-import ShellsDetail from '../../containers/android/ShellsDetail';
 import Choose from '../../containers/android/Choose';
 import About from './../../containers/android/About';
 import HelpView from './../../containers/android/HelpView';
@@ -54,7 +53,7 @@ class App extends React.Component {
   }
 
   test1() {
-    console.log(2222);
+    console.log(22222);
   }
 
   searchCharge() {
@@ -87,12 +86,6 @@ class App extends React.Component {
                   key="main"
                   component={Main}
                   title="Main"
-                  hideNavBar
-                />
-                <Scene
-                  key="shellsDetail"
-                  component={ShellsDetail}
-                  title="shellsDetail"
                   hideNavBar
                 />
                 <Scene
