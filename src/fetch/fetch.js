@@ -9,9 +9,11 @@ const FetchMethod = {
 function jsonToQueryString(jsonObj) {
   let queryStr = '';
   Object.keys(jsonObj).forEach(key => {
-    let value = jsonObj[key];
-    if (typeof value === 'object') {
+    let value;
+    if (typeof jsonObj[key] === 'object') {
       value = JSON.stringify(jsonObj[key]);
+    } else {
+      value = jsonObj[key];
     }
     queryStr += `${key}=${value}&`;
   });
@@ -32,7 +34,7 @@ function createFetch(url, method, jsonObj) {
       const options = {
         method: FetchMethod.Get,
       };
-      // console.log(urlWithQueryStr);
+      //console.log(urlWithQueryStr);
       return fetch(urlWithQueryStr, options);
     }
     case FetchMethod.Post:
