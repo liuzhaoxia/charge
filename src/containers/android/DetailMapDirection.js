@@ -25,7 +25,6 @@ class DetailMapDirection extends Component {
     constructor(props) {
         super(props);
 
-
         let annotations= [{
             coordinates: [39.9, 116.3],
             type: 'point',
@@ -263,7 +262,6 @@ const styles = StyleSheet.create({
 });
 function mapStateToProps(state) {
     return {
-        detailData:state.detailReducer.detailData,
         singeData:state.mapReducer.singeData,
     }
 }

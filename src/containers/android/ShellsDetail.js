@@ -93,7 +93,7 @@ class ShellsDetail extends Component {
     super(props);
 
     this.state = {
-      detailData: this.props.detailData,
+      data: null,
       show: this.props.showOrHide,
       isOpen: false,
       newLinkUrls: [
@@ -116,7 +116,7 @@ class ShellsDetail extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       show: nextProps.showOrHide,
-      detailData: nextProps.singeData,
+      data: nextProps.singeData[0],
     });
   }
 
@@ -157,7 +157,10 @@ class ShellsDetail extends Component {
   }
 
   render() {
-    const data = this.state.detailData[0];
+    const data = this.state.data;
+    if (!data) {
+      return null;
+    }
     return (
       <Modal
         position={"bottom"}

@@ -31,6 +31,7 @@ import Regist from './Regist';
 import UserAgreement from './UserAgreement';
 import FindPassword from './FindPassword';
 import Error from './Error';
+import Introduction from './Introduction'
 
 const styles = StyleSheet.create({
   textInput: {
@@ -54,21 +55,6 @@ class App extends React.Component {
 
   test1() {
     console.log(2222);
-  }
-
-  searchCharge() {
-
-  }
-
-  title() {
-    return (
-      <View style={styles.container}>
-        <TextInput
-          placeholder="搜索地点" placeholderTextColor="black" style={styles.textInput}
-          underlineColorAndroid="transparent" autoFocus onChangeText={this.searchCharge}
-        />
-      </View>
-    );
   }
 
   render() {
@@ -96,13 +82,7 @@ class App extends React.Component {
                   hideNavBar
                 />
                 <Scene
-                  key="shellsDetail"
-                  component={ShellsDetail}
-                  title="shellsDetail"
-                  hideNavBar
-                />
-                <Scene
-                  key="DetailInfo"
+                  key="detailInfo"
                   component={DetailInfo}
                   title="DetailInfo"
                   hideNavBar
