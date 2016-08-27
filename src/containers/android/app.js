@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   textInput: {
     color: 'black',
     flex: 1,
-    height: 40
+    height: 40,
   },
   container: {
     width: 250,
@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'red',
     flexDirection: 'row',
-    marginTop: 5
-  }
+    marginTop: 5,
+  },
 });
 class App extends React.Component {
   componentWillUnmount() {
@@ -53,7 +53,7 @@ class App extends React.Component {
   }
 
   test1() {
-    console.log(22222);
+    console.log(2222);
   }
 
   searchCharge() {
@@ -63,11 +63,12 @@ class App extends React.Component {
   title() {
     return (
       <View style={styles.container}>
-        <TextInput placeholder="搜索地点" placeholderTextColor='black' style={styles.textInput}
-                   underlineColorAndroid='transparent' autoFocus={true} onChange={this.searchCharge}>
-        </TextInput>
+        <TextInput
+          placeholder="搜索地点" placeholderTextColor="black" style={styles.textInput}
+          underlineColorAndroid="transparent" autoFocus onChangeText={this.searchCharge}
+        />
       </View>
-    )
+    );
   }
 
   render() {
@@ -86,6 +87,18 @@ class App extends React.Component {
                   key="main"
                   component={Main}
                   title="Main"
+                  hideNavBar
+                />
+                <Scene
+                  key="Introduction"
+                  component={Introduction}
+                  title="Introduction"
+                  hideNavBar
+                />
+                <Scene
+                  key="shellsDetail"
+                  component={ShellsDetail}
+                  title="shellsDetail"
                   hideNavBar
                 />
                 <Scene

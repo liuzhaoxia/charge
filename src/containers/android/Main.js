@@ -1,59 +1,71 @@
 /**
  * Created by zhongxiaoming on 2016/8/5.
  */
-//主页面
-import React,{Component} from 'react';
-import {View, Linking, Text, StyleSheet,TextInput,Image,TouchableHighlight,DrawerLayoutAndroid,TouchableWithoutFeedback} from "react-native";
-import { connect } from 'react-redux'
-import  {bindActionCreators} from 'redux'
-import Button from "react-native-button";
+
+import React, { Component } from 'react';
+import {
+  View,
+  Linking,
+  Text,
+  StyleSheet,
+  TextInput,
+  Image,
+  TouchableHighlight,
+  DrawerLayoutAndroid,
+  TouchableWithoutFeedback,
+} from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import Button from 'react-native-button';
+import { Actions } from 'react-native-router-flux';
 import Map from './MapContainer';
 import LeftMenu from './LeftMenu';
 import ShellsDetail from './ShellsDetail';
-import { Actions } from "react-native-router-flux";
+
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#2B3745'
-    },
-    header:{
-        height:50,
-        flexDirection: 'row',
-        backgroundColor:'#4EC3EE',
-        alignItems: 'center',
-        paddingTop:5,
-        paddingBottom:5
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#2B3745',
+  },
+  header: {
+    height: 50,
+    flexDirection: 'row',
+    backgroundColor: '#4EC3EE',
+    alignItems: 'center',
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
 
-    map:{
-        flex:1
-    },
+  map: {
+    flex: 1,
+  },
 
-    textinput: {
-        flex: 1,
-        backgroundColor: '#FFFFFF',
-        color: '#e5e5e5',
-        fontSize: 16
-    },
+  textinput: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    color: '#e5e5e5',
+    fontSize: 16,
+  },
 
-    logintext: {
-        color: '#FFFFFF',
-        padding:5,
-        fontSize: 16
-    },
-    search:{
-        color: '#FFFFFF',
-        padding:5,
-        fontSize: 16
-    },
-    image:{
-        width:50,
-        height:50
-    }
+  logintext: {
+    color: '#FFFFFF',
+    padding: 5,
+    fontSize: 16,
+  },
+  search: {
+    color: '#FFFFFF',
+    padding: 5,
+    fontSize: 16,
+  },
+  image: {
+    width: 50,
+    height: 50,
+  },
 });
 
 
 class Main extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -114,6 +126,7 @@ class Main extends Component {
             </DrawerLayoutAndroid>
         );
     }
+
 }
 
-export  default Main;
+export default Main;

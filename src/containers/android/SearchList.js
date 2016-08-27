@@ -2,59 +2,62 @@
  * Created by zhongxiaoming on 2016/8/5.
  */
 import React, { Component } from 'react';
-import {  View,
-    Text,
-    Image,
-    Navigator,
-    TextInput,
-    ScrollView,
-    StyleSheet,
-    Dimensions,
-    TouchableHighlight,
-    DrawerLayoutAndroid,
-    TouchableWithoutFeedback
-    } from "react-native";
-import Button from "react-native-button";
-import Modal from "react-native-modalbox";
+import {
+  View,
+  Text,
+  Image,
+  Navigator,
+  TextInput,
+  ScrollView,
+  StyleSheet,
+  Dimensions,
+  TouchableHighlight,
+  DrawerLayoutAndroid,
+  TouchableWithoutFeedback,
+} from 'react-native';
+import Button from 'react-native-button';
+import Modal from 'react-native-modalbox';
 import { connect } from 'react-redux';
-import  {bindActionCreators} from 'redux';
-import { Actions } from "react-native-router-flux";
+import store from 'react-native-simple-store';
+import { bindActionCreators } from 'redux';
+import { Actions } from 'react-native-router-flux';
 import searchActions from '../../actions/SearchActions';
 import Helper from '../../utils/helper';
-import store from 'react-native-simple-store';
+
 import { Global } from '../../Global';
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
   },
-  header:{
-    height:50,
+  header: {
+    height: 50,
     flexDirection: 'row',
-    backgroundColor:'#4EC3EE',
+    backgroundColor: '#4EC3EE',
     alignItems: 'center',
-    paddingTop:5,
-    paddingBottom:5
+    paddingTop: 5,
+    paddingBottom: 5,
   },
 
   textinput: {
     flex: 1,
     backgroundColor: '#FFFFFF',
     color: '#e5e5e5',
-    fontSize: 16
+    fontSize: 16,
   },
 
   logintext: {
     color: '#FFFFFF',
-    padding:5,
-    fontSize: 16
+    padding: 5,
+    fontSize: 16,
   },
-  search:{
+  search: {
     color: '#FFFFFF',
-    padding:5,
-    fontSize: 16
-  }
+    padding: 5,
+    fontSize: 16,
+  },
 });
 class SearchList extends Component {
   constructor(props) {
@@ -62,71 +65,72 @@ class SearchList extends Component {
 
     this.state = {
       searchText: '',
-      history:Global.appState.searchHistory || {list:[]},
+      history: Global.appState.searchHistory || { list: [] },
     };
     Helper.bindMethod(this);
   }
 
   componentDidMount() {
-    if(!Global.appState.searchHistory){
+
+    if (!Global.appState.searchHistory) {
       Global.appState.searchHistory = {
-        list:[]
+        list: []
       }
     }
   }
 
-  changeState(key,value){
+  changeState(key, value) {
     this.setState({ [key]: value });
   }
 
-  back(){
+  back() {
     Actions.pop();
   }
 
-  search(){
-    if(Global.appState.searchHistory){
+  search() {
+    if (Global.appState.searchHistory) {
       Global.appState.searchHistory.list.push(this.state.searchText);
     }
-    this.setState({"history":Global.appState.searchHistory});
+    this.setState({ 'history': Global.appState.searchHistory });
   }
 
-  render(){
+  render() {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <Button style={styles.logintext} onPress={this.back}>返回</Button>
-             <TextInput
-                value={this.state.searchText}
-                onChangeText={text => {
-                   this.changeState('searchText', text);
-                }}
-               placeholder="搜索地点"
-               placeholderTextColor ='#E0E0E0'
-               onSubmitEditing={this.search}
-               style={styles.textinput}
-               underlineColorAndroid='transparent'
-               keyboardType = 'default' />
+          <TextInput
+            value={this.state.searchText}
+            onChangeText={text => {
+             this.changeState('searchText', text);
+            }}
+            placeholder="搜索地点"
+            placeholderTextColor='#E0E0E0'
+            onSubmitEditing={this.search}
+            style={styles.textinput}
+            underlineColorAndroid='transparent'
+            keyboardType='default'/>
 
-          <Button style={styles.search} onPress={this.back} >取消</Button>
+          <Button style={styles.search} onPress={this.back}>取消</Button>
         </View>
         <View>
           {
-            this.state.history.list.map((text,i)=>{
+            this.state.history.list.map((text, i)=> {
               return (
                 <View style={{flexDirection:"row"}}>
-                   <View style={{flex:1}}>
-                   <Image
+                  <View style={{flex:1}}>
+                    <Image
                       source={require('../../image/history.png')}
                     />
-                   </View>
-                   <View style={{flex:8,underlineColorAndroid:"gray"}}>
-                      <Text key={text+i} style={{color:"#000000"}}>{text}</Text>
-                   </View>
-                   <View style={{flex:1}}>
-                   <Image
+                  </View>
+                  <View style={{flex:8,underlineColorAndroid:"gray"}}>
+                    <Text key={text+i} style={{color:"#000000"}}>{text}</Text>
+                  </View>
+                  <View style={{flex:1}}>
+                    <Image
                       source={require('../../image/arrow.png')}
                     />
-                   </View>
+                  </View>
                 </View>
               )
             })
@@ -134,19 +138,20 @@ class SearchList extends Component {
         </View>
       </View>
     )
+
   }
 }
 function mapStateToProps(state) {
-    return {
-        searchText:""
-    }
+  return {
+    searchText: '',
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(searchActions, dispatch);
+  return bindActionCreators(searchActions, dispatch);
 }
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(SearchList)
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchList);
