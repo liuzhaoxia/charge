@@ -97,6 +97,24 @@ const detailReducer = handleActions({
                 data.payment[i]='特制充值卡';
             }else if(data.payment[i]==='5'){
                 data.payment[i]='APP';
+            }else if(data.payment[i]==='101'){
+                data.payment[i]='支付宝';
+            }else if(data.payment[i]==='102'){
+                data.payment[i]='微信';
+            }else if(data.payment[i]==='400'){
+                data.payment[i]='其他充值卡';
+            }else if(data.payment[i]==='401'){
+                data.payment[i]='国网普通卡';
+            }else if(data.payment[i]==='402'){
+                data.payment[i]='南方电网卡';
+            }else if(data.payment[i]==='403'){
+                data.payment[i]='中石油卡';
+            }else if(data.payment[i]==='404'){
+                data.payment[i]='中石化卡';
+            }else if(data.payment[i]==='405'){
+                data.payment[i]='中海油卡';
+            }else if(data.payment[i]==='406'){
+                data.payment[i]='中国普天充值卡';
             }
         }
         state.detailData = data;
