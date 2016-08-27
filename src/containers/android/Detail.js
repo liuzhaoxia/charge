@@ -4,7 +4,7 @@
 //搜索结果详情
 import React, { Component } from 'react';
 import {View, Text,TextInput ,IntentAndroid,TouchableNativeFeedback,
-    TouchableHighlight,StyleSheet,Image,ScrollView} from "react-native";
+    TouchableHighlight,StyleSheet,Image,ScrollView,Linking} from "react-native";
 import Button from "react-native-button";
 import { connect } from 'react-redux';
 import  {bindActionCreators} from 'redux';
@@ -15,6 +15,8 @@ import detailActions  from '../../actions/detailActions'
 import { Actions } from "react-native-router-flux";
 // import SendIntentAndroid from 'react-native-send-intent';
 import imageViewPager from './imageViewPager'
+import Modal from "react-native-modalbox";
+import DetailMapDirection from './DetailMapDirection'
 const styles = StyleSheet.create({
     container: {
         flexDirection:'row',
@@ -54,6 +56,46 @@ const styles = StyleSheet.create({
     },scrollView: {
         height: 800,
     },
+    // modal的样式
+    modalStyle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        marginBottom:10,
+    },
+    modalHeight:{
+        height:180,
+        width: 350
+    },
+    // modal上子View的样式
+    subView:{
+        height:180,
+        backgroundColor:'#fff',
+        alignSelf: 'stretch',
+        justifyContent:'center',
+        borderRadius: 10,
+        borderWidth: 0.5,
+        borderColor:'#ccc'
+    },
+    buttonText: {
+        fontSize: 16,
+        textAlign: 'center',
+    },
+    buttonStyle: {
+        flex: 1,
+        height: 44,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    horizontalLine: {
+        height: 0.5,
+        backgroundColor: '#ccc',
+    },
+    buttonView: {
+        flex: 1,
+        alignItems: 'center',
+        height: 44,
+    },
 
 });
 class Detail extends React.Component {
@@ -64,13 +106,25 @@ class Detail extends React.Component {
         this.state = {
             detailData:this.props.detailData,
             tabNames: ['充电插口', '服务信息'],
+            singeData:this.props.singeData,
+            thridPlug:false,
+            newLinkUrls:[
+                {
+                    url:'baidumap://map/direction?destination=39.6,116.5',
+                    name:'百度'
+                },{
+                    url:'androidamap://viewMap?sourceApplication=appname&poiname=abc&lat=36.2&lon=116.1&dev=0',
+                    name:'高德'
+                },,{
+                    url:'',
+                    name:'取消'
+                }]
         };
-
         this.backShells=this.backShells.bind(this);
-
         this.openViewPage=this.openViewPage.bind(this);
         this.handleClick=this.handleClick.bind(this);
     }
+
 
     componentWillReceiveProps(nextProps) {
         this.setState({
@@ -79,20 +133,41 @@ class Detail extends React.Component {
     }
 
     backShells(){
-        Actions.main();
+        Actions.pop();
     }
 
     openViewPage(){
         Actions.imageViewPage();
     }
 
+    openMapUrl(index){
+        if(this.state.newLinkUrls[index].url==''){
+            this.setState({thridPlug:false});
+        }else {
+            Linking.canOpenURL(this.state.newLinkUrls[index].url).then(supported => {
+                if (supported) {
+                    return Linking.openURL(this.state.newLinkUrls[index].url);
+                }else{
+                    if(this.state.newLinkUrls[index].name=='百度'){
+                        return Linking.openURL('http://shouji.baidu.com/software/9831363.html');
+                    }else  if(this.state.newLinkUrls[index].name=='高德'){
+                        return Linking.openURL("http://www.autonavi.com/");
+                    }
+
+                }
+            });
+        }
+    }
+
     handleClick() {
-        // SendIntentAndroid.sendPhoneDial('+55 48 9999-9999');
+        this.setState({thridPlug:true});
     }
 
     render(){
+        console.log(this.state.singeData[0])
         let tabNames = this.state.tabNames;
-        let data=this.state.detailData[0];
+        let data=this.state.singeData[0];
+        let picUrl=data.plotPic.length>0?'http://chargingtest.navinfo.com/Charge/resources/photo/'+data.plotPic[0].url:'';
         return (
             <View style={{flex:1}}>
                 <View style={styles.container}>
@@ -109,10 +184,14 @@ class Detail extends React.Component {
                 <View style={{borderBottomColor:'#e5e5e5',borderBottomWidth:1}}/>
                 <View style={{flexDirection:'row',backgroundColor:'#00BFFF',height:90}}>
                     <View>
-                        <TouchableHighlight underlayColor='transparent'
+                        {data.plotPic.length>0?(<TouchableHighlight underlayColor='transparent'
                                             onPress={this.openViewPage}>
-                                 <Image source={{uri:data.plotPic[0]}} style={styles.logoImage}/>
-                        </TouchableHighlight>
+                                <Image source={{uri:picUrl}} style={styles.logoImage}/>
+                        </TouchableHighlight>):(
+                            <TouchableHighlight underlayColor='transparent'>
+                                <Image  source={require('../../image/noImage.jpg')} style={styles.logoImage}/>
+                            </TouchableHighlight>)}
+
                         <View style={{backgroundColor:'#000000',width:20,height:20,marginTop:-25,marginLeft:60,}}>
                             <Text style={{color:'#FFFFFF',marginLeft:5}}>{data.plotPic.length}</Text>
                         </View>
@@ -132,7 +211,7 @@ class Detail extends React.Component {
                         </View>
                     </View>
                 </View>
-                <View style={{flexDirection:'row',height:40,padding:4}}>
+                <View style={{flexDirection:'row',height:46,padding:4}}>
                     <View>
                         <Image source={require('../../image/position.png')}/>
                     </View>
@@ -151,8 +230,8 @@ class Detail extends React.Component {
                     </View>
                 </View>
                 <View style={{flexDirection:'row'}}>
-                    <View>
-                        <Image source={require('../../image/positionMap.jpg')} style={{flex:1}}/>
+                    <View style={{flex:1,height:200}}>
+                        <DetailMapDirection />
                     </View>
                 </View>
                 <View style={{flexDirection:'row',marginLeft:10}}>
@@ -208,7 +287,7 @@ class Detail extends React.Component {
                                 return (
                                     <View key={i} style={{flexDirection:'row'}}>
                                         <View>
-                                            <Image source={socker.plugType==='0'?require('../../image/socket_jiaoliudian3kongjiayong.png'):(socker.plugType==='1'?require('../../image/socket_guobiaojiaoliudian7kong.png'):(socker.plugType==='2'?require('../../image/socket_guobiaojiaoliudian9kong.png'):(socker.plugType==='3'?require('../../image/socket_meishijiaoliu5kong.png'):(socker.plugType==='4'?require('../../image/socket_meishizhiliucombo.png'):(socker.plugType==='5'?require('../../image/socket_oushijiaoliu7kong.png'):(socker.plugType==='6'?require('../../image/socket_oshizhiliucombo.png'):(socker.plugType==='7'?require('../../image/socket_rishizhiliuchademo.png'):(socker.plugType==='8'?require('../../image/socket_tesilachachao.png'):(socker.plugType==='9'?require('../../image/socket_qita.png'):'')))))))))} style={{width:25,height:25,margin:5}}/>
+                                            <Image source={socker.plugType==='0'?require('../../image/socket_jiaoliudian3kongjiayong.png'):(socker.plugType==='1'?require('../../image/socket_guobiaojiaoliudian7kong.png'):(socker.plugType==='2'?require('../../image/socket_guobiaozhiliudian9kong.png'):(socker.plugType==='3'?require('../../image/socket_meishijiaoliu5kong.png'):(socker.plugType==='4'?require('../../image/socket_meishizhiliucombo.png'):(socker.plugType==='5'?require('../../image/socket_oushijiaoliu7kong.png'):(socker.plugType==='6'?require('../../image/socket_oshizhiliucombo.png'):(socker.plugType==='7'?require('../../image/socket_rishizhiliuchademo.png'):(socker.plugType==='8'?require('../../image/socket_tesilachachao.png'):(socker.plugType==='9'?require('../../image/socket_qita.png'):'')))))))))} style={{width:25,height:25,margin:5}}/>
                                         </View>
                                         <View style={{width:250,flexDirection:'row',height:40,padding:5}}>
                                             <Text style={{margin:5}}>{socker.mode==='0'?'慢充':'快充'}{socker.acdc==='0'?'交流':'直流'}  {socker.plugType}</Text>
@@ -294,15 +373,42 @@ class Detail extends React.Component {
                             </ScrollView>
                     </View>
                 </ScrollableTabView>
+                <Modal
+                    position={"center"}
+                    isOpen={this.state.thridPlug}
+                    style={[styles.modalStyle,styles.modalHeight]}
+                    backdrop={false}
+                    swipeArea={20}>
+                    <View style={styles.subView}>
+                        {
+                            this.state.newLinkUrls.map((linkUrl,index)=>{
+                                return (
+                                    <View key={index}>
+                                        <TouchableHighlight underlayColor='transparent' key={index}
+                                            onPress={()=>{return this.openMapUrl(index)}} style={styles.buttonStyle}
+                                        >
+                                        <Text key={index} style={styles.buttonText}>
+                                                {linkUrl.name}
+                                        </Text>
+
+                                        </TouchableHighlight>
+                                        {
+                                            index<this.state.newLinkUrls.length-1?(<View style={styles.horizontalLine}/>):(<View />)
+                                        }
+                                    </View>
+                                )
+                            })
+                        }
+                    </View>
+                </Modal>
             </View>
-
-
         )
     }
 }
 function mapStateToProps(state) {
     return {
-        detailData:state.detailReducer.detailData
+        detailData:state.detailReducer.detailData,
+        singeData:state.mapReducer.singeData,
     }
 }
 

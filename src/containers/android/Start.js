@@ -21,7 +21,7 @@ class Start extends Component {
   }
 
   componentDidMount() {
-    WeChat.registerApp('wx248881ad9815ad88');
+    // WeChat.registerApp('wx248881ad9815ad88');
   }
 
   render() {

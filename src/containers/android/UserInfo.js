@@ -3,16 +3,16 @@ import { StyleSheet, View, Image, TextInput, Text } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import store from 'react-native-simple-store';
-import LoginActions from '../../actions/loginActions';
+import UserManagementActions from '../../actions/UserManagementActions';
 import Helper from '../../utils/helper';
 
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'stretch',
+    backgroundColor: '#87CEFA',
   },
   rowContainer: {
     flexDirection: 'row',
@@ -31,10 +31,11 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
   },
   loginContainer: {
+    width: 100,
     borderColor: '#808080',
     backgroundColor: '#ffffff',
     borderWidth: 1,
-    borderRadius: 2,
+    borderRadius: 15,
   },
   textLogin: {
     flex: 1,
@@ -70,13 +71,15 @@ class UserInfo extends Component {
             游客
           </Text>
         </View>
-        <View style={[styles.rowContainer, styles.loginContainer]}>
-          <Text
-            style={styles.textLogin}
-            onPress={() => { Actions.login(); }}
-          >
-            登陆
-          </Text>
+        <View style={styles.rowContainer}>
+          <View style={styles.loginContainer}>
+            <Text
+              style={styles.textLogin}
+              onPress={() => { Actions.login(); }}
+            >
+              登陆
+            </Text>
+          </View>
         </View>
       </View>
     );
@@ -97,45 +100,45 @@ class UserInfo extends Component {
           </Text>
         </View>
         <View style={styles.rowContainer}>
-          <Text style={styles.textRole}>
-            测试
-          </Text>
+          <View>
+            <Text style={styles.textRole}>
+              电话号
+            </Text>
+          </View>
+          <View>
+            <Text style={styles.textRole}>
+              微信
+            </Text>
+          </View>
+          <View>
+            <Text style={styles.textRole}>
+              真名
+            </Text>
+          </View>
         </View>
       </View>
     );
   }
 
   render() {
-    /*
-    const user = {
-      name: '测试人员',
-      access_token: '0005Y3SN00OCGL0378A7C91A800FA7F918FD1BE13CC80476',
-      userId: 9989303,
-      expires_in: 86400,
-      phone: 1,
-      wechat: 1,
-      icon: 'http://chargingtest.navinfo.com/Charge/resources/avatar/9989303_201603221505_pic.jpg',
-    };
-    */
-    const user = null;
-    // const { user } = this.props.state;
+    const { user } = this.props.state;
     if (!user) {
       return this.renderNoLogin();
     }
 
-    return this.renderLogin();
+    return this.renderLogin(user);
   }
 }
 
 function mapStateToProps(state) {
   return {
-    state: state.loginReducer,
+    state: state.UserManagementReducer,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(LoginActions, dispatch),
+    actions: bindActionCreators(UserManagementActions, dispatch),
   };
 }
 

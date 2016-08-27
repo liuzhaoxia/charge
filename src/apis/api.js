@@ -11,7 +11,7 @@ const api = {
     parameter
   ),
   getVisitorData: (parameter) => createFetch(
-    `${appConfig.serviceRoot}Charge/charge/app/visitorQuery`,
+    `${appConfig.serviceRoot}Charge/charge/wechat/query`,
     FetchMethod.Get,
     { parameter }
   ),
@@ -19,6 +19,21 @@ const api = {
     `${appConfig.serviceRoot}app/listAll`,
     FetchMethod.Get,
     { parameter }
+  ),
+  getAuthenticationCode: (parameter) => createFetch(
+    `${appConfig.serviceRoot}Charge/charge/users/getAuthenticationCode`,
+    FetchMethod.Get,
+    parameter
+  ),
+  regist: (parameter) => createFetch(
+    `${appConfig.serviceRoot}Charge/charge/users/regist/`,
+    FetchMethod.Get,
+    parameter
+  ),
+  updatePassword: (parameter) => createFetch(
+    `${appConfig.serviceRoot}Charge/charge/users/updatePassword`,
+    FetchMethod.Get,
+    parameter
   ),
 };
 

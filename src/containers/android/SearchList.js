@@ -18,17 +18,19 @@ import {
 import Button from 'react-native-button';
 import Modal from 'react-native-modalbox';
 import { connect } from 'react-redux';
+import store from 'react-native-simple-store';
 import { bindActionCreators } from 'redux';
 import { Actions } from 'react-native-router-flux';
-import store from 'react-native-simple-store';
-import searchActions from '../../actions/searchActions';
+import searchActions from '../../actions/SearchActions';
 import Helper from '../../utils/helper';
+
+import { Global } from '../../Global';
 
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2B3745',
+    backgroundColor: '#FFFFFF',
   },
   header: {
     height: 50,
@@ -60,11 +62,25 @@ const styles = StyleSheet.create({
 class SearchList extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      searchText: '',
+      history: Global.appState.searchHistory || { list: [] },
+    };
     Helper.bindMethod(this);
   }
 
   componentDidMount() {
-    console.log('search');
+
+    if (!Global.appState.searchHistory) {
+      Global.appState.searchHistory = {
+        list: []
+      }
+    }
+  }
+
+  changeState(key, value) {
+    this.setState({ [key]: value });
   }
 
   back() {
@@ -72,19 +88,11 @@ class SearchList extends Component {
   }
 
   search() {
-    if (global.storage) {
-      global.storage.load({
-        key: 'searchHistory',
-        autoSync: true,
-        syncInBackground: true,
-      }).then(
-        (ret) => {
-          console.log(ret);
-        }
-      );
+    if (Global.appState.searchHistory) {
+      Global.appState.searchHistory.list.push(this.state.searchText);
     }
+    this.setState({ 'history': Global.appState.searchHistory });
   }
-
 
   render() {
     return (
@@ -92,22 +100,45 @@ class SearchList extends Component {
         <View style={styles.header}>
           <Button style={styles.logintext} onPress={this.back}>返回</Button>
           <TextInput
+            value={this.state.searchText}
+            onChangeText={text => {
+             this.changeState('searchText', text);
+            }}
             placeholder="搜索地点"
-            placeholderTextColor="#E0E0E0"
+            placeholderTextColor='#E0E0E0'
             onSubmitEditing={this.search}
             style={styles.textinput}
-            underlineColorAndroid="transparent"
-            keyboardType="default"
-          />
-          <Button
-            style={styles.search}
-            onPress={this.back}
-          >
-            取消
-          </Button>
+            underlineColorAndroid='transparent'
+            keyboardType='default'/>
+
+          <Button style={styles.search} onPress={this.back}>取消</Button>
+        </View>
+        <View>
+          {
+            this.state.history.list.map((text, i)=> {
+              return (
+                <View style={{flexDirection:"row"}}>
+                  <View style={{flex:1}}>
+                    <Image
+                      source={require('../../image/history.png')}
+                    />
+                  </View>
+                  <View style={{flex:8,underlineColorAndroid:"gray"}}>
+                    <Text key={text+i} style={{color:"#000000"}}>{text}</Text>
+                  </View>
+                  <View style={{flex:1}}>
+                    <Image
+                      source={require('../../image/arrow.png')}
+                    />
+                  </View>
+                </View>
+              )
+            })
+          }
         </View>
       </View>
-    );
+    )
+
   }
 }
 function mapStateToProps(state) {

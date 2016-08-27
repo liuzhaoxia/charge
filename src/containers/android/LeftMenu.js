@@ -8,6 +8,9 @@ import  {bindActionCreators} from 'redux'
 import Button from "react-native-button";
 import { Actions} from 'react-native-router-flux';
 import UserInfo from './UserInfo';
+import { Global } from '../../Global';
+import Helper from '../../utils/helper';
+import UserManagementActions from '../../actions/UserManagementActions';
 
 const styles = StyleSheet.create({
     container: {
@@ -39,11 +42,17 @@ class LeftMenu extends Component {
             modalVisible: false,
             transparent: false,
         };
-        this.about = this.about.bind(this);
-
+        Helper.bindMethod(this);
     }
     about() {
         Actions.About()
+    }
+    getChargeView(){
+        Actions.ChargeView()
+    }
+
+    onLogOut() {
+        this.props.actions.updateUser(null);
     }
 
     render(){
@@ -51,23 +60,16 @@ class LeftMenu extends Component {
             <View style={styles.container}>
 
                 <View  style={styles.contentitem} >
-                    <UserInfo
-                        state={{
-                            user: null
-                        }}
-                        actions={{
-
-                        }}
-                        />
+                    <UserInfo/>
                 </View>
                 <View style={styles.splitters}/>
 
-                <View style={styles.contentitem}>
+                <View style={styles.contentitem} >
                     <TouchableHighlight underlayColor='transparent'>
                         <Image source={require('../../image/global_days.png')} />
                     </TouchableHighlight>
                     <TouchableHighlight underlayColor='transparent'>
-                        <Text style={styles.text} >桩家视界</Text>
+                        <Text style={styles.text} onPress={this.getChargeView}>桩家视界</Text>
                     </TouchableHighlight>
 
                 </View>
@@ -111,7 +113,7 @@ class LeftMenu extends Component {
                         <Image source={require('../../image/exit.png')} />
                     </TouchableHighlight>
                     <TouchableHighlight underlayColor='transparent'>
-                        <Text style={styles.text} >退出登录</Text>
+                        <Text style={styles.text} onPress={this.onLogOut}>退出登录</Text>
                     </TouchableHighlight>
 
                 </View>
@@ -122,4 +124,19 @@ class LeftMenu extends Component {
 
 }
 
-export default LeftMenu
+function mapStateToProps(state) {
+    return {
+        state: {},
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(UserManagementActions, dispatch),
+    };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LeftMenu);

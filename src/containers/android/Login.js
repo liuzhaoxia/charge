@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image, TextInput, Text } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import * as WeChat from 'react-native-wechat';
-import LoginActions from '../../actions/loginActions';
+import UserManagementActions from '../../actions/UserManagementActions';
 import Helper from '../../utils/helper';
 import { Global } from '../../Global';
 
@@ -110,15 +111,6 @@ class Login extends Component {
     Helper.bindMethod(this);
   }
 
-  componentWillMount() {
-    if (Global.appState.user) {
-      this.setState({
-        userName: Global.appState.user.name,
-        password: Global.appState.user.password,
-      });
-    }
-  }
-
   onLogin() {
     const parameter = {
       name: Number(this.state.userName),
@@ -178,7 +170,7 @@ class Login extends Component {
                 onChangeText={text => { this.changeState('userName', text); }}
               />
             </View>
-            <View style={styles.lineContainer}/>
+            <View style={styles.lineContainer} />
             <View style={styles.rowContainer}>
               <View style={styles.smallImageContainer}>
                 <Image
@@ -198,11 +190,11 @@ class Login extends Component {
                 onChangeText={text => { this.changeState('password', text); }}
               />
             </View>
-            <View style={styles.lineContainer}/>
+            <View style={styles.lineContainer} />
             <View style={[styles.rowContainer, styles.rightRowContainer]}>
               <Text
                 style={styles.forgetPassword}
-                onPress={this.onLogin}
+                onPress={() => { Actions.findPassword() }}
               >
                 忘记密码?
               </Text>
@@ -223,6 +215,14 @@ class Login extends Component {
                 微信登陆
               </Text>
             </View>
+            <View style={[styles.rowContainer, styles.textWeiXinLoginContainer]}>
+              <Text
+                style={styles.textWeiXinLogin}
+                onPress={() => { Actions.regist(); }}
+              >
+                注册
+              </Text>
+            </View>
           </View>
         </Image>
       </View>
@@ -238,7 +238,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(LoginActions, dispatch),
+    actions: bindActionCreators(UserManagementActions, dispatch),
   };
 }
 

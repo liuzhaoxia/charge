@@ -3,12 +3,12 @@
  */
 
 import { combineReducers } from 'redux';
-import LoginReducer from './loginReducer';
+import UserManagementReducer from './UserManagementReducer';
 import mapReducer from './mapReducer';
 import detailReducer from './detailReducer';
 
 const RootReducer = combineReducers({
-  LoginReducer,
+  UserManagementReducer,
   mapReducer,
   detailReducer,
 });

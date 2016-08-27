@@ -5,8 +5,8 @@ import { createAction } from 'redux-actions';
 import { Actions } from 'react-native-router-flux';
 import deepcopy from 'deepcopy';
 import store from 'react-native-simple-store';
-import LoginActions from '../actions/loginActions';
 import { Global, appStateDefault } from '../Global';
+import UserManagementActions from './UserManagementActions';
 
 const StartActions = {
   loadUser: (parameter) =>
@@ -14,9 +14,10 @@ const StartActions = {
       store.get('appState')
         .then(res => {
           Global.appState = res;
-          if (!Global) {
+          if (!Global.appState) {
             Global.appState = deepcopy(appStateDefault);
           }
+          dispatch(UserManagementActions.setUser(Global.appState.user));
           Actions.mainModule();
         });
     },

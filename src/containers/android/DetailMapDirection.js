@@ -8,115 +8,102 @@ import {
     Text,
     StatusBar,
     View,
-    ScrollView,
-    DeviceEventEmitter,
-    TouchableHighlight,
-    Image
+    ScrollView
 } from 'react-native';
+import { connect } from 'react-redux';
 import Mapbox, {MapView} from 'react-native-mapbox-gl';
 import { Actions } from "react-native-router-flux";
 import appConfig from '../../constants/appConfig';
 import  helper from '../../utils/helper';
+import detailActions  from '../../actions/detailActions'
+import  {bindActionCreators} from 'redux';
 const accessToken = appConfig.mapBoxToken;
 Mapbox.setAccessToken(accessToken);
-let watchID = null;
-class Map extends Component {
+
+class DetailMapDirection extends Component {
     // 构造
     constructor(props) {
         super(props);
-        // 初始状态
-        this.state = {
-            initialPosition: 'unknown',
-            lastPosition: 'unknown',
-            center: {
-                latitude: 40.008456800067,
-                longitude: 116.47474416608
+
+
+        let annotations= [{
+            coordinates: [39.9, 116.3],
+            type: 'point',
+            title: 'This is marker 1',
+            subtitle: 'It has a rightCalloutAccessory too',
+            rightCalloutAccessory: {
+                source: {uri: 'https://cldup.com/9Lp0EaBw5s.png'},
+                height: 25,
+                width: 25
             },
-            zoom: 11,
-            userTrackingMode: Mapbox.userTrackingMode.none,
-            annotations: [{
-                coordinates: [39.9, 116.3],
-                type: 'point',
-                title: 'This is marker 1',
-                subtitle: 'It has a rightCalloutAccessory too',
-                rightCalloutAccessory: {
-                    source: {uri: 'https://cldup.com/9Lp0EaBw5s.png'},
-                    height: 25,
-                    width: 25
-                },
-                annotationImage: {
-                    source: {uri: 'https://cldup.com/CnRLZem9k9.png'},
-                    height: 25,
-                    width: 25
-                },
-                id: 'marker1'
-            }, {
-                coordinates: [39.9, 116.3],
-                type: 'point',
+            annotationImage: {
+                source: {uri: 'https://cldup.com/CnRLZem9k9.png'},
+                height: 25,
+                width: 25
+            },
+            id: 'marker1'
+        }, {
+            coordinates: [39.9, 116.3],
+            type: 'point',
+            title: '',
+            subtitle: 'Neat, this is a custom annotation image',
+            annotationImage: {
+                source: {uri: 'https://cldup.com/7NLZklp8zS.png'},
+                height: 25,
+                width: 25
+            },
+            id: 'marker2'
+        }, {
+            coordinates: [[40.76572150042782, -73.99429321289062], [40.743485405490695, -74.00218963623047], [40.728266950429735, -74.00218963623047], [40.728266950429735, -73.99154663085938], [40.73633186448861, -73.98983001708984], [40.74465591168391, -73.98914337158203], [40.749337730454826, -73.9870834350586]],
+            type: 'polyline',
+            strokeColor: '#00FB00',
+            strokeWidth: 4,
+            strokeAlpha: .5,
+            id: 'foobar'
+        }, {
+            coordinates: [[40.749857912194386, -73.96820068359375], [40.741924698522055, -73.9735221862793], [40.735681504432264, -73.97523880004883], [40.7315190495212, -73.97438049316406], [40.729177554196376, -73.97180557250975], [40.72345355209305, -73.97438049316406], [40.719290332250544, -73.97455215454102], [40.71369559554873, -73.97729873657227], [40.71200407096382, -73.97850036621094], [40.71031250340588, -73.98691177368163], [40.71031250340588, -73.99154663085938]],
+            type: 'polygon',
+            fillAlpha: 1,
+            strokeColor: '#ffffff',
+            fillColor: '#0000ff',
+            id: 'zap'
+        }]
+        let showMarkerArr = [];
+        this.props.singeData.map(item=> {
+            showMarkerArr.push({
+                coordinates: [item["location"]["latitude"], item["location"]["longitude"]],
+                id: item.pid.toString(),
                 title: '',
-                subtitle: 'Neat, this is a custom annotation image',
+                type: 'point',
                 annotationImage: {
                     source: {uri: 'https://cldup.com/7NLZklp8zS.png'},
                     height: 25,
                     width: 25
                 },
-                id: 'marker2'
-            }, {
-                coordinates: [[40.76572150042782, -73.99429321289062], [40.743485405490695, -74.00218963623047], [40.728266950429735, -74.00218963623047], [40.728266950429735, -73.99154663085938], [40.73633186448861, -73.98983001708984], [40.74465591168391, -73.98914337158203], [40.749337730454826, -73.9870834350586]],
-                type: 'polyline',
-                strokeColor: '#00FB00',
-                strokeWidth: 4,
-                strokeAlpha: .5,
-                id: 'foobar'
-            }, {
-                coordinates: [[40.749857912194386, -73.96820068359375], [40.741924698522055, -73.9735221862793], [40.735681504432264, -73.97523880004883], [40.7315190495212, -73.97438049316406], [40.729177554196376, -73.97180557250975], [40.72345355209305, -73.97438049316406], [40.719290332250544, -73.97455215454102], [40.71369559554873, -73.97729873657227], [40.71200407096382, -73.97850036621094], [40.71031250340588, -73.98691177368163], [40.71031250340588, -73.99154663085938]],
-                type: 'polygon',
-                fillAlpha: 1,
-                strokeColor: '#ffffff',
-                fillColor: '#0000ff',
-                id: 'zap'
-            }],
-            userLocation:{ lng: 0.0, lat: 0.0}
+            })
+        })
+        // 初始状态
+        this.state = {
+            singeData:this.props.singeData,
+            center: {
+                latitude: this.props.singeData[0].location.latitude,
+                longitude: this.props.singeData[0].location.longitude
+            },
+            zoom: 11,
+            userTrackingMode: Mapbox.userTrackingMode.none,
+            annotations: [...annotations, ...showMarkerArr]
         };
         helper.bindMethod(this);
     }
 
-
     componentDidMount() {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                var initialPosition = JSON.stringify(position);
-                this.setState({initialPosition});
-            },
-            (error) => alert("initialPosition_error"+error.message),
-            {enableHighAccuracy: false}
-        );
-        watchID = navigator.geolocation.watchPosition((position) => {
-                var lastPosition = JSON.stringify(position);
-                alert("lastPosition"+lastPosition);
-                this.setState({
-                    lastPosition
-                })
-            }
-        );
-
-
-        this.props.setVisitorData({
-            "originLat": 40.018928097309,
-            "originLng": 116.48599579179,
-            "latitude": 40.018869147739,
-            "longitude": 116.48619658964,
-            "radius": 5000
-        });
-
-
 
 
     }
 
     componentWillReceiveProps(nextProps) {
         let showMarkerArr = [];
-        nextProps.visitorData.map(item=> {
+        nextProps.singeData.map(item=> {
             showMarkerArr.push({
                 coordinates: [item["location"]["latitude"], item["location"]["longitude"]],
                 id: item.pid.toString(),
@@ -135,53 +122,41 @@ class Map extends Component {
     }
 
     onRegionDidChange = (location) => {
-        this.props.setVisitorData({
-            "originLat": location.latitude,
-            "originLng": location.longitude,
-            "latitude": location.latitude,
-            "longitude": location.longitude,
-            "radius": 500
-        });
-        this.setState({currentZoom: location.zoomLevel});
-        //console.log('onRegionDidChange', location);
+
+        console.log('onRegionDidChange', location);
     };
     onRegionWillChange = (location) => {
-        //console.log('onRegionWillChange', location);
+        console.log('onRegionWillChange', location);
     };
     onUpdateUserLocation = (location) => {
-        //console.log('onUpdateUserLocation', location);
+        console.log('onUpdateUserLocation', location);
     };
     onOpenAnnotation = (annotation) => {
-        alert("this.state.lastPosition" + this.state.lastPosition);
-        this.props.setSingleData({
-            pid: annotation.id
-        });
-
-        //console.log('onOpenAnnotation', annotation);
+        console.log('onOpenAnnotation', annotation);
     };
     onRightAnnotationTapped = (e) => {
-        //console.log('onRightAnnotationTapped', e);
+        console.log('onRightAnnotationTapped', e);
     };
     onLongPress = (location) => {
-        //console.log('onLongPress', location);
+        console.log('onLongPress', location);
     };
     onTap = (location) => {
-        //console.log('onTap', location);
+        console.log('onTap', location);
     };
     onChangeUserTrackingMode = (userTrackingMode) => {
         this.setState({userTrackingMode});
-        //console.log('onChangeUserTrackingMode', userTrackingMode);
+        console.log('onChangeUserTrackingMode', userTrackingMode);
     };
 
     componentWillMount() {
         this._offlineProgressSubscription = Mapbox.addOfflinePackProgressListener(progress => {
-            //console.log('offline pack progress', progress);
+            console.log('offline pack progress', progress);
         });
         this._offlineMaxTilesSubscription = Mapbox.addOfflineMaxAllowedTilesListener(tiles => {
-            //console.log('offline max allowed tiles', tiles);
+            console.log('offline max allowed tiles', tiles);
         });
         this._offlineErrorSubscription = Mapbox.addOfflineErrorListener(error => {
-            //console.log('offline error', error);
+            console.log('offline error', error);
         });
     }
 
@@ -189,7 +164,6 @@ class Map extends Component {
         this._offlineProgressSubscription.remove();
         this._offlineMaxTilesSubscription.remove();
         this._offlineErrorSubscription.remove();
-        navigator.geolocation.clearWatch(watchID);
     }
 
     addNewMarkers = () => {
@@ -240,12 +214,6 @@ class Map extends Component {
         });
     };
 
-    goZoom(level){
-        console.log(this.state.zoom)
-        this._map.setZoomLevel(this.state.zoom+level);
-        this.setState({zoom:this.state.zoom+level})
-    }
-
     render() {
         StatusBar.setHidden(true);
         return (
@@ -256,11 +224,11 @@ class Map extends Component {
                     initialCenterCoordinate={this.state.center}
                     initialZoomLevel={this.state.zoom}
                     initialDirection={0}
-                    rotateEnabled={false}
+                    rotateEnabled={true}
                     scrollEnabled={true}
                     logoIsHidden={true}
                     attributionButtonIsHidden={true}
-                    zoomEnabled={false}
+                    zoomEnabled={true}
                     showsUserLocation={true}
                     styleURL={Mapbox.mapStyles.streets}
                     userTrackingMode={this.state.userTrackingMode}
@@ -275,20 +243,7 @@ class Map extends Component {
                     onLongPress={this.onLongPress}
                     onTap={this.onTap}
                 />
-                <View style={{flex: 1,bottom: 50,position:"absolute",right:10}}>
-                    <TouchableHighlight style={{  width: 24, height: 24, justifyContent: 'center', alignItems: 'center'}}
-                                        onPress={()=> {return this.goZoom(1)}}  >
-                        <Image
-                            source={require('../../image/zoomout_normal.png')} />
 
-                    </TouchableHighlight>
-                    <TouchableHighlight style={{  width: 24, height: 24, justifyContent: 'center', alignItems: 'center'}}
-                                        onPress={()=> {return this.goZoom(-1)}}  >
-                        <Image
-                            source={require('../../image/zoomin_normal.png')} />
-
-                    </TouchableHighlight>
-                </View>
             </View>
         );
     }
@@ -306,4 +261,18 @@ const styles = StyleSheet.create({
         flex: 1
     }
 });
-export  default Map;
+function mapStateToProps(state) {
+    return {
+        detailData:state.detailReducer.detailData,
+        singeData:state.mapReducer.singeData,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(detailActions, dispatch);
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DetailMapDirection);

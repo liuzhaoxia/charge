@@ -65,73 +65,68 @@ const styles = StyleSheet.create({
 
 
 class Main extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      animationType: 'none',
-      modalVisible: false,
-      transparent: false,
-    };
 
-    this.openDrawer = this.openDrawer.bind(this);
-    this.imagePress = this.imagePress.bind(this);
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            animationType: 'none',
+            modalVisible: false,
+            transparent: false,
+        };
 
-  openDrawer() {
-    this.drawer.openDrawer();
-  }
+        this.openDrawer = this.openDrawer.bind(this);
+        this.imagePress = this.imagePress.bind(this);
+    }
 
-  search() {
-    Actions.SearchList();
-  }
+    openDrawer() {
+        this.drawer.openDrawer();
+    }
 
-  imagePress() {
-    Actions.Choose();
-  }
+    search() {
+        Actions.SearchList();
+    }
+    imagePress() {
+        Actions.Choose();
+    }
 
-  render() {
-    let navigationView = (
-      <LeftMenu></LeftMenu>
-    );
+    render(){
+        var navigationView = (
+            <LeftMenu></LeftMenu>
+        );
 
-    return (
+        return (
 
-      <DrawerLayoutAndroid
-        drawerWidth={300}
-        drawerPosition={DrawerLayoutAndroid.positions.Left}
-        ref={(drawer) => { this.drawer = drawer; }}
-        renderNavigationView={() => navigationView}
-      >
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <Button style={styles.logintext} onPress={this.openDrawer}>登 录</Button>
-            <TextInput
-              placeholder="搜索地点"
-              placeholderTextColor="#E0E0E0"
-              style={styles.textinput}
-              underlineColorAndroid="transparent"
-              keyboardType="default"
-            />
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(drawer) => { this.drawer = drawer; }}
+                renderNavigationView={() => navigationView}
+            >
+                <View style={styles.container}>
+                    <View style={styles.header}>
+                        <Button style={styles.logintext} onPress={this.openDrawer}>登 录</Button>
+                        <TextInput placeholder="搜索地点" placeholderTextColor ='#E0E0E0'  style={styles.textinput} underlineColorAndroid='transparent'
+                                               keyboardType = 'default' onFocus={this.search}>
+                    </TextInput>
+                        <Button style={styles.search} onPress={this.search} >搜索</Button>
+                    </View>
+                    <View style={styles.map}>
+                        <Map/>
+                        <ShellsDetail/>
+                        <View style={{flex: 1,top: 60,position:"absolute",right:10}}>
+                            <TouchableHighlight style={{  width: 24, height: 24, justifyContent: 'center', alignItems: 'center'}}
+                                                onPress={this.imagePress}  >
+                                <Image
+                                       source={require('../../image/funnel.png')} />
 
-            <Button style={styles.search} onPress={this.search}>搜索</Button>
-          </View>
-          <View style={styles.map}>
-            <Map />
-            <ShellsDetail />
-            <View style={{ flex: 1, top: 60, position: 'absolute', right: 10 }}>
-              <TouchableHighlight
-                style={{ width: 24, height: 24, justifyContent: 'center', alignItems: 'center' }}
-                onPress={this.imagePress}
-              >
-                <Image source={require('../../image/funnel.png')} />
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+                </View>
+            </DrawerLayoutAndroid>
+        );
+    }
 
-              </TouchableHighlight>
-            </View>
-          </View>
-        </View>
-      </DrawerLayoutAndroid>
-    );
-  }
 }
 
 export default Main;
