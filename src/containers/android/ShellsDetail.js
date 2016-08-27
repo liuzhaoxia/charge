@@ -93,17 +93,17 @@ class ShellsDetail extends Component {
     super(props);
 
     this.state = {
-      detailData: this.props.detailData,
+      data: null,
       show: this.props.showOrHide,
       isOpen: false,
-      newLinkUrls:
-        [{
+      newLinkUrls: [
+        {
           url: 'baidumap://map/direction?destination=39.6,116.5',
           name: '百度',
         }, {
           url: 'androidamap://viewMap?sourceApplication=appname&poiname=abc&lat=36.2&lon=116.1&dev=0',
           name: '高德',
-        }, , {
+        }, {
           url: '',
           name: '取消',
         }],
@@ -116,7 +116,7 @@ class ShellsDetail extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       show: nextProps.showOrHide,
-      detailData: nextProps.singeData,
+      data: nextProps.singeData[0],
     });
   }
 
@@ -130,7 +130,7 @@ class ShellsDetail extends Component {
     this.setState({
       show: false,
     });
-    Actions.pop();
+    Actions.detailInfo();
   }
 
   closeModal() {
@@ -144,19 +144,23 @@ class ShellsDetail extends Component {
       Linking.canOpenURL(this.state.newLinkUrls[index].url).then(supported => {
         if (supported) {
           return Linking.openURL(this.state.newLinkUrls[index].url);
-        } else {
-          if (this.state.newLinkUrls[index].name === '百度') {
-            return Linking.openURL('http://shouji.baidu.com/software/9831363.html');
-          } else if (this.state.newLinkUrls[index].name === '高德') {
-            return Linking.openURL('http://www.autonavi.com/');
-          }
         }
+        if (this.state.newLinkUrls[index].name === '百度') {
+          return Linking.openURL('http://shouji.baidu.com/software/9831363.html');
+        }
+        if (this.state.newLinkUrls[index].name === '高德') {
+          return Linking.openURL('http://www.autonavi.com/');
+        }
+        return null;
       });
     }
   }
 
   render() {
-    const data = this.state.detailData[0];
+    const data = this.state.data;
+    if (!data) {
+      return null;
+    }
     return (
       <Modal
         position={"bottom"}
@@ -215,10 +219,9 @@ class ShellsDetail extends Component {
                   data.state === 0 ?
                   require('../../image/charge_avail.png') :
                   require('../../image/charge_unavail.png')}
-              >
-                </Image>
+              />
             </View>
-            <View style={{ width: 150 , flexDirection: 'row',  }}>
+            <View style={{ width: 150, flexDirection: 'row' }}>
               {
                 data.sockerParams.map((socker, i) =>
                   (<View key={i} style={{ flexDirection: 'row', marginLeft: 5 }}>
@@ -277,28 +280,33 @@ class ShellsDetail extends Component {
         <Modal
           position={"center"}
           isOpen={this.state.isOpen}
-          style={[styles.modalStyle , styles.modalHeight]}
+          style={[styles.modalStyle, styles.modalHeight]}
           backdrop={false}
-          swipeArea={20}>
+          swipeArea={20}
+        >
           <View style={styles.subView}>
             {
-              this.state.newLinkUrls.map((linkUrl, index)=> {
-                return (
-                  <View key={index}>
-                    <TouchableHighlight underlayColor='transparent' key={index}
-                                        onPress={()=>{return this.openMapUrl(index)}} style={styles.buttonStyle}
-                    >
-                      <Text key={index} style={styles.buttonText}>
-                        {linkUrl.name}
-                      </Text>
+              this.state.newLinkUrls.map(
+                (linkUrl, index) =>
+                  (
+                    <View key={index}>
+                      <TouchableHighlight
+                        underlayColor="transparent"
+                        key={index}
+                        onPress={() => { this.openMapUrl(index); }} style={styles.buttonStyle}
+                      >
+                        <Text key={index} style={styles.buttonText}>
+                          {linkUrl.name}
+                        </Text>
 
-                    </TouchableHighlight>
-                    {
-                      index < this.state.newLinkUrls.length - 1 ? (<View style={styles.horizontalLine}/>) : (<View />)
-                    }
-                  </View>
-                )
-              })
+                      </TouchableHighlight>
+                      {
+                        index < this.state.newLinkUrls.length - 1 ?
+                          (<View style={styles.horizontalLine}/>) : (<View />)
+                      }
+                    </View>
+                  )
+              )
             }
           </View>
         </Modal>
@@ -308,7 +316,6 @@ class ShellsDetail extends Component {
 }
 function mapStateToProps(state) {
   return {
-    detailData: state.detailReducer.detailData,
     singeData: state.mapReducer.singeData,
     showOrHide: state.mapReducer.showOrHide,
   };

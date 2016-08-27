@@ -335,7 +335,6 @@ class Choose extends Component {
     }
 
     componentWillMount() {
-
     }
 
     handlePress(name) {

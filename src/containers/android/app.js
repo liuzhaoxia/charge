@@ -6,6 +6,8 @@ import {
   View,
   Image,
   Text,
+  StyleSheet,
+  TextInput,
 } from 'react-native';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Router, Scene, Modal, ActionConst } from 'react-native-router-flux';
@@ -18,7 +20,6 @@ import Login from '../../containers/android/Login';
 import Start from '../../containers/android/Start';
 import DetailInfo from '../../containers/android/Detail';
 import Helper from '../../utils/helper';
-import ShellsDetail from '../../containers/android/ShellsDetail';
 import Choose from '../../containers/android/Choose';
 import About from './../../containers/android/About';
 import HelpView from './../../containers/android/HelpView';
@@ -30,25 +31,30 @@ import Regist from './Regist';
 import UserAgreement from './UserAgreement';
 import FindPassword from './FindPassword';
 import Error from './Error';
+import Introduction from './Introduction'
 
+const styles = StyleSheet.create({
+  textInput: {
+    color: 'black',
+    flex: 1,
+    height: 40,
+  },
+  container: {
+    width: 250,
+    marginLeft: 60,
+    borderWidth: 1,
+    borderColor: 'red',
+    flexDirection: 'row',
+    marginTop: 5,
+  },
+});
 class App extends React.Component {
   componentWillUnmount() {
-    store.get('appState')
-      .then(res => {
-        if (res) {
-          console.log('update');
-          console.log(JSON.stringify(Global.appState));
-          store.update('appState', Global.appState);
-          return;
-        }
-        console.log('save');
-        console.log(JSON.stringify(Global.appState));
-        store.save('appState', Global.appState);
-      });
+    store.save('appState', Global.appState);
   }
 
   test1() {
-    // alert(111);
+    console.log(2222);
   }
 
   render() {
@@ -70,13 +76,13 @@ class App extends React.Component {
                   hideNavBar
                 />
                 <Scene
-                  key="shellsDetail"
-                  component={ShellsDetail}
-                  title="shellsDetail"
+                  key="Introduction"
+                  component={Introduction}
+                  title="Introduction"
                   hideNavBar
                 />
                 <Scene
-                  key="DetailInfo"
+                  key="detailInfo"
                   component={DetailInfo}
                   title="DetailInfo"
                   hideNavBar
@@ -99,8 +105,8 @@ class App extends React.Component {
               <Scene
                 key="SearchList"
                 component={SearchList}
-                title="搜索"
-                hideNavBar
+                hideNavBar={false}
+                renderTitle={this.title}
               />
               <Scene
                 key="About" component={About}

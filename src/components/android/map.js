@@ -20,18 +20,6 @@ import  helper from '../../utils/helper';
 const accessToken = appConfig.mapBoxToken;
 Mapbox.setAccessToken(accessToken);
 let watchID = null;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'stretch',
-  },
-  map: {
-    flex: 1,
-  },
-  scrollView: {
-    flex: 1,
-  },
-});
 class Map extends Component {
   // 构造
   constructor(props) {
@@ -97,29 +85,24 @@ class Map extends Component {
         title: '',
         type: 'point',
         annotationImage: {
-          source:{ uri:'https://facebook.github.io/react/img/logo_small.png' },
-          height: 25,
-          width: 25,
-        }, rightCalloutAccessory: {
-          source: { uri: 'https://facebook.github.io/react/img/logo_small.png' },
+          source:{},
           height: 25,
           width: 25,
         }
       };
-      //if(item.plotKind === 0){//0:公共1：专用
-      //  if(item.kindCode===1){//1（充电站） 2（充换电站） 4（换电站） 5（充电桩）
-      //    mark.annotationImage.source={uri:require('../../../android/app/src/main/res/drawable/charge_station_common.png')};
-      //  }else if(item.kindCode===5){
-      //    mark.annotationImage.source={uri:require('../../../android/app/src/main/res/drawable/charge_pole_common.png')};
-      //  }
-      //}else{
-      //  if(item.kindCode===1){//1（充电站） 2（充换电站） 4（换电站） 5（充电桩）
-      //    mark.annotationImage.source={uri:require('../../../android/app/src/main/res/drawable/charge_station_special.png')};
-      //  }else if(item.kindCode===5){
-      //    mark.annotationImage.source={uri:require('../../../android/app/src/main/res/drawable/charge_pole_special.png')};
-      //  }
-      //}
-      console.log(mark);
+      if(item.plotKind === 0){//0:公共1：专用
+        if(item.kindCode==='1'){//1（充电站） 2（充换电站） 4（换电站） 5（充电桩）
+          mark.annotationImage.source={uri:'charge_station_common'};
+        }else if(item.kindCode==='5'){
+          mark.annotationImage.source={uri:'charge_pole_common'};
+        }
+      }else{
+        if(item.kindCode==='1'){//1（充电站） 2（充换电站） 4（换电站） 5（充电桩）
+          mark.annotationImage.source={uri:'charge_station_special'};
+        }else if(item.kindCode==='5'){
+          mark.annotationImage.source={uri:'charge_pole_special'};
+        }
+      }
       showMarkerArr.push(mark);
     });
 
@@ -130,52 +113,51 @@ class Map extends Component {
 
   onRegionDidChange = (location) => {
     this.props.setVisitorData({
-      originLat: location.latitude,
-      originLng: location.longitude,
-      latitude: location.latitude,
-      longitude: location.longitude,
-      radius: 500,
+      "originLat": location.latitude,
+      "originLng": location.longitude,
+      "latitude": location.latitude,
+      "longitude": location.longitude,
+      "radius": 5000
     });
-    this.setState({ currentZoom: location.zoomLevel });
-    console.log('onRegionDidChange', location);
+    this.setState({currentZoom: location.zoomLevel});
+    //console.log('onRegionDidChange', location);
   };
   onRegionWillChange = (location) => {
-    console.log('onRegionWillChange', location);
+    //console.log('onRegionWillChange', location);
   };
   onUpdateUserLocation = (location) => {
-    console.log('onUpdateUserLocation', location);
+    //console.log('onUpdateUserLocation', location);
   };
   onOpenAnnotation = (annotation) => {
-    alert("this.state.lastPosition" + this.state.lastPosition);
     this.props.setSingleData({
-      pid: annotation.id,
+      pid: annotation.id
     });
 
-    console.log('onOpenAnnotation', annotation);
+    //console.log('onOpenAnnotation', annotation);
   };
   onRightAnnotationTapped = (e) => {
-    console.log('onRightAnnotationTapped', e);
+    //console.log('onRightAnnotationTapped', e);
   };
   onLongPress = (location) => {
-    console.log('onLongPress', location);
+    //console.log('onLongPress', location);
   };
   onTap = (location) => {
-    console.log('onTap', location);
+    //console.log('onTap', location);
   };
   onChangeUserTrackingMode = (userTrackingMode) => {
-    this.setState({ userTrackingMode });
-    console.log('onChangeUserTrackingMode', userTrackingMode);
+    this.setState({userTrackingMode});
+    //console.log('onChangeUserTrackingMode', userTrackingMode);
   };
 
   componentWillMount() {
     this._offlineProgressSubscription = Mapbox.addOfflinePackProgressListener(progress => {
-      console.log('offline pack progress', progress);
+      //console.log('offline pack progress', progress);
     });
     this._offlineMaxTilesSubscription = Mapbox.addOfflineMaxAllowedTilesListener(tiles => {
-      console.log('offline max allowed tiles', tiles);
+      //console.log('offline max allowed tiles', tiles);
     });
     this._offlineErrorSubscription = Mapbox.addOfflineErrorListener(error => {
-      console.log('offline error', error);
+      //console.log('offline error', error);
     });
   }
 
@@ -193,14 +175,14 @@ class Map extends Component {
         coordinates: [40.73312, -73.989],
         type: 'point',
         title: 'This is a new marker',
-        id: 'foo',
+        id: 'foo'
       }, {
-        coordinates: [[40.749857912194386, -73.96820068359375], [40.741924698522055, -73.9735221862793], [40.735681504432264, -73.97523880004883], [40.7315190495212, -73.97438049316406], [40.729177554196376, -73.97180557250975], [40.72345355209305, -73.97438049316406], [40.719290332250544, -73.97455215454102], [40.71369559554873, -73.97729873657227], [40.71200407096382, -73.97850036621094], [40.71031250340588, -73.98691177368163], [40.71031250340588, -73.99154663085938]],
-        type: 'polygon',
-        fillAlpha: 1,
-        fillColor: '#000000',
-        strokeAlpha: 1,
-        id: 'new-black-polygon',
+        'coordinates': [[40.749857912194386, -73.96820068359375], [40.741924698522055, -73.9735221862793], [40.735681504432264, -73.97523880004883], [40.7315190495212, -73.97438049316406], [40.729177554196376, -73.97180557250975], [40.72345355209305, -73.97438049316406], [40.719290332250544, -73.97455215454102], [40.71369559554873, -73.97729873657227], [40.71200407096382, -73.97850036621094], [40.71031250340588, -73.98691177368163], [40.71031250340588, -73.99154663085938]],
+        'type': 'polygon',
+        'fillAlpha': 1,
+        'fillColor': '#000000',
+        'strokeAlpha': 1,
+        'id': 'new-black-polygon'
       }]
     });
   };
@@ -214,15 +196,15 @@ class Map extends Component {
         }
         return {
           coordinates: [39.9, 116.3],
-          type: 'point',
+          'type': 'point',
           title: 'New Title!',
           subtitle: 'New Subtitle',
           annotationImage: {
-            source: { uri: 'https://cldup.com/7NLZklp8zS.png' },
+            source: {uri: 'https://cldup.com/7NLZklp8zS.png'},
             height: 25,
-            width: 25,
+            width: 25
           },
-          id: 'marker2',
+          id: 'marker2'
         };
       })
     });
@@ -234,19 +216,19 @@ class Map extends Component {
     });
   };
 
-  goZoom(level) {
-    console.log(this.state.zoom);
-    this._map.setZoomLevel(this.state.zoom + level);
-    this.setState({ zoom: this.state.zoom + level });
+  goZoom(level){
+    console.log(this.state.zoom)
+    this._map.setZoomLevel(this.state.zoom+level);
+    this.setState({zoom:this.state.zoom+level})
   }
 
   render() {
     StatusBar.setHidden(true);
     return (
-      <View style={ styles.container }>
+      <View style={styles.container}>
         <MapView
           ref={map => { this._map = map; }}
-          style={ styles.map }
+          style={styles.map}
           initialCenterCoordinate={this.state.center}
           initialZoomLevel={this.state.zoom}
           initialDirection={0}
@@ -259,7 +241,7 @@ class Map extends Component {
           styleURL={Mapbox.mapStyles.streets}
           userTrackingMode={this.state.userTrackingMode}
           annotations={this.state.annotations}
-          annotationsAreImmutable={false}
+          annotationsAreImmutable
           onChangeUserTrackingMode={this.onChangeUserTrackingMode}
           onRegionDidChange={this.onRegionDidChange}
           onRegionWillChange={this.onRegionWillChange}
@@ -271,15 +253,15 @@ class Map extends Component {
         />
         <View style={{flex: 1,bottom: 50,position:"absolute",right:10}}>
           <TouchableHighlight style={{  width: 24, height: 24, justifyContent: 'center', alignItems: 'center'}}
-                              onPress={()=> {return this.goZoom(1)}}>
+                              onPress={()=> {return this.goZoom(1)}}  >
             <Image
-              source={require('../../image/zoomout_normal.png')}/>
+              source={require('../../image/zoomout_normal.png')} />
 
           </TouchableHighlight>
           <TouchableHighlight style={{  width: 24, height: 24, justifyContent: 'center', alignItems: 'center'}}
-                              onPress={()=> {return this.goZoom(-1)}}>
+                              onPress={()=> {return this.goZoom(-1)}}  >
             <Image
-              source={require('../../image/zoomin_normal.png')}/>
+              source={require('../../image/zoomin_normal.png')} />
 
           </TouchableHighlight>
         </View>
@@ -288,5 +270,16 @@ class Map extends Component {
   }
 }
 
-
-export default Map;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'stretch'
+  },
+  map: {
+    flex: 1
+  },
+  scrollView: {
+    flex: 1
+  }
+});
+export  default Map;
