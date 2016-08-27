@@ -143,13 +143,13 @@ class Map extends Component {
             "radius": 500
         });
         this.setState({currentZoom: location.zoomLevel});
-        console.log('onRegionDidChange', location);
+        //console.log('onRegionDidChange', location);
     };
     onRegionWillChange = (location) => {
-        console.log('onRegionWillChange', location);
+        //console.log('onRegionWillChange', location);
     };
     onUpdateUserLocation = (location) => {
-        console.log('onUpdateUserLocation', location);
+        //console.log('onUpdateUserLocation', location);
     };
     onOpenAnnotation = (annotation) => {
         alert("this.state.lastPosition" + this.state.lastPosition);
@@ -157,31 +157,31 @@ class Map extends Component {
             pid: annotation.id
         });
 
-        console.log('onOpenAnnotation', annotation);
+        //console.log('onOpenAnnotation', annotation);
     };
     onRightAnnotationTapped = (e) => {
-        console.log('onRightAnnotationTapped', e);
+        //console.log('onRightAnnotationTapped', e);
     };
     onLongPress = (location) => {
-        console.log('onLongPress', location);
+        //console.log('onLongPress', location);
     };
     onTap = (location) => {
-        console.log('onTap', location);
+        //console.log('onTap', location);
     };
     onChangeUserTrackingMode = (userTrackingMode) => {
         this.setState({userTrackingMode});
-        console.log('onChangeUserTrackingMode', userTrackingMode);
+        //console.log('onChangeUserTrackingMode', userTrackingMode);
     };
 
     componentWillMount() {
         this._offlineProgressSubscription = Mapbox.addOfflinePackProgressListener(progress => {
-            console.log('offline pack progress', progress);
+            //console.log('offline pack progress', progress);
         });
         this._offlineMaxTilesSubscription = Mapbox.addOfflineMaxAllowedTilesListener(tiles => {
-            console.log('offline max allowed tiles', tiles);
+            //console.log('offline max allowed tiles', tiles);
         });
         this._offlineErrorSubscription = Mapbox.addOfflineErrorListener(error => {
-            console.log('offline error', error);
+            //console.log('offline error', error);
         });
     }
 

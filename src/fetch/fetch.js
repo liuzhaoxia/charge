@@ -29,7 +29,7 @@ function createFetch(url, method, jsonObj) {
         const options = {
           method: FetchMethod.Get,
         };
-        console.log(urlWithQueryStr);
+        //console.log(urlWithQueryStr);
         return fetch(urlWithQueryStr, options);
       }
     case FetchMethod.Post:
@@ -39,8 +39,8 @@ function createFetch(url, method, jsonObj) {
           method: FetchMethod.Post,
           body: queryStr,
         };
-        console.log(url);
-        console.log(queryStr);
+        //console.log(url);
+        //console.log(queryStr);
         return fetch(url, options);
       }
     default:

@@ -6,7 +6,7 @@ import { Actions } from 'react-native-router-flux';
 import Toast from 'react-native-root-toast';
 import { api, callApi } from '../apis/api';
 import { Global } from '../Global';
-import UserManagementActionEnum from '../constants/UserManagementActionEnum'
+import UserManagementActionEnum from '../constants/UserManagementActionEnum';
 
 const UserManagementActions = {
   setUser: createAction(UserManagementActionEnum.SET_USER),
@@ -22,7 +22,7 @@ const UserManagementActions = {
         data => {
           dispatch(UserManagementActions.loginRequestSuccess(
             data,
-            parameter.userName,
+            parameter.name,
             parameter.password
           ));
         },
@@ -42,12 +42,12 @@ const UserManagementActions = {
         icon: data.icon,
         accessToken: data.access_token,
       };
-      dispatch(UserManagementActions.setUser(user));
+      dispatch(UserManagementActions.updateUser(user));
       Actions.pop();
     },
   loginRequestFail: err =>
     dispatch => {
-      dispatch(UserManagementActions.setUser(null));
+      dispatch(UserManagementActions.updateUser(null));
       Toast.show(err, {
         duration: Toast.durations.LONG, // toast显示时长
         position: Toast.positions.CENTER, // toast位置
@@ -111,12 +111,12 @@ const UserManagementActions = {
         icon: data.icon,
         accessToken: data.access_token,
       };
-      dispatch(UserManagementActions.setUser(user));
+      dispatch(UserManagementActions.updateUser(user));
       Actions.mainModule();
     },
   registRequestFail: err =>
     dispatch => {
-      dispatch(UserManagementActions.setUser(null));
+      dispatch(UserManagementActions.updateUser(null));
       Toast.show(err, {
         duration: Toast.durations.LONG, // toast显示时长
         position: Toast.positions.CENTER, // toast位置
@@ -153,7 +153,7 @@ const UserManagementActions = {
         icon: data.icon,
         accessToken: data.access_token,
       };
-      dispatch(UserManagementActions.setUser(user));
+      dispatch(UserManagementActions.updateUser(user));
       Toast.show('修改密码成功', {
         duration: Toast.durations.LONG, // toast显示时长
         position: Toast.positions.CENTER, // toast位置

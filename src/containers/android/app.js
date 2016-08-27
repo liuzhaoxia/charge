@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
-class App extends Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -57,26 +57,7 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-    store.get('appState')
-      .then(res => {
-        if (res) {
-          console.log('---');
-          console.log(Global.appState);
-          console.log('---');
-          store.update('appState', Global.appState);
-          return;
-        }
-        console.log('------');
-        console.log(Global.appState);
-        console.log('------');
-        store.save('appState', Global.appState);
-      })
-      .catch(error => {
-        store.save('appState', Global.appState);
-        console.log('----------');
-        console.error(error.message);
-        console.log('----------');
-      });
+    store.save('appState', Global.appState);
   }
 
   test1() {
