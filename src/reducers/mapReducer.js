@@ -17,16 +17,16 @@ const initialState = {
   listMapFlag: false,
 };
 const mapReducer = handleActions({
-  [mapAction.getVisitorData]: (state, action)=> {
-    state = Object.assign({}, state);
-    state.showOrHide = false;
-    state.visitorData = action.payload.data;
-    return state;
+  [mapAction.getVisitorData]: (state, action) => {
+    const newState = Object.assign({}, state);
+    newState.showOrHide = false;
+    newState.visitorData = action.payload.data;
+    return newState;
   },
-  [mapAction.getSingleData]: (state, action)=> {
-    state = Object.assign({}, state);
-    state.showOrHide = action.payload.showOrHide;
-    let data = action.payload.data.data;
+  [mapAction.getSingleData]: (state, action) => {
+    const newState = Object.assign({}, state);
+    newState.showOrHide = action.payload.showOrHide;
+    const data = action.payload.data.data;
     if (data.servicePro === '0') {
       data.servicePro = '其它';
     } else if (data.servicePro === '1') {
@@ -56,56 +56,58 @@ const mapReducer = handleActions({
     } else if (data.servicePro === '11') {
       data.servicePro = '中电';
     }
-    //支付方式
-    for (let i in data.payment) {
-      if (data.payment[i] === '0') {
-        data.payment[i] = '其他';
-      } else if (data.payment[i] === '1') {
-        data.payment[i] = '现金';
-      } else if (data.payment[i] === '2') {
-        data.payment[i] = '信用卡';
-      } else if (data.payment[i] === '3') {
-        data.payment[i] = '借记卡';
-      } else if (data.payment[i] === '4') {
-        data.payment[i] = '特制充值卡';
-      } else if (data.payment[i] === '5') {
-        data.payment[i] = 'APP';
-      } else if (data.payment[i] === '101') {
-        data.payment[i] = '支付宝';
-      } else if (data.payment[i] === '102') {
-        data.payment[i] = '微信';
-      } else if (data.payment[i] === '400') {
-        data.payment[i] = '其他充值卡';
-      } else if (data.payment[i] === '401') {
-        data.payment[i] = '国网普通卡';
-      } else if (data.payment[i] === '402') {
-        data.payment[i] = '南方电网卡';
-      } else if (data.payment[i] === '403') {
-        data.payment[i] = '中石油卡';
-      } else if (data.payment[i] === '404') {
-        data.payment[i] = '中石化卡';
-      } else if (data.payment[i] === '405') {
-        data.payment[i] = '中海油卡';
-      } else if (data.payment[i] === '406') {
-        data.payment[i] = '中国普天充值卡';
+    // 支付方式
+    for (let payment of data.payment) {
+      if (payment === '0') {
+        payment = '其他';
+      } else if (payment === '1') {
+        payment = '现金';
+      } else if (payment === '2') {
+        payment = '信用卡';
+      } else if (payment === '3') {
+        payment = '借记卡';
+      } else if (payment === '4') {
+        payment = '特制充值卡';
+      } else if (payment === '5') {
+        payment = 'APP';
+      } else if (payment === '101') {
+        payment = '支付宝';
+      } else if (payment === '102') {
+        payment = '微信';
+      } else if (payment === '400') {
+        payment = '其他充值卡';
+      } else if (payment === '401') {
+        payment = '国网普通卡';
+      } else if (payment === '402') {
+        payment = '南方电网卡';
+      } else if (payment === '403') {
+        payment = '中石油卡';
+      } else if (payment === '404') {
+        payment = '中石化卡';
+      } else if (payment === '405') {
+        payment = '中海油卡';
+      } else if (payment === '406') {
+        payment = '中国普天充值卡';
       }
-      state.singeData = data;
+      newState.singeData = data;
     }
-    return state;
+    return newState;
   },
   [SearchActions.setLocationToMap]: (state, action) => {
-    state = Object.assign({}, state);
-    state.location = {
+    const newState = Object.assign({}, state);
+    newState.location = {
       latitude: action.payload.lat,
       longitude: action.payload.lng,
     };
-    return state;
+    return newState;
   },
   [SearchActions.setChargeMapList]: (state, action) => {
-    state = Object.assign({}, state);
-    state.mapListData = action.payload;
-    state.listMapFlag = true;
-    return state;
+    const newState = Object.assign({}, state);
+    newState.mapListData = action.payload;
+    newState.listMapFlag = true;
+    return newState;
   },
 }, initialState);
+
 export default mapReducer;
+
