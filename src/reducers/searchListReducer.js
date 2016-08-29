@@ -6,9 +6,9 @@ const initialState = {
 };
 const searchList = handleActions({
   [SearchActions.setChargeList]: (state, action) => {
-    state = Object.assign({}, state);
-    state.searchListData = action.payload.data;
-    return state;
+    const newState = Object.assign({}, state);
+    newState.searchListData = action.payload.data;
+    return newState;
   },
 }, initialState);
 export default searchList;
