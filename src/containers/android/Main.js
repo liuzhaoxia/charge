@@ -1,7 +1,6 @@
 /**
  * Created by zhongxiaoming on 2016/8/5.
  */
-
 import React, { Component } from 'react';
 import {
   View,
@@ -74,28 +73,28 @@ class Main extends Component {
             transparent: false,
         };
 
-        this.openDrawer = this.openDrawer.bind(this);
-        this.imagePress = this.imagePress.bind(this);
-    }
+    this.openDrawer = this.openDrawer.bind(this);
+    this.imagePress = this.imagePress.bind(this);
+  }
 
-    openDrawer() {
-        this.drawer.openDrawer();
-    }
+  openDrawer() {
+    this.drawer.openDrawer();
+  }
 
-    search() {
-        Actions.SearchList();
-    }
-    imagePress() {
-        Actions.Choose();
-    }
+  search() {
+    Actions.SearchList();
+  }
 
-    render(){
-        var navigationView = (
-            <LeftMenu></LeftMenu>
-        );
+  imagePress() {
+    Actions.Choose();
+  }
 
-        return (
+  render() {
+    var navigationView = (
+      <LeftMenu></LeftMenu>
+    );
 
+    return (
             <DrawerLayoutAndroid
                 drawerWidth={300}
                 drawerPosition={DrawerLayoutAndroid.positions.Left}
