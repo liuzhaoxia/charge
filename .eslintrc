@@ -36,6 +36,9 @@
     "react/jsx-space-before-closing": 0,
 
     // 关闭规则，允许不验证组件属性
-    "react/prop-types": 0
+    "react/prop-types": 0,
+
+    // 关闭规则，忽略行结尾符
+    "linebreak-style": 0
   }
 }

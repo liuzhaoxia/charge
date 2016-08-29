@@ -9,6 +9,24 @@ import { connect } from 'react-redux';
 import StartActions from '../../actions/StartActions';
 import Helper from '../../utils/helper';
 
+const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    alignItems: 'stretch',
+  },
+  bgImage: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    padding: 10,
+
+    // 需要将width和height都设置为undefined，图片尺寸才能自动缩放
+    width: undefined,
+    height: undefined,
+  },
+});
+
 class Start extends Component {
   constructor(props) {
     super(props);
@@ -26,10 +44,11 @@ class Start extends Component {
 
   render() {
     return (
-      <View >
-        <Text>
-          这是启动页面
-        </Text>
+      <View style={styles.rootContainer}>
+        <Image
+          style={styles.bgImage}
+          source={require('../../image/splash.png')}
+        />
       </View>
     );
   }

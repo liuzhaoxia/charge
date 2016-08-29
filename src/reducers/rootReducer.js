@@ -5,10 +5,12 @@
 import { combineReducers } from 'redux';
 import UserManagementReducer from './UserManagementReducer';
 import mapReducer from './mapReducer';
+import searchListReducer from './searchListReducer';
 
 const RootReducer = combineReducers({
   UserManagementReducer,
   mapReducer,
+  searchListReducer,
 });
 
 export default RootReducer;

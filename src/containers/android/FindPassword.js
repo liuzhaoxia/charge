@@ -104,7 +104,7 @@ class FindPassword extends Component {
   }
 
   getCode() {
-    const parameter = { cellNo: Number(this.state.userName) };
+    const parameter = { cellNo: this.state.userName };
     this.props.actions.getAuthenticationCodeRequest(parameter);
     this.setState({
       isCountDown: true,
@@ -126,9 +126,9 @@ class FindPassword extends Component {
 
   onResetAndLogin() {
     const parameter = {
-      cellNum: Number(this.state.userName),
-      password: Number(this.state.password),
-      authenticationCode: Number(this.state.code),
+      cellNum: this.state.userName,
+      password: this.state.password,
+      authenticationCode: this.state.code,
     };
     this.props.actions.updatePasswordRequest(parameter);
   }

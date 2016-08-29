@@ -105,8 +105,7 @@ class App extends React.Component {
               <Scene
                 key="SearchList"
                 component={SearchList}
-                hideNavBar={false}
-                renderTitle={this.title}
+                hideNavBar
               />
               <Scene
                 key="About" component={About}
