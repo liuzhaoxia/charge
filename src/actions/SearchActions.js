@@ -8,6 +8,7 @@ import actionEnum from '../constants/actionEnum';
 
 const searchActions = {
   setChargeList: createAction(actionEnum.SET_CHARGE_LIST),
+  setLocationToMap: createAction(actionEnum.SET_LOCATION_TO_MAP),
   toDetail: () => {
     return dispatch => {
       dispatch(Actions.DetailInfo);
@@ -34,6 +35,11 @@ const searchActions = {
   requestChargeListFail: (data) => {
     return dispatch => {
       alert(data);
+    };
+  },
+  getListOfCharge: (parameter) => {
+    return dispatch => {
+      dispatch(searchActions.setLocationToMap(parameter));
     };
   },
 };

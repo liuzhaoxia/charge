@@ -1,7 +1,7 @@
 /**
  * Created by liwanchong on 2016/8/2.
  */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -108,6 +108,7 @@ class Map extends Component {
 
     this.setState({
       annotations: [...this.state.annotations, ...showMarkerArr],
+      center: nextProps.location,
     });
   }
 

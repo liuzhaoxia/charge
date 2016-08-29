@@ -61,15 +61,15 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
   },
-  header:{
-    height:50,
+  header: {
+    height: 50,
     flexDirection: 'row',
-    backgroundColor:'#4EC3EE',
+    backgroundColor: '#4EC3EE',
     alignItems: 'center',
-    paddingTop:5,
-    paddingBottom:5
+    paddingTop: 5,
+    paddingBottom: 5,
   },
 
   textinput: {
@@ -139,7 +139,39 @@ class SearchList extends Component {
     }
     this.setState({ history: Global.appState.searchHistory });
   }
+  pressData(data){
+    Actions.pop();
+    this.props.getListOfCharge(data.location);
+  }
 
+  list(data, index) {
+    return (
+      <TouchableHighlight onPress={() => this.pressData(data)} key={index}>
+        <View style={styles.row}>
+          <View>
+            <Image style={styles.thumb} source={require('../../image/logo.png')}/>
+          </View>
+          <View style={{ width: 250 }}>
+            <View>
+              <Text style={styles.title} numberOfLines={1}>
+                {data.name}
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.desc}>
+                {data.address}
+              </Text>
+            </View>
+          </View>
+          <View>
+            <Text style={styles.num}>
+              {data.num}个结果
+            </Text>
+          </View>
+        </View>
+      </TouchableHighlight>
+    );
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -156,6 +188,7 @@ class SearchList extends Component {
             style={styles.textinput}
             underlineColorAndroid="transparent"
             keyboardType="default"
+            autoFocus
           />
 
           <Button style={styles.search} onPress={this.back}>取消</Button>
@@ -187,33 +220,6 @@ class SearchList extends Component {
               );
             })
           }
-        </View>
-      </View>
-    );
-  }
-
-  list(data, index) {
-    return (
-      <View style={styles.row} key={index}>
-        <View>
-          <Image style={styles.thumb} source={require('../../image/logo.png')}/>
-        </View>
-        <View style={{ width: 250 }}>
-          <View>
-            <Text style={styles.title} numberOfLines={1}>
-              {data.name}
-            </Text>
-          </View>
-          <View>
-            <Text style={styles.desc}>
-              {data.address}
-            </Text>
-          </View>
-        </View>
-        <View>
-          <Text style={styles.num}>
-            {data.num}个结果
-          </Text>
         </View>
       </View>
     );
