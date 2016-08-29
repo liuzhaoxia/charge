@@ -158,14 +158,14 @@ class FindPassword extends Component {
     if (this.state.isShowPassword) {
       return (
         <Image
-          source={require('../../image/logo.png')}
+          source={require('../../image/login_icon_password.png')}
           style={styles.smallImage}
         />
       );
     }
     return (
       <Image
-        source={require('../../image/logo.png')}
+        source={require('../../image/login_icon_password.png')}
         style={styles.smallImage}
       />
     );
@@ -177,7 +177,7 @@ class FindPassword extends Component {
         <View style={[styles.rowContainer, styles.rowBG]}>
           <View style={styles.smallImageContainer}>
             <Image
-              source={require('../../image/logo.png')}
+              source={require('../../image/login_icon_phonenumber.png')}
               style={styles.smallImage}
             />
           </View>
@@ -197,7 +197,7 @@ class FindPassword extends Component {
         <View style={[styles.rowContainer, styles.rowBG]}>
           <View style={styles.smallImageContainer}>
             <Image
-              source={require('../../image/logo.png')}
+              source={require('../../image/login_icon_verifycode.png')}
               style={styles.smallImage}
             />
           </View>
@@ -224,7 +224,7 @@ class FindPassword extends Component {
         <View style={[styles.rowContainer, styles.rowBG]}>
           <View style={styles.smallImageContainer}>
             <Image
-              source={require('../../image/logo.png')}
+              source={require('../../image/login_icon_password.png')}
               style={styles.smallImage}
             />
           </View>

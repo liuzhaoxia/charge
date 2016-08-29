@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   smallImage: {
-    width: 16,
-    height: 16,
+    width: 20,
+    height: 20,
   },
   lineContainer: {
     backgroundColor: '#808080',
@@ -123,7 +123,7 @@ class Login extends Component {
         <View style={styles.rowContainer}>
           <View style={styles.smallImageContainer}>
             <Image
-              source={require('../../image/logo.png')}
+              source={require('../../image/login_icon_phonenumber.png')}
               style={styles.smallImage}
             />
           </View>
@@ -141,7 +141,7 @@ class Login extends Component {
         <View style={styles.rowContainer}>
           <View style={styles.smallImageContainer}>
             <Image
-              source={require('../../image/logo.png')}
+              source={require('../../image/login_icon_password.png')}
               style={styles.smallImage}
             />
           </View>
