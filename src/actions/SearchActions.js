@@ -9,6 +9,7 @@ import actionEnum from '../constants/actionEnum';
 const searchActions = {
   setChargeList: createAction(actionEnum.SET_CHARGE_LIST),
   setLocationToMap: createAction(actionEnum.SET_LOCATION_TO_MAP),
+  setChargeMapList: createAction(actionEnum.SET_CHARGE_MAP_LIST),
   toDetail: () => {
     return dispatch => {
       dispatch(Actions.DetailInfo);
@@ -37,9 +38,28 @@ const searchActions = {
       alert(data);
     };
   },
-  getListOfCharge: (parameter) => {
+  getListOfCharge: (location, parameter) => {
     return dispatch => {
-      dispatch(searchActions.setLocationToMap(parameter));
+      callApi(
+        api.chargeMapList(parameter),
+        data => {
+          dispatch(searchActions.requestChargeMapListSuccess(data));
+        },
+        err => {
+          dispatch(searchActions.requestChargeMapListFail(err));
+        }
+      );
+      dispatch(searchActions.setLocationToMap(location));
+    };
+  },
+  requestChargeMapListSuccess: (data) => {
+    return dispatch => {
+      dispatch(searchActions.setChargeMapList(data));
+    };
+  },
+  requestChargeMapListFail: (data) => {
+    return dispatch => {
+      alert(data);
     };
   },
 };
