@@ -13,7 +13,6 @@ const api = {
   ),
   getVisitorData: (parameter) => {
     let token = '';
-    console.log(Global);
     if (Global.appState && Global.appState.user) {
       token = Global.appState.user.accessToken;
     }
@@ -82,7 +81,6 @@ async function callApi(apiService, success, fail) {
       throw new Error(`服务器错误:${jsonResult.errmsg}`);
     }
   } catch (error) {
-    console.log(error);
     if (fail) {
       fail(error.message);
     }
