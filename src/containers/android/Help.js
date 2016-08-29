@@ -44,7 +44,7 @@ class Help extends Component {
             <View style={styles.container}>
                 <View style={styles.bgcontainer}>
                     <View style={styles.toolbar}>
-                        <Text style={{flex:1}}  onPress={Actions.About}>返回</Text>
+                        <Text style={{flex:1}}  onPress={Actions.about}>返回</Text>
                         <Text style={{color:'#fff',textAlign:'center',flex:9}}>关于</Text>
                     </View>
                     <Image

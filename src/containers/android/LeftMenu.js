@@ -45,10 +45,10 @@ class LeftMenu extends Component {
         Helper.bindMethod(this);
     }
     about() {
-        Actions.About()
+        Actions.about()
     }
     getChargeView(){
-        Actions.ChargeView()
+        Actions.chargeView()
     }
 
     onLogOut() {

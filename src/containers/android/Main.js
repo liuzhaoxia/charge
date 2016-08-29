@@ -82,11 +82,11 @@ class Main extends Component {
   }
 
   search() {
-    Actions.SearchList();
+    Actions.searchList();
   }
 
   imagePress() {
-    Actions.Choose();
+    Actions.choose();
   }
 
   render() {
