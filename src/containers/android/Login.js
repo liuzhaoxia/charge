@@ -11,33 +11,11 @@ import { Global } from '../../Global';
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    alignItems: 'stretch',
-  },
-  bgImage: {
-    flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
     alignItems: 'stretch',
-    padding: 10,
-
-    // 需要将width和height都设置为undefined，图片尺寸才能自动缩放
-    width: undefined,
-    height: undefined,
-  },
-  topContainer: {
-    flex: 4,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  mainContainer: {
-    flex: 6,
-    flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'stretch',
-  },
-  logoImage: {
-    width: 80,
-    height: 80,
+    marginTop: 53,
+    padding: 10,
   },
   rowContainer: {
     flexDirection: 'row',
@@ -65,7 +43,7 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 9,
     height: 30,
-    color: '#FFFFFF',
+    color: '#000000',
     margin: 0,
     padding: 0,
   },
@@ -142,89 +120,76 @@ class Login extends Component {
   render() {
     return (
       <View style={styles.rootContainer}>
-        <Image
-          source={require('../../image/loginBackground.jpg')}
-          style={styles.bgImage}
-        >
-          <View style={styles.topContainer}>
+        <View style={styles.rowContainer}>
+          <View style={styles.smallImageContainer}>
             <Image
               source={require('../../image/logo.png')}
-              style={styles.logoImage}
+              style={styles.smallImage}
             />
           </View>
-          <View style={styles.mainContainer}>
-            <View style={styles.rowContainer}>
-              <View style={styles.smallImageContainer}>
-                <Image
-                  source={require('../../image/logo.png')}
-                  style={styles.smallImage}
-                />
-              </View>
-              <TextInput
-                placeholder="请输入手机号"
-                placeholderTextColor="#808080"
-                style={styles.textInput}
-                underlineColorAndroid="transparent"
-                keyboardType="default"
-                value={this.state.userName}
-                onChangeText={text => { this.changeState('userName', text); }}
-              />
-            </View>
-            <View style={styles.lineContainer} />
-            <View style={styles.rowContainer}>
-              <View style={styles.smallImageContainer}>
-                <Image
-                  source={require('../../image/logo.png')}
-                  style={styles.smallImage}
-                />
-              </View>
-              <TextInput
-                ref={c => { this.passwordInput = c; }}
-                placeholder="请输入密码"
-                placeholderTextColor="#808080"
-                style={styles.textInput}
-                secureTextEntry
-                underlineColorAndroid="transparent"
-                keyboardType="default"
-                value={this.state.password}
-                onChangeText={text => { this.changeState('password', text); }}
-              />
-            </View>
-            <View style={styles.lineContainer} />
-            <View style={[styles.rowContainer, styles.rightRowContainer]}>
-              <Text
-                style={styles.forgetPassword}
-                onPress={() => { Actions.findPassword() }}
-              >
-                忘记密码?
-              </Text>
-            </View>
-            <View style={[styles.rowContainer, styles.textLoginContainer]}>
-              <Text
-                style={styles.textLogin}
-                onPress={this.onLogin}
-              >
-                登陆
-              </Text>
-            </View>
-            <View style={[styles.rowContainer, styles.textWeiXinLoginContainer]}>
-              <Text
-                style={styles.textWeiXinLogin}
-                onPress={this.onWeiXinLogin}
-              >
-                微信登陆
-              </Text>
-            </View>
-            <View style={[styles.rowContainer, styles.textWeiXinLoginContainer]}>
-              <Text
-                style={styles.textWeiXinLogin}
-                onPress={() => { Actions.regist(); }}
-              >
-                注册
-              </Text>
-            </View>
+          <TextInput
+            placeholder="请输入手机号"
+            placeholderTextColor="#808080"
+            style={styles.textInput}
+            underlineColorAndroid="transparent"
+            keyboardType="default"
+            value={this.state.userName}
+            onChangeText={text => { this.changeState('userName', text); }}
+          />
+        </View>
+        <View style={styles.lineContainer}/>
+        <View style={styles.rowContainer}>
+          <View style={styles.smallImageContainer}>
+            <Image
+              source={require('../../image/logo.png')}
+              style={styles.smallImage}
+            />
           </View>
-        </Image>
+          <TextInput
+            ref={c => { this.passwordInput = c; }}
+            placeholder="请输入密码"
+            placeholderTextColor="#808080"
+            style={styles.textInput}
+            secureTextEntry
+            underlineColorAndroid="transparent"
+            keyboardType="default"
+            value={this.state.password}
+            onChangeText={text => { this.changeState('password', text); }}
+          />
+        </View>
+        <View style={styles.lineContainer}/>
+        <View style={[styles.rowContainer, styles.rightRowContainer]}>
+          <Text
+            style={styles.forgetPassword}
+            onPress={() => { Actions.findPassword(); }}
+          >
+            忘记密码?
+          </Text>
+        </View>
+        <View style={[styles.rowContainer, styles.textLoginContainer]}>
+          <Text
+            style={styles.textLogin}
+            onPress={this.onLogin}
+          >
+            登陆
+          </Text>
+        </View>
+        <View style={[styles.rowContainer, styles.textWeiXinLoginContainer]}>
+          <Text
+            style={styles.textWeiXinLogin}
+            onPress={this.onWeiXinLogin}
+          >
+            微信登陆
+          </Text>
+        </View>
+        <View style={[styles.rowContainer, styles.textWeiXinLoginContainer]}>
+          <Text
+            style={styles.textWeiXinLogin}
+            onPress={() => { Actions.regist(); }}
+          >
+            注册
+          </Text>
+        </View>
       </View>
     );
   }

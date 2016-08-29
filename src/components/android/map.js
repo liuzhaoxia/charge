@@ -30,53 +30,12 @@ class Map extends Component {
       lastPosition: 'unknown',
       center: {
         latitude: 40.008456800067,
-        longitude: 116.47474416608
+        longitude: 116.47474416608,
       },
       zoom: 11,
       userTrackingMode: Mapbox.userTrackingMode.none,
-      annotations: [{
-        coordinates: [39.9, 116.3],
-        type: 'point',
-        title: 'This is marker 1',
-        subtitle: 'It has a rightCalloutAccessory too',
-        rightCalloutAccessory: {
-          source: { uri: 'https://cldup.com/9Lp0EaBw5s.png' },
-          height: 25,
-          width: 25
-        },
-        annotationImage: {
-          source: { uri: 'https://cldup.com/CnRLZem9k9.png' },
-          height: 25,
-          width: 25
-        },
-        id: 'marker1'
-      }, {
-        coordinates: [39.9, 116.3],
-        type: 'point',
-        title: '',
-        subtitle: 'Neat, this is a custom annotation image',
-        annotationImage: {
-          source: { uri: 'https://cldup.com/7NLZklp8zS.png' },
-          height: 25,
-          width: 25
-        },
-        id: 'marker2'
-      }, {
-        coordinates: [[40.76572150042782, -73.99429321289062], [40.743485405490695, -74.00218963623047], [40.728266950429735, -74.00218963623047], [40.728266950429735, -73.99154663085938], [40.73633186448861, -73.98983001708984], [40.74465591168391, -73.98914337158203], [40.749337730454826, -73.9870834350586]],
-        type: 'polyline',
-        strokeColor: '#00FB00',
-        strokeWidth: 4,
-        strokeAlpha: .5,
-        id: 'foobar'
-      }, {
-        coordinates: [[40.749857912194386, -73.96820068359375], [40.741924698522055, -73.9735221862793], [40.735681504432264, -73.97523880004883], [40.7315190495212, -73.97438049316406], [40.729177554196376, -73.97180557250975], [40.72345355209305, -73.97438049316406], [40.719290332250544, -73.97455215454102], [40.71369559554873, -73.97729873657227], [40.71200407096382, -73.97850036621094], [40.71031250340588, -73.98691177368163], [40.71031250340588, -73.99154663085938]],
-        type: 'polygon',
-        fillAlpha: 1,
-        strokeColor: '#ffffff',
-        fillColor: '#0000ff',
-        id: 'zap'
-      }],
-      userLocation: { lng: 0.0, lat: 0.0 }
+      annotations: [],
+      userLocation: { lng: 0.0, lat: 0.0 },
     };
     helper.bindMethod(this);
   }
@@ -87,27 +46,31 @@ class Map extends Component {
       (position) => {
         var initialPosition = JSON.stringify(position);
         this.setState({ initialPosition });
-        console.log("---------------");
       },
-      (error) => alert("initialPosition_error" + error.message),
-      { enableHighAccuracy: false }
+      (error) => console.log("initialPosition_error" + error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
     watchID = navigator.geolocation.watchPosition((position) => {
         var lastPosition = JSON.stringify(position);
-        alert("lastPosition" + lastPosition);
-        this.setState({
-          lastPosition
-        })
+        if (lastPosition !== "unknown") {
+          this.setState({
+            userLocation: {
+              lng: lastPosition.coords.longitude,
+              lat: lastPosition.coords.latitude,
+            },
+            lastPosition ,
+          });
+        }
       }
     );
 
 
     this.props.setVisitorData({
-      "originLat": 40.018928097309,
-      "originLng": 116.48599579179,
-      "latitude": 40.018869147739,
-      "longitude": 116.48619658964,
-      "radius": 5000
+      originLat: 40.018928097309,
+      originLng: 116.48599579179,
+      latitude: 40.018869147739,
+      longitude: 116.48619658964,
+      radius: 5000,
     });
 
 
@@ -115,24 +78,38 @@ class Map extends Component {
 
   componentWillReceiveProps(nextProps) {
     let showMarkerArr = [];
-    nextProps.visitorData.map(item=> {
-      showMarkerArr.push({
-        coordinates: [item["location"]["latitude"], item["location"]["longitude"]],
+    nextProps.visitorData.map( item => {
+      let mark={
+        coordinates: [item['location']['latitude'], item['location']['longitude']],
         id: item.pid.toString(),
         title: '',
         type: 'point',
         annotationImage: {
-          source: { uri: 'https://cldup.com/7NLZklp8zS.png' },
+          source:{},
           height: 25,
-          width: 25
-        },
-      })
-    })
+          width: 25,
+        }
+      };
+      if(item.plotKind === 0){//0:公共1：专用
+        if(item.kindCode==='1'){//1（充电站） 2（充换电站） 4（换电站） 5（充电桩）
+          mark.annotationImage.source={uri:'charge_station_common'};
+        }else if(item.kindCode==='5'){
+          mark.annotationImage.source={uri:'charge_pole_common'};
+        }
+      }else{
+        if(item.kindCode==='1'){//1（充电站） 2（充换电站） 4（换电站） 5（充电桩）
+          mark.annotationImage.source={uri:'charge_station_special'};
+        }else if(item.kindCode==='5'){
+          mark.annotationImage.source={uri:'charge_pole_special'};
+        }
+      }
+      showMarkerArr.push(mark);
+    });
+
     this.setState({
       annotations: [...this.state.annotations, ...showMarkerArr],
       center: nextProps.location,
     });
-    console.log(nextProps.location);
   }
 
   onRegionDidChange = (location) => {
@@ -141,9 +118,9 @@ class Map extends Component {
       "originLng": location.longitude,
       "latitude": location.latitude,
       "longitude": location.longitude,
-      "radius": 500
+      "radius": 5000
     });
-    this.setState({ currentZoom: location.zoomLevel });
+    this.setState({currentZoom: location.zoomLevel});
     //console.log('onRegionDidChange', location);
   };
   onRegionWillChange = (location) => {
@@ -153,7 +130,6 @@ class Map extends Component {
     //console.log('onUpdateUserLocation', location);
   };
   onOpenAnnotation = (annotation) => {
-    alert("this.state.lastPosition" + this.state.lastPosition);
     this.props.setSingleData({
       pid: annotation.id
     });
@@ -170,7 +146,7 @@ class Map extends Component {
     //console.log('onTap', location);
   };
   onChangeUserTrackingMode = (userTrackingMode) => {
-    this.setState({ userTrackingMode });
+    this.setState({userTrackingMode});
     //console.log('onChangeUserTrackingMode', userTrackingMode);
   };
 
@@ -225,7 +201,7 @@ class Map extends Component {
           title: 'New Title!',
           subtitle: 'New Subtitle',
           annotationImage: {
-            source: { uri: 'https://cldup.com/7NLZklp8zS.png' },
+            source: {uri: 'https://cldup.com/7NLZklp8zS.png'},
             height: 25,
             width: 25
           },
@@ -241,10 +217,10 @@ class Map extends Component {
     });
   };
 
-  goZoom(level) {
+  goZoom(level){
     console.log(this.state.zoom)
-    this._map.setZoomLevel(this.state.zoom + level);
-    this.setState({ zoom: this.state.zoom + level })
+    this._map.setZoomLevel(this.state.zoom+level);
+    this.setState({zoom:this.state.zoom+level})
   }
 
   render() {
@@ -278,15 +254,15 @@ class Map extends Component {
         />
         <View style={{flex: 1,bottom: 50,position:"absolute",right:10}}>
           <TouchableHighlight style={{  width: 24, height: 24, justifyContent: 'center', alignItems: 'center'}}
-                              onPress={()=> {return this.goZoom(1)}}>
+                              onPress={()=> {return this.goZoom(1)}}  >
             <Image
-              source={require('../../image/zoomout_normal.png')}/>
+              source={require('../../image/zoomout_normal.png')} />
 
           </TouchableHighlight>
           <TouchableHighlight style={{  width: 24, height: 24, justifyContent: 'center', alignItems: 'center'}}
-                              onPress={()=> {return this.goZoom(-1)}}>
+                              onPress={()=> {return this.goZoom(-1)}}  >
             <Image
-              source={require('../../image/zoomin_normal.png')}/>
+              source={require('../../image/zoomin_normal.png')} />
 
           </TouchableHighlight>
         </View>

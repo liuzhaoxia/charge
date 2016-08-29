@@ -27,20 +27,19 @@ const styles = StyleSheet.create({
   },
   textRole: {
     height: 30,
-    color: '#808080',
+    color: '#ffffff',
     textAlignVertical: 'center',
   },
   loginContainer: {
     width: 100,
-    borderColor: '#808080',
-    backgroundColor: '#ffffff',
+    borderColor: '#ffffff',
     borderWidth: 1,
     borderRadius: 15,
   },
   textLogin: {
     flex: 1,
     height: 30,
-    color: '#1e90ff',
+    color: '#ffffff',
     textAlign: 'center',
     textAlignVertical: 'center',
   },
@@ -86,6 +85,12 @@ class UserInfo extends Component {
   }
 
   renderLogin(user) {
+    const phoneImage = this.props.state.user.phone === 1 ?
+      require('../../image/telephone_yes.png') :
+      require('../../image/telephone_no.png');
+    const wechatImage = this.props.state.user.wechat === 1 ?
+      require('../../image/wechat_yes.png') :
+      require('../../image/wechat_no.png');
     return (
       <View style={styles.rootContainer}>
         <View style={styles.rowContainer}>
@@ -96,24 +101,27 @@ class UserInfo extends Component {
         </View>
         <View style={styles.rowContainer}>
           <Text style={styles.textRole}>
-            {user.nameName}
+            {user.userName}
           </Text>
         </View>
         <View style={styles.rowContainer}>
           <View>
-            <Text style={styles.textRole}>
-              电话号
-            </Text>
+            <Image
+              source={phoneImage}
+              style={styles.logoImage}
+            />
           </View>
           <View>
-            <Text style={styles.textRole}>
-              微信
-            </Text>
+            <Image
+              source={wechatImage}
+              style={styles.logoImage}
+            />
           </View>
           <View>
-            <Text style={styles.textRole}>
-              真名
-            </Text>
+            <Image
+              source={require('../../image/identify_no.png')}
+              style={styles.logoImage}
+            />
           </View>
         </View>
       </View>

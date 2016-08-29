@@ -6,6 +6,7 @@ const actionEnum = {
   GET_VISITOR_DATA: 'GET_VISITOR_DATA',
   GET_SINGLE_DATA: 'GET_SINGLE_DATA',
   SET_CHARGE_LIST: 'SET_CHARGE_LIST',
+  SET_LOCATION_TO_MAP: 'SET_LOCATION_TO_MAP',
 };
 
 export default actionEnum;
