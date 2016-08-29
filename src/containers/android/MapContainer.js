@@ -10,6 +10,8 @@ function mapStateToProps(state) {
   return {
     visitorData: state.mapReducer.visitorData,
     location: state.mapReducer.location,
+    listMapFlag: state.mapReducer.listMapFlag,
+    mapListData: state.mapReducer.mapListData,
   };
 }
 

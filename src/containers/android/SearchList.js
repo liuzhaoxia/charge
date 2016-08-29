@@ -141,7 +141,18 @@ class SearchList extends Component {
   }
   pressData(data){
     Actions.pop();
-    this.props.getListOfCharge(data.location);
+    this.props.getListOfCharge(data.location, {
+      access_token: Global.appState.user.accessToken,
+      parameter: {
+        radius: 5000,
+        name: data.name,
+        region: '北京',
+        latitude: data.location.lat,
+        longitude: data.location.lng,
+        originLat: 40.008456800067,
+        originLng: 116.47474416608,
+      },
+    });
   }
 
   list(data, index) {
