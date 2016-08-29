@@ -1,7 +1,7 @@
 /**
  * Created by 123 on 2016/8/10.
  */
-import ViewPager from 'react-native-viewpager'
+import ViewPager from 'react-native-viewpager';
 import React, { Component } from 'react';
 import {
   View,
@@ -17,7 +17,7 @@ import { bindActionCreators } from 'redux';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { Actions } from 'react-native-router-flux';
 import detailActions from '../../actions/detailActions';
-import Helper from '../../utils/helper'
+import Helper from '../../utils/helper';
 
 const dataSource = new ViewPager.DataSource({
   pageHasChanged: (p1, p2) => p1 !== p2,
