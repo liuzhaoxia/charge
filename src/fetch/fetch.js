@@ -28,26 +28,26 @@ function jsonToQueryString(jsonObj) {
 function createFetch(url, method, jsonObj) {
   switch (method) {
     case FetchMethod.Get:
-    {
-      const queryStr = jsonToQueryString(jsonObj);
-      const urlWithQueryStr = `${url}?${queryStr}`;
-      const options = {
-        method: FetchMethod.Get,
-      };
-      //console.log(urlWithQueryStr);
-      return fetch(urlWithQueryStr, options);
-    }
+      {
+        const queryStr = jsonToQueryString(jsonObj);
+        const urlWithQueryStr = `${url}?${queryStr}`;
+        const options = {
+          method: FetchMethod.Get,
+        };
+        // console.log(urlWithQueryStr);
+        return fetch(urlWithQueryStr, options);
+      }
     case FetchMethod.Post:
-    {
-      const queryStr = JSON.stringify(jsonObj);
-      const options = {
-        method: FetchMethod.Post,
-        body: queryStr,
-      };
-      // console.log(url);
-      // console.log(queryStr);
-      return fetch(url, options);
-    }
+      {
+        const queryStr = JSON.stringify(jsonObj);
+        const options = {
+          method: FetchMethod.Post,
+          body: queryStr,
+        };
+        // console.log(url);
+        // console.log(queryStr);
+        return fetch(url, options);
+      }
     default:
       throw new Error(`not support method ${method}`);
   }
