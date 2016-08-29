@@ -17,7 +17,6 @@ const api = {
     if (Global.appState && Global.appState.user) {
       token = Global.appState.user.accessToken;
     }
-    token = '0005Y3SN00OCLJ5E219D0116393E17936455568B53DE1DA7';
     const newParameter = {
       parameter,
       access_token: token,
@@ -33,7 +32,6 @@ const api = {
     if (Global.appState && Global.appState.user) {
       token = Global.appState.user.accessToken;
     }
-    token = '0005Y3SN00OCLJ5E219D0116393E17936455568B53DE1DA7';
     const newParameter = {
       parameter,
       access_token: token,
