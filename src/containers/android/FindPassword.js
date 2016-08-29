@@ -95,12 +95,17 @@ class FindPassword extends Component {
     Helper.bindMethod(this);
   }
 
-  changeState(key, value) {
-    this.setState({ [key]: value });
-  }
-
   onShowPassword() {
     this.setState({ isShowPassword: !this.state.isShowPassword });
+  }
+
+  onResetAndLogin() {
+    const parameter = {
+      cellNum: this.state.userName,
+      password: this.state.password,
+      authenticationCode: this.state.code,
+    };
+    this.props.actions.updatePasswordRequest(parameter);
   }
 
   getCode() {
@@ -124,13 +129,8 @@ class FindPassword extends Component {
     });
   }
 
-  onResetAndLogin() {
-    const parameter = {
-      cellNum: this.state.userName,
-      password: this.state.password,
-      authenticationCode: this.state.code,
-    };
-    this.props.actions.updatePasswordRequest(parameter);
+  changeState(key, value) {
+    this.setState({ [key]: value });
   }
 
   renderGetCodeText() {
