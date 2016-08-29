@@ -31,7 +31,7 @@ import Regist from './Regist';
 import UserAgreement from './UserAgreement';
 import FindPassword from './FindPassword';
 import Error from './Error';
-import Introduction from './Introduction'
+import Introduction from './Introduction';
 
 const styles = StyleSheet.create({
   textInput: {
@@ -54,7 +54,7 @@ class App extends React.Component {
   }
 
   test1() {
-    console.log(2222);
+
   }
 
   render() {
