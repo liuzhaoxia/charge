@@ -99,19 +99,8 @@ class Login extends Component {
     this.props.actions.loginRequest(parameter);
   }
 
-  //async onWeiXinLogin() {
-  //  try {
-  //    const result = await WeChat.sendAuthRequest();
-  //    console.log(result);
-  //  } catch (e) {
-  //    console.log(e);
-  //  }
-  //}
-
-  //onWeiXinLogin() {
-  //  //const result = await WeChat.sendAuthRequest();
-  //  console.log('test');
-  //}
+  onWeiXinLogin() {
+  }
 
   changeState(key, value) {
     this.setState({ [key]: value });
