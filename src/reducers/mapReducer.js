@@ -9,7 +9,12 @@ const initialState = {
   visitorData: [],
   showOrHide: false,
   singleData: {},
-  location: {},
+  location: {
+    latitude: 40.008456800067,
+    longitude: 116.47474416608,
+  },
+  mapListData: {},
+  listMapFlag: false,
 };
 const mapReducer = handleActions({
   [mapAction.getVisitorData]: (state, action)=> {
@@ -96,6 +101,11 @@ const mapReducer = handleActions({
     };
     return state;
   },
-
+  [SearchActions.setChargeMapList]: (state, action) => {
+    state = Object.assign({}, state);
+    state.mapListData = action.payload;
+    state.listMapFlag = true;
+    return state;
+  },
 }, initialState);
 export default mapReducer;

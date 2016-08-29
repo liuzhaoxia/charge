@@ -17,7 +17,6 @@ const StartActions = {
           if (!Global.appState) {
             Global.appState = deepcopy(appStateDefault);
           }
-          console.log(Global);
           dispatch(UserManagementActions.setUser(Global.appState.user));
           Actions.mainModule();
         });

@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   smallImage: {
-    width: 16,
-    height: 16,
+    width: 20,
+    height: 20,
   },
   lineContainer: {
     backgroundColor: '#C5C1AA',
@@ -178,7 +178,7 @@ class Regist extends Component {
         <View style={[styles.rowContainer, styles.rowBG]}>
           <View style={styles.smallImageContainer}>
             <Image
-              source={require('../../image/logo.png')}
+              source={require('../../image/login_icon_phonenumber.png')}
               style={styles.smallImage}
             />
           </View>
@@ -198,7 +198,7 @@ class Regist extends Component {
         <View style={[styles.rowContainer, styles.rowBG]}>
           <View style={styles.smallImageContainer}>
             <Image
-              source={require('../../image/logo.png')}
+              source={require('../../image/login_icon_password.png')}
               style={styles.smallImage}
             />
           </View>
@@ -220,7 +220,7 @@ class Regist extends Component {
         <View style={[styles.rowContainer, styles.rowBG]}>
           <View style={styles.smallImageContainer}>
             <Image
-              source={require('../../image/logo.png')}
+              source={require('../../image/login_icon_verifycode.png')}
               style={styles.smallImage}
             />
           </View>
