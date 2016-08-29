@@ -288,24 +288,22 @@ class ShellsDetail extends Component {
             {
               this.state.newLinkUrls.map(
                 (linkUrl, index) =>
-                  (
-                    <View key={index}>
-                      <TouchableHighlight
-                        underlayColor="transparent"
-                        key={index}
-                        onPress={() => { this.openMapUrl(index); }} style={styles.buttonStyle}
-                      >
-                        <Text key={index} style={styles.buttonText}>
-                          {linkUrl.name}
-                        </Text>
+                  (<View key={index}>
+                    <TouchableHighlight
+                      underlayColor="transparent"
+                      key={index}
+                      onPress={() => { this.openMapUrl(index); }} style={styles.buttonStyle}
+                    >
+                      <Text key={index} style={styles.buttonText}>
+                        {linkUrl.name}
+                      </Text>
 
-                      </TouchableHighlight>
-                      {
-                        index < this.state.newLinkUrls.length - 1 ?
-                          (<View style={styles.horizontalLine}/>) : (<View />)
-                      }
-                    </View>
-                  )
+                    </TouchableHighlight>
+                    {
+                      index < this.state.newLinkUrls.length - 1 ?
+                        (<View style={styles.horizontalLine}/>) : (<View />)
+                    }
+                  </View>)
               )
             }
           </View>
