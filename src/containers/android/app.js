@@ -25,6 +25,7 @@ import About from './../../containers/android/About';
 import HelpView from './../../containers/android/HelpView';
 import Main from './../../containers/android/Main';
 import SearchList from '../../containers/android/SearchList';
+import ChargeList from '../../containers/android/ChargeList';
 import { Global } from '../../Global';
 import imageViewPage from '../../containers/android/imageViewPager';
 import Regist from './Regist';
@@ -123,6 +124,11 @@ class App extends React.Component {
                 component={ChargeView}
                 title="桩家视界"
                 hideNavBar={false}
+              />
+              <Scene
+                key="chargeList"
+                component={ChargeList}
+                hideNavBar
               />
             </Scene>
             <Scene

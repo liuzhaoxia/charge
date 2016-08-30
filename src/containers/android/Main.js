@@ -97,7 +97,7 @@ class Main extends Component {
   }
 
   mapToList() {
-
+    Actions.chargeList();
   }
 
   render() {
