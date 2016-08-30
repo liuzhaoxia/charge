@@ -492,7 +492,7 @@ class Detail extends React.Component {
                         <View />
                       ) : (
                         <View>
-                          <Image source={{ uri: serviceProIcon }} style={styles.logoImage}/>
+                          <Image source={{ uri: serviceProIcon }} style={styles.avatarimage}/>
                         </View>
                       )
                     }
