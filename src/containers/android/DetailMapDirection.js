@@ -135,6 +135,7 @@ class DetailMapDirection extends Component {
           zoomEnabled
           showsUserLocation
           styleURL={Mapbox.mapStyles.streets}
+          annotations={this.state.annotations}
           annotationsAreImmutable
         />
       </View>
