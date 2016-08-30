@@ -49,6 +49,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#FFFFFF',
     alignSelf: 'center',
+    lineHeight: 30,
+    textAlign: 'center',
   },
 });
 
@@ -94,11 +96,11 @@ class imageViewPager extends React.Component {
       <View style={{ flex: 1 }}>
         <View style={styles.container}>
           <View>
-            <TouchableHighlight underlayColor="transparent" onPress={this.backShells}>
+            <TouchableHighlight underlayColor="transparent" onPress={this.backDetail}>
               <Image source={require('../../image/back.png')} style={styles.avatarimage}/>
             </TouchableHighlight>
           </View>
-          <View style={{ lineHeight: 30, textAlign: 'center' }}>
+          <View style={{ alignItems: 'center', width: 300 }}>
             <Text style={styles.textTitle}>图片浏览</Text>
           </View>
         </View>
