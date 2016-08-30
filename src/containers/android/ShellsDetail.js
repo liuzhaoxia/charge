@@ -184,7 +184,7 @@ class ShellsDetail extends Component {
       } else if (data.kindCode === '5') {
         image = require('../../image/charge_pole_common.png');
       }
-    } else {
+    } else if (data.plotKind === 1) {
       if (data.kindCode === '1') {
         image = require('../../image/charge_station_special.png');
       } else if (data.kindCode === '5') {
@@ -202,7 +202,6 @@ class ShellsDetail extends Component {
     if (!data) {
       return null;
     }
-    console.log(data);
     return (
       <Modal
         position={"bottom"}
@@ -315,8 +314,7 @@ class ShellsDetail extends Component {
             {
               this.state.newLinkUrls.map(
                 (linkUrl, index) =>
-                  (
-                  <View key={index}>
+                  (<View key={index}>
                     <TouchableHighlight
                       underlayColor="transparent"
                       key={index}
@@ -331,8 +329,7 @@ class ShellsDetail extends Component {
                       index < this.state.newLinkUrls.length - 1 ?
                         (<View style={styles.horizontalLine}/>) : (<View />)
                     }
-                  </View>
-                  )
+                  </View>)
               )
             }
           </View>

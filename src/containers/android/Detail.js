@@ -228,14 +228,38 @@ class Detail extends React.Component {
       </View>);
   }
 
+  renderCar(car, i) {
+    let image = null;
+    switch (car) {
+      case '400F':
+        image = require('../../image/bmw.png');
+        break;
+      case '348D':
+        image = require('../../image/tesla.png');
+        break;
+      case '3701':
+        image = require('../../image/tengshi.png');
+        break;
+      default:
+        break;
+    }
+    return (
+      <Image
+        key={i}
+        source={image}
+        style={{ width: 25, height: 25, margin: 5 }}
+      />
+    );
+  }
+
   render() {
     const tabNames = this.state.tabNames;
     const data = this.state.singeData;
-    console.log(data);
     if (!data) {
       return null;
     }
     const picUrl = data.plotPic.length > 0 ? `http://chargingtest.navinfo.com/Charge/resources/photo/${data.plotPic[0].url}` : '';
+    const serviceProIcon = data.servicePro_icon != null ? `http://chargingtest.navinfo.com/Charge${data.servicePro_icon}` : '';
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.container}>
@@ -280,8 +304,10 @@ class Detail extends React.Component {
           </View>
           <View style={{ width: 240, marginLeft: 5 }}>
             <Text style={styles.nameTitle}>{data.name}</Text>
-
-            <View style={{ flexDirection: 'row', marginTop: 20 }}>
+            {
+              data.carBrand.map(this.renderCar)
+            }
+            <View style={{ flexDirection: 'row', marginTop: 5 }}>
               <Image source={require('../../image/xposition.png')}/>
               <Text style={{ color: '#FFFFFF', fontSize: 13 }}>{data.distance}km</Text>
             </View>
@@ -346,12 +372,23 @@ class Detail extends React.Component {
             <Image source={require('../../image/socket_icon.png')}/>
           </View>
           <View style={{ width: 280 }}>
-            <Text style={{ margin: 5, fontSize: 15, fontWeight: 'bold' }}>慢充2</Text>
+            {
+              data.socker_num.sDCquick_num + data.socker_num.sACquick_num > 0 ?
+                (<Text style={{ margin: 5, fontSize: 15, fontWeight: 'bold' }}>
+                    快充{data.socker_num.sDCquick_num + data.socker_num.sACquick_num}个</Text>
+                ) : null
+            }
+            {
+              data.socker_num.sACslow_num + data.socker_num.sDCslow_num > 0 ?
+                (<Text style={{ margin: 5, fontSize: 15, fontWeight: 'bold' }}>
+                    慢充{data.socker_num.sACslow_num + data.socker_num.sDCslow_num}个</Text>
+                ) : null
+            }
           </View>
           <View style={{ flex: 1, marginTop: 10 }}>
             <Image
               source={
-                data.state === 0 ?
+                data.state === '0' ?
                 require('../../image/charge_avail.png') :
                 require('../../image/charge_unavail.png')
               }
@@ -381,7 +418,9 @@ class Detail extends React.Component {
           tabBarPosition="top"
         >
           <View style={styles.content} tabLabel="key1">
-
+            {
+              data.sockerParams.map(this.renderSocker)
+            }
           </View>
           <View style={{ flex: 1 }} tabLabel="key2">
             <ScrollView>
@@ -448,6 +487,15 @@ class Detail extends React.Component {
                     <View >
                       <Text style={{ margin: 5 }}>{data.servicePro}</Text>
                     </View>
+                    {
+                      serviceProIcon === '' ? (
+                        <View />
+                      ) : (
+                        <View>
+                          <Image source={{ uri: serviceProIcon }} style={styles.logoImage}/>
+                        </View>
+                      )
+                    }
                   </View>
                 </View>)
               }
@@ -462,7 +510,25 @@ class Detail extends React.Component {
           swipeArea={20}
         >
           <View style={styles.subView}>
-
+            {
+              this.state.newLinkUrls.map((linkUrl, index) =>
+                (<View key={index}>
+                  <TouchableHighlight
+                    underlayColor="transparent"
+                    key={index}
+                    onPress={() => { this.openMapUrl(index); }}
+                    style={styles.buttonStyle}
+                  >
+                    <Text key={index} style={styles.buttonText}>
+                      {linkUrl.name}
+                    </Text>
+                  </TouchableHighlight>
+                  {
+                    index < this.state.newLinkUrls.length - 1 ?
+                      (<View style={styles.horizontalLine}/>) : null
+                  }
+                </View>))
+            }
           </View>
         </Modal>
       </View>

@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
 class SearchList extends Component {
   constructor(props) {
     super(props);
@@ -117,7 +118,6 @@ class SearchList extends Component {
   }
 
   changeState(key, value) {
-    console.log({ [key]: value });
     this.props.getChargeList({
       access_token: Global.appState.user.accessToken,
       parameter: {
@@ -139,7 +139,8 @@ class SearchList extends Component {
     }
     this.setState({ history: Global.appState.searchHistory });
   }
-  pressData(data){
+
+  pressData(data) {
     Actions.pop();
     this.props.getListOfCharge(data.location, {
       access_token: Global.appState.user.accessToken,
@@ -183,6 +184,7 @@ class SearchList extends Component {
       </TouchableHighlight>
     );
   }
+
   render() {
     return (
       <View style={styles.container}>
@@ -201,7 +203,6 @@ class SearchList extends Component {
             keyboardType="default"
             autoFocus
           />
-
           <Button style={styles.search} onPress={this.back}>取消</Button>
         </View>
         <ScrollView>
@@ -211,25 +212,23 @@ class SearchList extends Component {
         </ScrollView>
         <View>
           {
-            this.state.history.list.map((text, i) => {
-              return (
-                <View style={{ flexDirection: 'row' }}>
-                  <View style={{ flex: 1 }}>
-                    <Image
-                      source={require('../../image/history.png')}
-                    />
-                  </View>
-                  <View style={{ flex: 8, underlineColorAndroid: 'gray' }}>
-                    <Text key={text + i} style={{ color: '#000000' }}>{text}</Text>
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <Image
-                      source={require('../../image/arrow.png')}
-                    />
-                  </View>
+            this.state.history.list.map((text, i) =>
+              (<View style={{ flexDirection: 'row' }}>
+                <View style={{ flex: 1 }}>
+                  <Image
+                    source={require('../../image/history.png')}
+                  />
                 </View>
-              );
-            })
+                <View style={{ flex: 8, underlineColorAndroid: 'gray' }}>
+                  <Text key={text + i} style={{ color: '#000000' }}>{text}</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Image
+                    source={require('../../image/arrow.png')}
+                  />
+                </View>
+              </View>)
+            )
           }
         </View>
       </View>
