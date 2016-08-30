@@ -26,7 +26,7 @@ const mapReducer = handleActions({
   [mapAction.getSingleData]: (state, action)=> {
     state = Object.assign({}, state);
     state.showOrHide = action.payload.showOrHide;
-    let data = action.payload.data.data;
+    let data = action.payload.data.data[0];
     if (data.servicePro === '0') {
       data.servicePro = '其它';
     } else if (data.servicePro === '1') {
@@ -89,8 +89,8 @@ const mapReducer = handleActions({
       } else if (data.payment[i] === '406') {
         data.payment[i] = '中国普天充值卡';
       }
-      state.singeData = data;
     }
+    state.singeData = data;
     return state;
   },
   [SearchActions.setLocationToMap]: (state, action) => {

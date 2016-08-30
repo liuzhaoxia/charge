@@ -135,7 +135,7 @@ class Detail extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      singeData: nextProps.singeData[0],
+      singeData: nextProps.singeData,
     });
   }
 
@@ -230,7 +230,8 @@ class Detail extends React.Component {
 
   render() {
     const tabNames = this.state.tabNames;
-    const data = this.state.singeData[0];
+    const data = this.state.singeData;
+    console.log(data);
     if (!data) {
       return null;
     }
@@ -279,26 +280,7 @@ class Detail extends React.Component {
           </View>
           <View style={{ width: 240, marginLeft: 5 }}>
             <Text style={styles.nameTitle}>{data.name}</Text>
-            {
-              data.carBrand.map(
-                (car, i) => {
-                  if (car === '') {
-                    return null;
-                  }
-                  return (
-                    <View style={{ flexDirection: 'row' }}>
-                      <Image
-                        source={
-                        car === '1' ?
-                        require('../../image/bmw.png') :
-                        require('../../image/tesla.png')
-                      }
-                      />
-                    </View>
-                  );
-                }
-              )
-            }
+
             <View style={{ flexDirection: 'row', marginTop: 20 }}>
               <Image source={require('../../image/xposition.png')}/>
               <Text style={{ color: '#FFFFFF', fontSize: 13 }}>{data.distance}km</Text>
@@ -399,9 +381,7 @@ class Detail extends React.Component {
           tabBarPosition="top"
         >
           <View style={styles.content} tabLabel="key1">
-            {
-              data.sockerParams.map(this.renderSocker)
-            }
+
           </View>
           <View style={{ flex: 1 }} tabLabel="key2">
             <ScrollView>
@@ -482,25 +462,7 @@ class Detail extends React.Component {
           swipeArea={20}
         >
           <View style={styles.subView}>
-            {
-              this.state.newLinkUrls.map((linkUrl, index) =>
-                (<View key={index}>
-                  <TouchableHighlight
-                    underlayColor="transparent"
-                    key={index}
-                    onPress={() => { this.openMapUrl(index); }}
-                    style={styles.buttonStyle}
-                  >
-                    <Text key={index} style={styles.buttonText}>
-                      {linkUrl.name}
-                    </Text>
-                  </TouchableHighlight>
-                  {
-                    index < this.state.newLinkUrls.length - 1 ?
-                      (<View style={styles.horizontalLine}/>) : null
-                  }
-                </View>))
-            }
+
           </View>
         </Modal>
       </View>
