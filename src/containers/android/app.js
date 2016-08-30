@@ -32,7 +32,7 @@ import Regist from './Regist';
 import UserAgreement from './UserAgreement';
 import FindPassword from './FindPassword';
 import Error from './Error';
-import Introduction from './Introduction'
+import Introduction from './Introduction';
 
 const styles = StyleSheet.create({
   textInput: {
@@ -55,7 +55,7 @@ class App extends React.Component {
   }
 
   test1() {
-    console.log(2222);
+
   }
 
   render() {
@@ -77,7 +77,7 @@ class App extends React.Component {
                   hideNavBar
                 />
                 <Scene
-                  key="Introduction"
+                  key="introduction"
                   component={Introduction}
                   title="Introduction"
                   hideNavBar
@@ -96,7 +96,7 @@ class App extends React.Component {
                 />
               </Scene>
               <Scene
-                key="Choose"
+                key="choose"
                 component={Choose}
                 title="个人定制"
                 rightTitle="重置"
@@ -104,23 +104,23 @@ class App extends React.Component {
                 hideNavBar={false}
               />
               <Scene
-                key="SearchList"
+                key="searchList"
                 component={SearchList}
                 hideNavBar
               />
               <Scene
-                key="About" component={About}
+                key="about" component={About}
                 title="关于"
                 hideNavBar={false}
               />
               <Scene
-                key="HelpView"
+                key="helpView"
                 component={HelpView}
                 title="帮助"
                 hideNavBar={false}
               />
               <Scene
-                key="ChargeView"
+                key="chargeView"
                 component={ChargeView}
                 title="桩家视界"
                 hideNavBar={false}

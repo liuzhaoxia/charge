@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
 class Main extends Component {
 
   constructor(props) {
@@ -89,20 +88,31 @@ class Main extends Component {
   }
 
   search() {
-    Actions.SearchList();
+    Actions.searchList();
   }
 
   imagePress() {
-    Actions.Choose();
+    Actions.choose();
   }
 
   mapToList() {
     Actions.chargeList();
   }
 
+  button() {
+    if (!this.state.listMapFlag) {
+      return (
+        <Button style={styles.search} onPress={this.search}>搜索</Button>
+      );
+    }
+    return (
+      <Button style={styles.search} onPress={this.mapToList}>列表</Button>
+    );
+  }
+
   render() {
-    var navigationView = (
-      <LeftMenu></LeftMenu>
+    const navigationView = (
+      <LeftMenu/>
     );
 
     return (
@@ -115,37 +125,32 @@ class Main extends Component {
         <View style={styles.container}>
           <View style={styles.header}>
             <Button style={styles.logintext} onPress={this.openDrawer}>登 录</Button>
-            <TextInput placeholder="搜索地点" placeholderTextColor='#E0E0E0' style={styles.textinput}
-                       underlineColorAndroid='transparent'
-                       keyboardType='default' onFocus={this.search}>
-            </TextInput>
+            <TextInput
+              placeholder="搜索地点"
+              placeholderTextColor="#E0E0E0"
+              style={styles.textinput}
+              underlineColorAndroid="transparent"
+              keyboardType="default"
+              onFocus={this.search}
+            />
             {this.button()}
           </View>
           <View style={styles.map}>
             <Map/>
             <ShellsDetail/>
-            <View style={{flex: 1,top: 60,position:"absolute",right:10}}>
-              <TouchableHighlight style={{  width: 24, height: 24, justifyContent: 'center', alignItems: 'center'}}
-                                  onPress={this.imagePress}>
+            <View style={{ flex: 1, top: 60, position: 'absolute', right: 10 }}>
+              <TouchableHighlight
+                style={{ width: 24, height: 24, justifyContent: 'center', alignItems: 'center' }}
+                onPress={this.imagePress}
+              >
                 <Image
-                  source={require('../../image/funnel.png')}/>
-
+                  source={require('../../image/funnel.png')}
+                />
               </TouchableHighlight>
             </View>
           </View>
         </View>
       </DrawerLayoutAndroid>
-    );
-  }
-
-  button() {
-    if (!this.state.listMapFlag) {
-      return (
-        <Button style={styles.search} onPress={this.search}>搜索</Button>
-      );
-    }
-    return (
-      <Button style={styles.search} onPress={this.mapToList}>列表</Button>
     );
   }
 }

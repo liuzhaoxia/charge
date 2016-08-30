@@ -11,15 +11,30 @@ import {
   ScrollView,
   DeviceEventEmitter,
   TouchableHighlight,
-  Image
+  Image,
 } from 'react-native';
-import Mapbox, {MapView} from 'react-native-mapbox-gl';
-import { Actions } from "react-native-router-flux";
+import Mapbox, { MapView } from 'react-native-mapbox-gl';
+import { Actions } from 'react-native-router-flux';
+import Toast from 'react-native-root-toast';
 import appConfig from '../../constants/appConfig';
-import  helper from '../../utils/helper';
+import Helper from '../../utils/helper';
+
 const accessToken = appConfig.mapBoxToken;
 Mapbox.setAccessToken(accessToken);
-let watchID = null;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'stretch',
+  },
+  map: {
+    flex: 1,
+  },
+  scrollView: {
+    flex: 1,
+  },
+});
+
 class Map extends Component {
   // 构造
   constructor(props) {
@@ -36,61 +51,74 @@ class Map extends Component {
       userTrackingMode: Mapbox.userTrackingMode.none,
       annotations: [],
       userLocation: { lng: 0.0, lat: 0.0 },
+      watchID: null,
     };
-    helper.bindMethod(this);
+    Helper.bindMethod(this);
   }
 
-
-  componentDidMount() {
+  componentWillMount() {
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        var initialPosition = JSON.stringify(position);
+      position => {
+        const initialPosition = JSON.stringify(position);
         this.setState({ initialPosition });
       },
-      (error) => console.log("initialPosition_error" + error.message),
+      error => {
+        Toast.show(`initialPosition_error${error.message}`, {
+          duration: Toast.durations.LONG, // toast显示时长
+          position: Toast.positions.CENTER, // toast位置
+          shadow: true, // toast是否出现阴影
+          animation: true, // toast显示/隐藏的时候是否需要使用动画过渡
+          hideOnPress: true, // 是否可以通过点击事件对toast进行隐藏
+          delay: 0, // toast显示的延时
+        });
+      },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
-    watchID = navigator.geolocation.watchPosition((position) => {
-        var lastPosition = JSON.stringify(position);
-        if (lastPosition !== "unknown") {
+    const newWatchID = navigator.geolocation.watchPosition(
+      position => {
+        const lastPosition = JSON.stringify(position);
+        if (lastPosition !== 'unknown') {
           this.setState({
             userLocation: {
               lng: lastPosition.coords.longitude,
               lat: lastPosition.coords.latitude,
             },
-            lastPosition ,
+            lastPosition,
           });
         }
       }
     );
 
+    this.setState({ watchID: newWatchID });
   }
 
   componentWillReceiveProps(nextProps) {
-    let showMarkerArr = [];
-    nextProps.visitorData.map( item => {
-      let mark={
-        coordinates: [item['location']['latitude'], item['location']['longitude']],
+    const showMarkerArr = [];
+    nextProps.visitorData.forEach(item => {
+      const mark = {
+        coordinates: [item.location.latitude, item.location.longitude],
         id: item.pid.toString(),
         title: '',
         type: 'point',
         annotationImage: {
-          source:{},
+          source: {},
           height: 25,
           width: 25,
-        }
+        },
       };
-      if(item.plotKind === 0){//0:公共1：专用
-        if(item.kindCode==='1'){//1（充电站） 2（充换电站） 4（换电站） 5（充电桩）
-          mark.annotationImage.source={uri:'charge_station_common'};
-        }else if(item.kindCode==='5'){
-          mark.annotationImage.source={uri:'charge_pole_common'};
+      if (item.plotKind === 0) { // 0:公共1：专用
+        if (item.kindCode === '1') { // 1（充电站） 2（充换电站） 4（换电站） 5（充电桩）
+          mark.annotationImage.source = { uri: 'charge_station_common' };
         }
-      }else{
-        if(item.kindCode==='1'){//1（充电站） 2（充换电站） 4（换电站） 5（充电桩）
-          mark.annotationImage.source={uri:'charge_station_special'};
-        }else if(item.kindCode==='5'){
-          mark.annotationImage.source={uri:'charge_pole_special'};
+        if (item.kindCode === '5') {
+          mark.annotationImage.source = { uri: 'charge_pole_common' };
+        }
+      } else {
+        if (item.kindCode === '1') { // 1（充电站） 2（充换电站） 4（换电站） 5（充电桩）
+          mark.annotationImage.source = { uri: 'charge_station_special' };
+        }
+        if (item.kindCode === '5') {
+          mark.annotationImage.source = { uri: 'charge_pole_special' };
         }
       }
       showMarkerArr.push(mark);
@@ -99,122 +127,40 @@ class Map extends Component {
     this.setState({
       annotations: [...this.state.annotations, ...showMarkerArr],
     });
-    if(this.props.location.latitude!==nextProps.location.latitude&&this.props.location.longitude!==nextProps.location.longitude){
-
-      this._map.setCenterCoordinate(nextProps.location.latitude, nextProps.location.longitude);
+    if (this.props.location.latitude !== nextProps.location.latitude &&
+      this.props.location.longitude !== nextProps.location.longitude) {
+      this.map.setCenterCoordinate(nextProps.location.latitude, nextProps.location.longitude);
     }
-    console.log(nextProps.location.latitude);
-  }
-
-  onRegionDidChange = (location) => {
-    this.props.setVisitorData({
-      "originLat": location.latitude,
-      "originLng": location.longitude,
-      "latitude": location.latitude,
-      "longitude": location.longitude,
-      "radius": 5000
-    });
-    this.setState({currentZoom: location.zoomLevel});
-    //console.log('onRegionDidChange', location);
-  };
-  onRegionWillChange = (location) => {
-    //console.log('onRegionWillChange', location);
-  };
-  onUpdateUserLocation = (location) => {
-    //console.log('onUpdateUserLocation', location);
-  };
-  onOpenAnnotation = (annotation) => {
-    this.props.setSingleData({
-      pid: annotation.id
-    });
-
-    //console.log('onOpenAnnotation', annotation);
-  };
-  onRightAnnotationTapped = (e) => {
-    //console.log('onRightAnnotationTapped', e);
-  };
-  onLongPress = (location) => {
-    //console.log('onLongPress', location);
-  };
-  onTap = (location) => {
-    //console.log('onTap', location);
-  };
-  onChangeUserTrackingMode = (userTrackingMode) => {
-    this.setState({userTrackingMode});
-    //console.log('onChangeUserTrackingMode', userTrackingMode);
-  };
-
-  componentWillMount() {
-    this._offlineProgressSubscription = Mapbox.addOfflinePackProgressListener(progress => {
-      //console.log('offline pack progress', progress);
-    });
-    this._offlineMaxTilesSubscription = Mapbox.addOfflineMaxAllowedTilesListener(tiles => {
-      //console.log('offline max allowed tiles', tiles);
-    });
-    this._offlineErrorSubscription = Mapbox.addOfflineErrorListener(error => {
-      //console.log('offline error', error);
-    });
   }
 
   componentWillUnmount() {
-    this._offlineProgressSubscription.remove();
-    this._offlineMaxTilesSubscription.remove();
-    this._offlineErrorSubscription.remove();
-    navigator.geolocation.clearWatch(watchID);
+    navigator.geolocation.clearWatch(this.state.watchID);
   }
 
-  addNewMarkers = () => {
-    // Treat annotations as immutable and create a new one instead of using .push()
-    this.setState({
-      annotations: [...this.state.annotations, {
-        coordinates: [40.73312, -73.989],
-        type: 'point',
-        title: 'This is a new marker',
-        id: 'foo'
-      }, {
-        'coordinates': [[40.749857912194386, -73.96820068359375], [40.741924698522055, -73.9735221862793], [40.735681504432264, -73.97523880004883], [40.7315190495212, -73.97438049316406], [40.729177554196376, -73.97180557250975], [40.72345355209305, -73.97438049316406], [40.719290332250544, -73.97455215454102], [40.71369559554873, -73.97729873657227], [40.71200407096382, -73.97850036621094], [40.71031250340588, -73.98691177368163], [40.71031250340588, -73.99154663085938]],
-        'type': 'polygon',
-        'fillAlpha': 1,
-        'fillColor': '#000000',
-        'strokeAlpha': 1,
-        'id': 'new-black-polygon'
-      }]
+  onRegionDidChange(location) {
+    this.props.setVisitorData({
+      originLat: location.latitude,
+      originLng: location.longitude,
+      latitude: location.latitude,
+      longitude: location.longitude,
+      radius: 5000,
     });
-  };
+    this.setState({ currentZoom: location.zoomLevel });
+  }
 
-  updateMarker2 = () => {
-    // Treat annotations as immutable and use .map() instead of changing the array
-    this.setState({
-      annotations: this.state.annotations.map(annotation => {
-        if (annotation.id !== 'marker2') {
-          return annotation;
-        }
-        return {
-          coordinates: [39.9, 116.3],
-          'type': 'point',
-          title: 'New Title!',
-          subtitle: 'New Subtitle',
-          annotationImage: {
-            source: {uri: 'https://cldup.com/7NLZklp8zS.png'},
-            height: 25,
-            width: 25
-          },
-          id: 'marker2'
-        };
-      })
+  onOpenAnnotation(annotation) {
+    this.props.setSingleData({
+      pid: annotation.id,
     });
-  };
+  }
 
-  removeMarker2 = () => {
-    this.setState({
-      annotations: this.state.annotations.filter(a => a.id !== 'marker2')
-    });
-  };
+  onChangeUserTrackingMode(userTrackingMode) {
+    this.setState({ userTrackingMode });
+  }
 
-  goZoom(level){
-    console.log(this.state.zoom)
-    this._map.setZoomLevel(this.state.zoom+level);
-    this.setState({zoom:this.state.zoom+level})
+  goZoom(level) {
+    this.map.setZoomLevel(this.state.zoom + level);
+    this.setState({ zoom: this.state.zoom + level });
   }
 
   render() {
@@ -222,42 +168,41 @@ class Map extends Component {
     return (
       <View style={styles.container}>
         <MapView
-          ref={map => { this._map = map; }}
+          ref={map => { this.map = map; }}
           style={styles.map}
           initialCenterCoordinate={this.state.center}
           initialZoomLevel={this.state.zoom}
           initialDirection={0}
           rotateEnabled={false}
-          scrollEnabled={true}
-          logoIsHidden={true}
-          attributionButtonIsHidden={true}
+          scrollEnabled
+          logoIsHidden
+          attributionButtonIsHidden
           zoomEnabled={false}
-          showsUserLocation={true}
+          showsUserLocation
           styleURL={Mapbox.mapStyles.streets}
           userTrackingMode={this.state.userTrackingMode}
           annotations={this.state.annotations}
           annotationsAreImmutable
           onChangeUserTrackingMode={this.onChangeUserTrackingMode}
           onRegionDidChange={this.onRegionDidChange}
-          onRegionWillChange={this.onRegionWillChange}
           onOpenAnnotation={this.onOpenAnnotation}
-          onRightAnnotationTapped={this.onRightAnnotationTapped}
-          onUpdateUserLocation={this.onUpdateUserLocation}
-          onLongPress={this.onLongPress}
-          onTap={this.onTap}
         />
-        <View style={{flex: 1,bottom: 50,position:"absolute",right:10}}>
-          <TouchableHighlight style={{  width: 24, height: 24, justifyContent: 'center', alignItems: 'center'}}
-                              onPress={()=> {return this.goZoom(1)}}  >
+        <View style={{ flex: 1, bottom: 50, position: 'absolute', right: 10 }}>
+          <TouchableHighlight
+            style={{ width: 24, height: 24, justifyContent: 'center', alignItems: 'center' }}
+            onPress={() => { this.goZoom(1); }}
+          >
             <Image
-              source={require('../../image/zoomout_normal.png')} />
-
+              source={require('../../image/zoomout_normal.png')}
+            />
           </TouchableHighlight>
-          <TouchableHighlight style={{  width: 24, height: 24, justifyContent: 'center', alignItems: 'center'}}
-                              onPress={()=> {return this.goZoom(-1)}}  >
+          <TouchableHighlight
+            style={{ width: 24, height: 24, justifyContent: 'center', alignItems: 'center' }}
+            onPress={() => { this.goZoom(-1); }}
+          >
             <Image
-              source={require('../../image/zoomin_normal.png')} />
-
+              source={require('../../image/zoomin_normal.png')}
+            />
           </TouchableHighlight>
         </View>
       </View>
@@ -265,16 +210,4 @@ class Map extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'stretch'
-  },
-  map: {
-    flex: 1
-  },
-  scrollView: {
-    flex: 1
-  }
-});
-export  default Map;
+export default Map;

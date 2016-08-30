@@ -17,32 +17,34 @@ const initialState = {
   listMapFlag: false,
 };
 const mapReducer = handleActions({
-  [mapAction.getVisitorData]: (state, action)=> {
-    state = Object.assign({}, state);
-    state.showOrHide = false;
-    state.visitorData = action.payload.data;
-    return state;
+  [mapAction.getVisitorData]: (state, action) => {
+    const newState = Object.assign({}, state);
+    newState.showOrHide = false;
+    newState.visitorData = action.payload.data;
+    return newState;
   },
-  [mapAction.getSingleData]: (state, action)=> {
-    state = Object.assign({}, state);
-    state.showOrHide = action.payload.showOrHide;
-    let data = action.payload.data.data;
-    state.singeData = data;
-    return state;
+  [mapAction.getSingleData]: (state, action) => {
+    const newState = Object.assign({}, state);
+    newState.showOrHide = action.payload.showOrHide;
+    const data = action.payload.data.data;
+    newState.singeData = data;
+    return newState;
   },
   [SearchActions.setLocationToMap]: (state, action) => {
-    state = Object.assign({}, state);
-    state.location = {
+    const newState = Object.assign({}, state);
+    newState.location = {
       latitude: action.payload.lat,
       longitude: action.payload.lng,
     };
-    return state;
+    return newState;
   },
   [SearchActions.setChargeMapList]: (state, action) => {
-    state = Object.assign({}, state);
-    state.mapListData = action.payload;
-    state.listMapFlag = true;
-    return state;
+    const newState = Object.assign({}, state);
+    newState.mapListData = action.payload;
+    newState.listMapFlag = true;
+    return newState;
   },
 }, initialState);
+
 export default mapReducer;
+

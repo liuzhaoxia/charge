@@ -117,8 +117,13 @@ class Regist extends Component {
     }
   }
 
-  changeState(key, value) {
-    this.setState({ [key]: value });
+  onRegist() {
+    const parameter = {
+      name: this.state.userName,
+      password: this.state.password,
+      authenticationCode: this.state.code,
+    };
+    this.props.actions.registRequest(parameter);
   }
 
   getCode() {
@@ -132,6 +137,10 @@ class Regist extends Component {
     this.state.timer = setInterval(this.countDown, 1000);
   }
 
+  changeState(key, value) {
+    this.setState({ [key]: value });
+  }
+
   countDown() {
     if (this.state.count > 0) {
       this.setState({ count: this.state.count - 1 });
@@ -140,15 +149,6 @@ class Regist extends Component {
     this.setState({
       isCountDown: false,
     });
-  }
-
-  onRegist() {
-    const parameter = {
-      name: this.state.userName,
-      password: this.state.password,
-      authenticationCode: this.state.code,
-    };
-    this.props.actions.registRequest(parameter);
   }
 
   renderGetCodeText() {

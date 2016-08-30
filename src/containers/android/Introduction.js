@@ -19,7 +19,6 @@ import {
 import { Actions } from 'react-native-router-flux';
 import NavButton from './NavButton';
 
-
 const styles = StyleSheet.create({
   viewPager: {
     flex: 1,
@@ -63,7 +62,6 @@ const styles = StyleSheet.create({
 
 });
 
-
 class Introduction extends Component {
 
   render() {
@@ -90,7 +88,6 @@ class Introduction extends Component {
             style={styles.image}
           />
         </View>
-
         <View style={styles.pageStyle}>
           <Image
             source={require('../../image/first_show_4.png')}
@@ -105,7 +102,6 @@ class Introduction extends Component {
                 style={styles.startBtn}
               />
             </View>
-
           </Image>
         </View>
       </ViewPagerAndroid>
@@ -113,7 +109,5 @@ class Introduction extends Component {
   }
 }
 
-
 export default Introduction;
-
 
