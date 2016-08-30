@@ -230,7 +230,7 @@ class Detail extends React.Component {
 
   render() {
     const tabNames = this.state.tabNames;
-    const data = this.state.singeData[0];
+    const data = this.state.singeData;
     if (!data) {
       return null;
     }

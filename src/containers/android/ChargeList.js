@@ -15,6 +15,7 @@ import {
   DrawerLayoutAndroid,
   TouchableWithoutFeedback,
   ListView,
+  Linking,
 } from 'react-native';
 import Button from 'react-native-button';
 import Modal from 'react-native-modalbox';
@@ -24,35 +25,47 @@ import { Actions } from 'react-native-router-flux';
 import store from 'react-native-simple-store';
 import Helper from '../../utils/helper';
 import { Global } from '../../Global';
+import chargeListActions from '../../actions/chargeListActions'
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
+  header: {
+    height: 50,
+    flexDirection: 'row',
+    backgroundColor: '#4EC3EE',
+    alignItems: 'center',
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
+
+  textinput: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    color: '#e5e5e5',
+    fontSize: 16,
+  },
+
+  logintext: {
+    color: '#FFFFFF',
+    padding: 5,
+    fontSize: 16,
+  },
   row: {
     borderBottomColor: '#E0E0E0',
     borderBottomWidth: 1,
     flexDirection: 'row',
     padding: 5,
   },
-  thumb: {
-    width: 56,
-    height: 56,
-  },
-  title: {
-    marginTop: 8,
-    marginLeft: 3,
-    width: 300,
-    color: 'black',
-    flex: 1,
-  },
-  desc: {
-    marginTop: 8,
-    marginLeft: 3,
-  },
   wrapper: {
     flex: 1,
   },
   // modal上子View的样式
   subView: {
-    height: 180,
+    flex: 1,
+    height: 160,
     backgroundColor: '#fff',
     alignSelf: 'stretch',
     justifyContent: 'center',
@@ -102,14 +115,38 @@ const styles = StyleSheet.create({
     color: '#3393F2',
     textAlign: 'center',
   },
+  modalStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalHeight: {
+    height: 180,
+    width: 350,
+    borderRadius: 10,
+  },
 });
 class listView extends Component {
   constructor(props) {
     super(props);
     this.state = {
       pageNum: 1,
+      isOpen: false,
+      newLinkUrls: [
+        {
+          url: 'baidumap://map/direction?destination=39.6,116.5',
+          name: '百度',
+        }, {
+          url: 'androidamap://viewMap?sourceApplication=appname&poiname=abc&lat=36.2&lon=116.1&dev=0',
+          name: '高德',
+        }, {
+          url: '',
+          name: '取消',
+        }],
     };
     this.getAllList = this.getAllList.bind(this);
+    this.setModalVisible = this.setModalVisible.bind(this);
+    this.toDetailContainer = this.toDetailContainer.bind(this);
+
   }
 
   componentWillMount() {
@@ -119,6 +156,36 @@ class listView extends Component {
     this.setState({});
   }
 
+  setModalVisible() {
+    this.setState({
+      isOpen: !this.state.isOpen,
+    });
+  }
+
+  openMapUrl(index) {
+    if (this.state.newLinkUrls[index].url === '') {
+      this.setState({ isOpen: false });
+    } else {
+      Linking.canOpenURL(this.state.newLinkUrls[index].url).then(supported => {
+        if (supported) {
+          return Linking.openURL(this.state.newLinkUrls[index].url);
+        }
+        if (this.state.newLinkUrls[index].name === '百度') {
+          return Linking.openURL('http://shouji.baidu.com/software/9831363.html');
+        }
+        if (this.state.newLinkUrls[index].name === '高德') {
+          return Linking.openURL('http://www.autonavi.com/');
+        }
+        return null;
+      });
+    }
+  }
+  toDetailContainer(pid) {
+    this.props.getChargeDesc({
+      pid,
+    });
+    Actions.detailInfo();
+  }
   getAllList() {
     console.log(1111);
     //const pageNum = this.state.pageNum;
@@ -131,22 +198,69 @@ class listView extends Component {
     //}
   }
 
+  back() {
+    Actions.pop();
+  }
+
   render() {
     const data = this.props.state.mapListData;
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     let dataSource = ds.cloneWithRows(data);
     return (
-      <ListView
-        enableEmptySections
-        onEndReached={this.getAllList}
-        onEndReachedThreshold={20}
-        dataSource={dataSource}
-        renderRow={(rowData) =>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Button style={styles.logintext} onPress={this.back}>返回</Button>
+          <TextInput
+            placeholderTextColor="#E0E0E0"
+            style={styles.textinput}
+            underlineColorAndroid="transparent"
+            keyboardType="default"
+          />
+          <Button style={styles.search} onPress={this.back}>地图</Button>
+        </View>
+        <ListView
+          enableEmptySections
+          onEndReached={this.getAllList}
+          onEndReachedThreshold={20}
+          dataSource={dataSource}
+          renderRow={(rowData) =>
           <View style={styles.row}>
            {this.renderList(rowData)}
           </View>
             }
-      />
+        />
+        <Modal
+          position={"bottom"}
+          isOpen={this.state.isOpen}
+          style={[styles.modalStyle, styles.modalHeight]}
+          backdrop={false}
+          swipeArea={20}
+        >
+          <View style={styles.subView}>
+            {
+              this.state.newLinkUrls.map(
+                (linkUrl, index) =>
+                  (<View key={index}>
+                    <TouchableHighlight
+                      underlayColor="transparent"
+                      key={index}
+                      onPress={() => { this.openMapUrl(index); }} style={styles.buttonStyle}
+                    >
+                      <Text key={index} style={styles.buttonText}>
+                        {linkUrl.name}
+                      </Text>
+
+                    </TouchableHighlight>
+                    {
+                      index < this.state.newLinkUrls.length - 1 ?
+                        (<View style={styles.horizontalLine}/>) : (<View />)
+                    }
+                  </View>)
+              )
+            }
+          </View>
+        </Modal>
+      </View>
     );
   }
 
@@ -169,9 +283,13 @@ class listView extends Component {
             <View style={{ flexDirection: 'row' }}>
               <Image
                 source={
-                     data.carBrand === '1' ?
-                    require('../../image/bmw.png') :
-                    require('../../image/tesla.png')
+                     data.carBrand === '348D' ?
+                    require('../../image/tesla.png') :
+                     data.carBrand === '400F' ?
+                      require('../../image/bmw.png') :
+                      data.carBrand === '3701' ?
+                      require('../../image/tengshi.png') :
+                       require('../../image/tesla.png')
                     }
               />
             </View>
@@ -179,7 +297,7 @@ class listView extends Component {
         </View>
         <View style={{ flexDirection: 'row' }}>
           <View>
-            <Text style={{ fontSize: 10, marginLeft: 30 }}>{data.address.substring(0,8)}</Text>
+            <Text style={{ fontSize: 10, marginLeft: 30 }}>{data.address.substring(0, 8)}</Text>
           </View>
         </View>
         <View style={{ flexDirection: 'row' }}>
@@ -221,6 +339,7 @@ class listView extends Component {
           <TouchableHighlight
             underlayColor="transparent"
             style={styles.buttonStyle}
+            onPress={this.setModalVisible}
           >
             <Text style={styles.buttonText}>
               引导
@@ -230,6 +349,7 @@ class listView extends Component {
           <TouchableHighlight
             underlayColor="transparent"
             style={styles.buttonStyle}
+            onPress={() => this.toDetailContainer(data.pid)}
           >
             <Text style={styles.buttonText}>
               详情
@@ -248,7 +368,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {};
+  return bindActionCreators(chargeListActions, dispatch);
 }
 
 export default connect(
