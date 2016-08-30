@@ -23,41 +23,90 @@ const mapReducer = handleActions({
     newState.visitorData = action.payload.data;
     return newState;
   },
-  [mapAction.getSingleData]: (state, action)=> {
-    state = Object.assign({}, state);
-    state.showOrHide = action.payload.showOrHide;
-    let data = action.payload.data.data[0];
-    if (data.servicePro === '0') {
-      data.servicePro = '其它';
-    } else if (data.servicePro === '1') {
-      data.servicePro = '国家电网';
-    } else if (data.servicePro === '2') {
-      data.servicePro = '南方电网';
-    } else if (data.servicePro === '3') {
-      data.servicePro = '中石油';
-    } else if (data.servicePro === '4') {
-      data.servicePro = '中石化';
-    } else if (data.servicePro === '5') {
-      data.servicePro = '中海油';
-    } else if (data.servicePro === '6') {
-      data.servicePro = '中国普天';
-    } else if (data.servicePro === '7') {
-      data.servicePro = '特来电';
-    } else if (data.servicePro === '8') {
-      data.servicePro = '循道新能源';
-    } else if (data.servicePro === '9') {
-      data.servicePro = '富电科技';
-    } else if (data.servicePro === '10') {
-      data.servicePro = '华商三优';
-    } else if (data.servicePro === '12') {
-      data.servicePro = '港灯';
-    } else if (data.servicePro === '13') {
-      data.servicePro = '澳电';
-    } else if (data.servicePro === '11') {
-      data.servicePro = '中电';
+  [mapAction.getSingleData]: (state, action) => {
+    const nesState = Object.assign({}, state);
+    nesState.showOrHide = action.payload.showOrHide;
+    const data = action.payload.data.data[0];
+    switch (data.servicePro) {
+      case '400F':
+        data.servicePro = '宝马';
+        break;
+      case '348D':
+        data.servicePro = '特斯拉';
+        break;
+      case '3701':
+        data.servicePro = '腾势';
+        break;
+      case '0':
+        data.servicePro = '其它';
+        break;
+      case '1':
+        data.servicePro = '国家电网';
+        break;
+      case '2':
+        data.servicePro = '南方电网';
+        break;
+      case '3':
+        data.servicePro = '中石油';
+        break;
+      case '4':
+        data.servicePro = '中石化';
+        break;
+      case '5':
+        data.servicePro = '中海油';
+        break;
+      case '6':
+        data.servicePro = '中国普天';
+        break;
+      case '7':
+        data.servicePro = '特来电';
+        break;
+      case '8':
+        data.servicePro = '循道新能源';
+        break;
+      case '9':
+        data.servicePro = '富电科技';
+        break;
+      case '10':
+        data.servicePro = '华商三优';
+        break;
+      case '11':
+        data.servicePro = '中电';
+        break;
+      case '12':
+        data.servicePro = '港灯';
+        break;
+      case '13':
+        data.servicePro = '澳电';
+        break;
+      case '14':
+        data.servicePro = '绿狗';
+        break;
+      case '15':
+        data.servicePro = 'EVCARD';
+        break;
+      case '16':
+        data.servicePro = '星星充电';
+        break;
+      case '17':
+        data.servicePro = '电桩';
+        break;
+      case '18':
+        data.servicePro = '依威能源';
+        break;
+      case 'ChainID':
+        data.servicePro = 'ChainID';
+        break;
+      case '98':
+        data.servicePro = '山东鲁能';
+        break;
+      case '99':
+        data.servicePro = '1886';
+        break;
+      default:
+        break;
     }
-    //支付方式
-    for (let i in data.payment) {
+    for (const i of data.payment) {
       if (data.payment[i] === '0') {
         data.payment[i] = '其他';
       } else if (data.payment[i] === '1') {
@@ -90,8 +139,8 @@ const mapReducer = handleActions({
         data.payment[i] = '中国普天充值卡';
       }
     }
-    state.singeData = data;
-    return state;
+    nesState.singeData = data;
+    return nesState;
   },
   [SearchActions.setLocationToMap]: (state, action) => {
     const newState = Object.assign({}, state);
